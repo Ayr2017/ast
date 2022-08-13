@@ -47,4 +47,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setDeletedAtAttribute($value)
+    {
+        if($value){
+            $this->attributes['deleted_at'] = date("Y-m-d H:i:s");
+        }else{
+            $this->attributes['deleted_at'] = null;
+        }
+    }
 }

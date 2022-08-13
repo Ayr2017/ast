@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Admin\Users\GetUsers;
+use App\Actions\Admin\Users\UpdateUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\GetUsersRequest;
+use App\Http\Requests\Admin\Users\UpdateUserRequest;
+use App\Models\User;
+use App\Services\Admin\RoleService;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -55,26 +60,31 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit($id, RoleService $roleService)
     {
-        return 'users.edit';
+        $user = User::withTrashed()->find($id);
+        $roles = $roleService->all();
+
+        return view('admin.users.edit',[
+            'user' => $user,
+            'roles' => $roles,
+            ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateUserRequest $request
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id, UpdateUser $updateUser)
     {
-        return 'users.update';
+
+        $user = $updateUser->execute($request, $id);
+
+        return redirect()->route('admin.users.index');
     }
 
     /**

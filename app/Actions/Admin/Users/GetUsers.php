@@ -9,12 +9,12 @@ class GetUsers
 {
     public function execute($request)
     {
-        if($request->select == 'withTrashed' ) {
-            $users = User::withTrashed()->with('roles')->get();
+        if($request->select == 'withoutTrashed' ) {
+            $users = User::with('roles')->get();
         } elseif($request->select == 'trashed' ){
             $users = User::onlyTrashed()->with('roles')->get();
         } else {
-            $users = User::with('roles')->get();
+            $users = User::withTrashed()->with('roles')->get();
         }
 
         return $this->filterUsers($users);
