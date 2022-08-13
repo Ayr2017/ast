@@ -21,7 +21,7 @@
                 <td>{{$user->phone}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->job_title}}</td>
-                <td>{{$user->roles->join(',')}}</td>
+                <td>{{$user->getRoleNames()->join(',')}}</td>
                 <td>
                     <div class="d-flex justify-content-evenly">
                         <div class="py-1">

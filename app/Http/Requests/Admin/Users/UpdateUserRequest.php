@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => [ 'string', 'max:255', 'nullable'],
             'surname' => [ 'string', 'max:255', 'nullable'],
-            'email' => [ 'string', 'email', 'max:255', 'unique:users', 'nullable'],
+            'email' => [ 'string', 'email', 'max:255', 'nullable'],
             'phone' => [ 'string', 'max:255','regex:/^\+79\d{9}$/', 'nullable'],
             'job_title' => [ 'string', 'max:255', 'nullable'],
             'deleted_at' => [ 'in:1,0','nullable'],

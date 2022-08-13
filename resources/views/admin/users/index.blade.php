@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="container">
+    <div class="container py-4">
         <div class="row">
             <h3 class="h3">Пользователи</h3>
         </div>
