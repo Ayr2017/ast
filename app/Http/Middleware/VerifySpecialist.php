@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class VerifyAdmin
+class VerifySpecialist
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,11 @@ class VerifyAdmin
     public function handle(Request $request, Closure $next)
     {
         $user = auth()->user();
-        if($user?->hasRole('admin')){
+        if($user?->hasRole('specialist')) {
             return $next($request);
         }
 
         return redirect('home')->withErrors(['no_permissions' => 'Вы не обладаете привилегиями для этого действия']);
+
     }
 }

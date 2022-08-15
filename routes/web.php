@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
+use App\Http\Controllers\Specialist\OrganizationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,4 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(function(){
     Route::resource('users', AdminUsersController::class);
+});
+
+Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist')->group(function(){
+    Route::resource('organizations', OrganizationController::class);
 });
