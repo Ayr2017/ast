@@ -9,10 +9,7 @@
     </div>
     <div class="container">
         <div class="offcanvas-body small">
-            @php
-            $modelType = get_class($organization)
-            @endphp
-            @livewire('user.contacts.create-contact', ['model_type' => $modelType])
+            @livewire('user.contacts.create-contact', ['model_type' => get_class($organization), 'model_id' => $organization->id])
         </div>
     </div>
 </div>

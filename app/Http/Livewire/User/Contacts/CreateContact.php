@@ -8,26 +8,38 @@ use Livewire\Component;
 
 class CreateContact extends Component
 {
-    public Contact $contact;
+    public string $model_type;
+    public string $name;
+    public string $type;
+    public string $value;
 
     protected $rules = [
-        'contact.name' => 'required|string',
-        'contact.job_title' => 'required|string',
-        'contact.type' => 'required|in:email,phone,mobile',
-        'contact.value' => 'required|string',
-        'contact.model_type' => 'required|string',
+        'name' => 'required|string',
+        'job_title' => 'required|string',
+        'type' => 'required|in:email,phone,mobile',
+        'value' => 'required|string',
+        'model_type' => 'required|string|min:5',
+        'model_id' => 'required|numeric',
     ];
 
-    public function __construct()
+    public function __construct($model_type)
     {
-        $this->contact = new Contact();
-//        $this->contact->model = $model;
+        $this->model_type = $model_type;
+        $this->model_id = null;
+        $this->name = '';
+        $this->type = 'mobile';
+        $this->value = '';
+        $this->job_title = '';
     }
 
-    public function updatedContact()
+    public function mount()
     {
-//        dd($this->contact);
     }
+
+    public function updated()
+    {
+    }
+
 
     public function render()
     {
@@ -36,16 +48,17 @@ class CreateContact extends Component
 
     public function save()
     {
-        try {
-        $contact = $this->contact->save();
-
-        }catch(\Exception $exception) {
-            Log::error($exception->getMessage());
-        }
-        if($contact){
-            return redirect()->back();
-        } else {
-
-        }
+        $contact = Contact::updateOrCreate([
+            'model_type' => $this->model_type,
+            'model_id' => $this->model_id,
+            'value' => $this->value,
+        ],[
+            'model_type' => $this->model_type,
+            'model_id' => $this->model_id,
+            'name' => $this->name,
+            'job_title' => $this->job_title,
+            'type' => $this->type,
+            'value' => $this->value,
+        ]);
     }
 }

@@ -54,10 +54,14 @@
 
                 <div class="card w-100 my-1" >
                     <div class="card-body">
+                        @foreach($organization->contacts as $contact)
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Регион</h6>
-                            <h5 class="card-title">{{$organization?->region?->name}}</h5>
+                            <h5 class="card-title"><span class="card-subtitle text-muted" >Имя: </span> {{$contact->name}}</h5>
+                            <h5 class="card-title"><span class="card-subtitle text-muted" >Должность: </span> {{$contact->job_title}}</h5>
+                            <h5 class="card-title"><span class="card-subtitle text-muted" >{{$contact->type}} : </span> {{$contact->value}}</h5>
+                            <a href="{{route('user.contacts.edit', ['contact' => $contact])}}">Изменить</a>
                         </div>
+                        @endforeach
                         <button  class="btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                             <i class="fa-solid fa-file-signature"></i>
                             Добавить контакт
