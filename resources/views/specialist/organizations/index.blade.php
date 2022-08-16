@@ -34,6 +34,13 @@
 
         <div class="row">
             <div class="col">
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            {{$error}}
+                        </div>
+                    @endforeach
+                @endif
                 @include('specialist.organizations.partials.organizations-table')
             </div>
         </div>

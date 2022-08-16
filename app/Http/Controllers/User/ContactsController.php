@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class OrganizationController extends Controller
+class ContactsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        return 'organization';
+        //
     }
 
     /**
@@ -24,7 +25,7 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.contacts.create');
     }
 
     /**

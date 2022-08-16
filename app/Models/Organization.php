@@ -11,7 +11,7 @@ class Organization extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = [''];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'id' => 'string'
@@ -34,4 +34,20 @@ class Organization extends Model
             $this->attributes['deleted_at'] = null;
         }
     }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'creator_id', 'id');
+    }
+
 }

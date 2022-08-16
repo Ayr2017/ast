@@ -69,5 +69,9 @@ class Kernel extends HttpKernel
         'verify-specialist' => VerifySpecialist::class,
         'verify-admin' => VerifyAdmin::class,
         'verify-super-admin' => VerifySuperAdmin::class,
+
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
     ];
 }

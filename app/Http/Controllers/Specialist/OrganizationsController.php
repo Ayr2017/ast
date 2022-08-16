@@ -6,9 +6,10 @@ use App\Actions\Specialist\Organizations\StoreOrganisation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Specialist\Organizations\StoreOrganizationRequest;
 use App\Models\Organization;
+use App\Services\DadataService;
 use Illuminate\Http\Request;
 
-class OrganizationController extends Controller
+class OrganizationsController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -18,7 +19,7 @@ class OrganizationController extends Controller
         $organizations = Organization::all();
 
         return view('specialist.organizations.index',[
-            'organisations' => $organizations,
+            'organizations' => $organizations,
         ]);
     }
 
@@ -37,19 +38,27 @@ class OrganizationController extends Controller
      */
     public function store(StoreOrganizationRequest $request, StoreOrganisation $storeOrganisation)
     {
-        $organization = $storeOrganisation->execute($request);
+        $validatedRequest = $request->validated();
+        $dadataService = new DadataService();
+
+        $organizationFromDadata = $dadataService->getOrganizationByInn($validatedRequest['inn']);
+
+        if(!$organizationFromDadata){
+            return redirect()->back()->withErrors(['message'=>'Организации с таким ИНН не существует.'])->withInput();
+        }
+
+        $organization = $storeOrganisation->execute($validatedRequest, $organizationFromDadata);
         return redirect()->route('specialist.organizations.show',['organization' => $organization]);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
-        //
+        $organization = Organization::with(['region', 'district', 'creator'])->find($id);
+        return view('specialist.organizations.show', ['organization' => $organization]);
     }
 
     /**

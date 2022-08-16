@@ -9,12 +9,9 @@ use function App\Helpers\collectR;
 
 class StoreOrganisation
 {
-    public function execute(StoreOrganizationRequest $request)
+    public function execute($validatedRequest, $organizationFromDadata)
     {
-        $validatedRequest = $request->validated();
-        $dadataService = new DadataService();
 
-        $organizationFromDadata = $dadataService->getOrganizationByInn($validatedRequest['inn']);
 
         $validatedRequest['kpp'] = $organizationFromDadata->get('data')?->get('kpp');
         $validatedRequest['ogrn'] = $organizationFromDadata->get('data')?->get('ogrn');

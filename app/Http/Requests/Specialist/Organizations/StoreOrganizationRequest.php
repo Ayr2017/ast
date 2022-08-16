@@ -26,7 +26,7 @@ class StoreOrganizationRequest extends FormRequest
     {
         return [
             'name' => [ 'string', 'max:255'],
-            'inn' => [ 'string', 'unique:organizations','max:255', 'nullable'],
+            'inn' => [ 'string', 'unique:organizations','max:255'],
             'region_id' => [ 'numeric', 'max:255'],
             'district_id' => [ 'numeric', 'max:255'],
             'deleted_at' => [ 'in:1,0'],

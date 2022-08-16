@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
-use App\Http\Controllers\Specialist\OrganizationController;
+use App\Http\Controllers\Specialist\OrganizationsController;
+use App\Http\Controllers\User\ContactsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,5 +29,9 @@ Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(functi
 });
 
 Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist')->group(function(){
-    Route::resource('organizations', OrganizationController::class);
+    Route::resource('organizations', OrganizationsController::class);
+});
+
+Route::prefix('user')->name('user.')->middleware('role:admin|specialist|super-admin')->group(function(){
+    Route::resource('contacts', ContactsController::class);
 });
