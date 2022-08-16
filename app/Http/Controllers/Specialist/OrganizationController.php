@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Specialist;
 
+use App\Actions\Specialist\Organizations\StoreOrganisation;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Specialist\Organizations\StoreOrganizationRequest;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 
@@ -29,14 +31,14 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreOrganizationRequest $request
+     * @param StoreOrganisation $storeOrganisation
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreOrganizationRequest $request, StoreOrganisation $storeOrganisation)
     {
-        dd($request->all());
+        $organization = $storeOrganisation->execute($request);
+        return redirect()->route('specialist.organizations.show',['organization' => $organization]);
     }
 
     /**
