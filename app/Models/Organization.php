@@ -50,9 +50,5 @@ class Organization extends Model
         return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 
-    public function contacts()
-    {
-        return $this->hasMany(Contact::class, 'model_id', 'id', );
-    }
 
 }

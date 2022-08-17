@@ -54,18 +54,33 @@
 
                 <div class="card w-100 my-1" >
                     <div class="card-body">
-                        @foreach($organization->contacts as $contact)
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h5 class="card-title"><span class="card-subtitle text-muted" >Имя: </span> {{$contact->name}}</h5>
-                            <h5 class="card-title"><span class="card-subtitle text-muted" >Должность: </span> {{$contact->job_title}}</h5>
-                            <h5 class="card-title"><span class="card-subtitle text-muted" >{{$contact->type}} : </span> {{$contact->value}}</h5>
-                            <a href="{{route('user.contacts.edit', ['contact' => $contact])}}">Изменить</a>
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Контакты
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        @foreach($organization->contacts as $contact)
+                                            <div class="p-2 mb-2 bg-info bg-opacity-10">
+                                                <h5 class="card-title"><span class="card-subtitle text-muted" >Имя: </span> {{$contact->name}}</h5>
+                                                <h5 class="card-title"><span class="card-subtitle text-muted" >Должность: </span> {{$contact->job_title}}</h5>
+                                                <h5 class="card-title"><span class="card-subtitle text-muted" >{{$contact->type}} : </span> {{$contact->value}}</h5>
+                                                <a href="{{route('user.contacts.edit', ['contact' => $contact])}}">Изменить</a>
+                                            </div>
+                                        @endforeach
+                                            <button  class="btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                                                <i class="fa-solid fa-file-signature"></i>
+                                                Добавить контакт
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        @endforeach
-                        <button  class="btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                            <i class="fa-solid fa-file-signature"></i>
-                            Добавить контакт
-                        </button>
+
+
                     </div>
                 </div>
 
