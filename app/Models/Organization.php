@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\Contactable;
+use App\Models\Traits\HasContacts;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Organization extends Model
+class Organization extends Model implements Contactable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasContacts;
 
     protected $guarded = ['id'];
 
@@ -48,6 +50,11 @@ class Organization extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id', 'id');
+    }
+
+    public function farms()
+    {
+        return $this->hasMany(Farm::class);
     }
 
 

@@ -9,7 +9,7 @@
     </div>
     <div class="container">
         <div class="offcanvas-body small">
-
+            @include('user.contacts.partials.create-contact-form')
         </div>
     </div>
 </div>

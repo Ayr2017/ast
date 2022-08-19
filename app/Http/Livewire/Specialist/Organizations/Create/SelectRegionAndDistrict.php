@@ -27,11 +27,6 @@ class SelectRegionAndDistrict extends Component
         $this->district = $this->districts->first();
     }
 
-    public function mount()
-    {
-
-    }
-
     public function hydrate()
     {
         $this->regions = Region::where('name', 'like', '%' . $this->regionSearch . '%')->get();

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Specialist;
 
 use App\Actions\Specialist\Organizations\StoreOrganisation;
+use App\Actions\Specialist\Organizations\UpdateContacts;
+use App\Actions\Specialist\Organizations\UpdateOrganization;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Specialist\Organizations\StoreOrganizationRequest;
+use App\Http\Requests\Specialist\Organizations\UpdateOrganizationRequest;
+use App\Models\Contact;
 use App\Models\Organization;
 use App\Services\DadataService;
 use Illuminate\Http\Request;
@@ -48,6 +52,7 @@ class OrganizationsController extends Controller
         }
 
         $organization = $storeOrganisation->execute($validatedRequest, $organizationFromDadata);
+
         return redirect()->route('specialist.organizations.show',['organization' => $organization]);
     }
 
@@ -79,9 +84,17 @@ class OrganizationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateOrganizationRequest $request, $organizationId, UpdateOrganization $updateOrganization, UpdateContacts $updateContacts )
     {
-        //
+        $validatedRequest = $request->validated();
+        $organization = Organization::with('contacts')->find($organizationId);
+
+
+        $updateOrganization->execute($validatedRequest, $organization);
+        $updateContacts->execute($validatedRequest, $organization);
+
+        dd($organization);
+
     }
 
     /**

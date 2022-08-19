@@ -5,6 +5,7 @@ namespace App\Actions\Specialist\Organizations;
 use App\Http\Requests\Specialist\Organizations\StoreOrganizationRequest;
 use App\Models\Organization;
 use App\Services\DadataService;
+use Illuminate\Support\Str;
 use function App\Helpers\collectR;
 
 class StoreOrganisation
