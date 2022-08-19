@@ -64,6 +64,5 @@
             </div>
         </div>
         @include('specialist.organizations.partials.show.contacts-create-offcanvas')
-
     </div>
 @endsection

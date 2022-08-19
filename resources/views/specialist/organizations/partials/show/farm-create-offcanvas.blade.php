@@ -13,7 +13,7 @@
     </div>
     <div class="container">
         <div class="offcanvas-body small">
-{{--            @include('user.contacts.partials.create-contact-form')--}}
+            <livewire:specialist.farm.create.select-region-and-district />
         </div>
     </div>
 </div>
