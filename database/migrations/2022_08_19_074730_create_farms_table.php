@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('farms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('organization_id');
             $table->foreignId('region_id');
             $table->foreignId('district_id');
             $table->string('address');

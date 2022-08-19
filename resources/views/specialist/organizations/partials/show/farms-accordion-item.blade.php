@@ -3,7 +3,7 @@
         <button class="accordion-button" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseFarms" aria-expanded="true"
                 aria-controls="collapseFarms">
-            Контакты
+            Фермы
         </button>
     </h2>
     <div id="collapseFarms" class="accordion-collapse collapse hide"
@@ -41,6 +41,7 @@
 {{--                    @include('general.contacts.partials.destroy-modal')--}}
 {{--                </div>--}}
             @endforeach
+            @include('specialist.organizations.partials.show.farm-create-offcanvas')
         </div>
     </div>
 </div>

@@ -62,7 +62,7 @@ class OrganizationsController extends Controller
      */
     public function show($id)
     {
-        $organization = Organization::with(['region', 'district', 'creator'])->find($id);
+        $organization = Organization::with(['region', 'district', 'creator', 'farms'])->find($id);
         return view('specialist.organizations.show', ['organization' => $organization]);
     }
 
