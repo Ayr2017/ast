@@ -52,7 +52,7 @@ class FarmsController extends Controller
      */
     public function show($id)
     {
-        $farm = Farm::find($id);
+        $farm = Farm::withTrashed()->find($id);
         return view('specialist.farms.show',['farm' => $farm]);
     }
 
@@ -80,13 +80,12 @@ class FarmsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        Farm::find($id)->delete();
+        return redirect()->back();
     }
 }

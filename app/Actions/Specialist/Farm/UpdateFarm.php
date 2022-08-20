@@ -9,6 +9,7 @@ class UpdateFarm
     public function execute($validatedRequest,$id)
     {
         $farm = Farm::find($id);
-        return $farm->update($validatedRequest);
+        $farm->update($validatedRequest);
+        return $farm;
     }
 }

@@ -24,7 +24,7 @@
 
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
                             <h6 class="card-subtitle mb-2 text-muted">Организация</h6>
-                            <h5 class="card-title">{{$farm?->organization?->name}}</h5>
+                            <h5 class="card-title"><a href="{{route('specialist.organizations.show',['organization' =>$farm?->organization_id])}}">{{$farm?->organization?->name}}</a></h5>
                         </div>
 
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
@@ -64,7 +64,14 @@
 
                     </div>
                 </div>
-                <a href="{{route('specialist.farms.edit',['farm' => $farm])}}" class="btn btn-link">Редактировать</a>
+                <div class="d-flex">
+                    <a href="{{route('specialist.farms.edit',['farm' => $farm])}}" class="btn btn-link">Редактировать</a>
+                    <form href="{{route('specialist.farms.destroy',['farm' => $farm])}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-link text-danger">Удалить</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
