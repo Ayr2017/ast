@@ -3,7 +3,7 @@
 @section('content')
     <div class="container py-4">
         <div class="row">
-            <h3 class="h3"><span class="text-black-50">Организация</span> {{$organization->name}}</h3>
+            <h3 class="h3"><span class="text-black-50 d-none d-sm-inline d-lg-inline d-md-inline">Организация</span> {{$organization->name}}</h3>
         </div>
         <div class="row">
             <div class="col">
@@ -18,7 +18,7 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-6 col-lg-12">
+            <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
                 <div class="card w-100 my-1">
                     <div class="card-body">
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
@@ -41,7 +41,7 @@
                             <h5 class="card-title">{{$organization?->address}}</h5>
                         </div>
 
-                        <p class="card-text">
+                        <p class="card-text text-muted">
                             Создано: {{$organization->created_at}} - {{$organization->creator?->name}}
                         </p>
 
