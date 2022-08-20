@@ -1,7 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Specialist;
 
+use App\Actions\Specialist\Farm\CreateFarm;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Specialist\Farm\CreateFarmRequest;
+use App\Models\Farm;
 use Illuminate\Http\Request;
 
 class FarmsController extends Controller
@@ -27,14 +31,15 @@ class FarmsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateFarmRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateFarmRequest $request, CreateFarm $createFarm)
     {
-        //
+        $validated = $request->validated();
+        $farm = $createFarm->execute($validated);
+
+        return redirect()->back();
     }
 
     /**

@@ -9,22 +9,18 @@ use Livewire\Component;
 class SelectRegionAndDistrict extends Component
 {
     public $organization = null;
-    public $regions;
+    public $regions = [];
     public $region;
-    public $districts;
+    public $districts = [];
     public $district;
-    public $regionVisibility = false;
-    public $districtVisibility = false;
     public $regionSearch = '';
     public $districtSearch = '';
+    public $regionId = null;
+    public $districtId = null;
 
     public function __construct()
     {
         $this->regions = Region::where('name', 'like', '%' . $this->regionSearch . '%')->get();
-        $this->region = $this->regions->first();
-
-        $this->districts = $this->region->districts;
-        $this->district = $this->districts->first();
     }
 
     public function hydrate()
@@ -36,13 +32,16 @@ class SelectRegionAndDistrict extends Component
     public function updatedRegionSearch()
     {
         $this->regions = Region::where('name', 'like', '%' . $this->regionSearch . '%')->get();
-        $this->regionVisibility = true;
-        $this->getDistricts(true);
+        $this->regionId = Region::where('name',  $this->regionSearch)?->first()?->id;
+        $this->districtSearch = '';
+        $this->getDistricts();
     }
 
     public function updatedDistrictSearch()
     {
-        $this->getDistricts(false);
+        $this->getDistricts();
+        $this->districtId = District::where('name',  $this->districtSearch)?->first()?->id;
+
     }
 
     public function render()
@@ -50,32 +49,12 @@ class SelectRegionAndDistrict extends Component
         return view('livewire.specialist.farm.create.select-region-and-district');
     }
 
-    public function selectRegion(Region $region)
-    {
-        $this->region = $region;
-        $this->regions = collect([$region]);
-        $this->regionSearch = $region->name;
-        $this->regionVisibility = false;
-        $this->districtSearch = '';
-        $this->getDistricts(true);
-    }
 
-    public function selectDistrict(District $district)
+    public function getDistricts()
     {
-        $this->district = $district;
-        $this->districts = collect([$district]);
-        $this->districtSearch = $district->name;
-        $this->getDistricts(false);
-    }
-
-    public function getDistricts($flag)
-    {
-        $this->districts = District::where('region_id', $this->region->id)
+        $this->districts = District::where('region_id', $this->regionId)
             ->where('name', 'like', '%' . $this->districtSearch . '%')
             ->get();
-        $this->districtVisibility = $flag;
-
-
     }
 
 

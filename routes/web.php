@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
-use App\Http\Controllers\FarmsController;
 use App\Http\Controllers\General\ContactsController;
+use App\Http\Controllers\Specialist\FarmsController;
 use App\Http\Controllers\Specialist\OrganizationsController;
 use Illuminate\Support\Facades\Route;
 

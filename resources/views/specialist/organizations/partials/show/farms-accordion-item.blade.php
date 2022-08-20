@@ -10,36 +10,28 @@
          aria-labelledby="headingOne" data-bs-parent="#accordionExample">
         <div class="accordion-body">
             @foreach($organization->farms as $farm)
-{{--                <div class="p-2 mb-2 bg-info bg-opacity-10">--}}
-{{--                    @if($contact->name || $contact->surname || $contact->patronymic)--}}
-{{--                        <h5 class="card-title"><span--}}
-{{--                                class="card-subtitle text-muted">Имя: </span> {{$contact->name}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                    @if($contact->job_title)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Должность: </span> {{$contact->job_title}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                    @if($contact->email)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Email: </span> {{$contact->email}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                    @if($contact->phone)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Основной: </span> {{$contact->phone}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                    @if($contact->mobile)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Мобильный: </span> {{$contact->mobile}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                    @if($contact->work_number)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Рабочий: </span> {{$contact->work_number}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
+                <div class="p-2 mb-2 bg-info bg-opacity-10">
+                    @if($farm->name)
+                        <h5 class="card-title"><span
+                                class="card-subtitle text-muted">Название: </span> {{$farm->name}}
+                        </h5>
+                    @endif
+                    @if($farm->region)
+                        <h5 class="card-title"><span class="card-subtitle text-muted">Регион: </span> {{$farm->region->name}}
+                        </h5>
+                    @endif
+                    @if($farm->district)
+                        <h5 class="card-title"><span class="card-subtitle text-muted">Район: </span> {{$farm->district->name}}
+                        </h5>
+                    @endif
+                    @if($farm->address)
+                        <h5 class="card-title"><span class="card-subtitle text-muted">Район: </span> {{$farm->address}}
+                        </h5>
+                    @endif
 
-{{--                    <a href="{{route('general.contacts.edit', ['contact' => $contact])}}">Изменить</a>--}}
-{{--                    @include('general.contacts.partials.destroy-modal')--}}
-{{--                </div>--}}
+                    <a href="{{route('specialist.farms.edit', ['farm' => $farm])}}">Изменить</a>
+                    @include('specialist.farms.partials.destroy-modal')
+                </div>
             @endforeach
             @include('specialist.organizations.partials.show.farm-create-offcanvas')
         </div>
