@@ -17,10 +17,22 @@ class SelectRegionAndDistrict extends Component
     public $districtSearch = '';
     public $regionId = null;
     public $districtId = null;
+    public $farm = null;
 
     public function __construct()
     {
         $this->regions = Region::where('name', 'like', '%' . $this->regionSearch . '%')->get();
+
+    }
+
+    public function mount($farm = null)
+    {
+        $this->farm = $farm;
+        $this->regionSearch = $farm?->region->name;
+        $this->regionId = $farm?->region_id;
+        $this->districtSearch = $farm?->district->name;
+        $this->districtId = $farm?->district_id;
+
     }
 
     public function hydrate()

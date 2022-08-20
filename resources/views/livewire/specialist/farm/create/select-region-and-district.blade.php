@@ -4,11 +4,12 @@
         <input class="form-control" list="regionDatalistOptions" wire:model.debounce.100ms="regionSearch" name="region_name" id="region_name" placeholder="Республика Татарстан">
         <datalist id="regionDatalistOptions">
             @foreach($this->regions as $region)
-            <option data-value="1" >{{$region->name}}</option>
+            <option data-value="1">{{$region->name}}</option>
             @endforeach
         </datalist>
+
+
         <input type="hidden" value="{{$regionId}}" name="region_id">
-        {{$regionId}}
     </div>
 
     <div class="mb-3">
@@ -20,6 +21,5 @@
             @endforeach
         </datalist>
         <input type="hidden" value="{{$districtId}}" name="district_id">
-        {{$districtId}}
     </div>
 </div>

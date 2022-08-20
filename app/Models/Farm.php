@@ -20,4 +20,9 @@ class Farm extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 }
