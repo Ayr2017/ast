@@ -29,6 +29,9 @@ class CreateFarmRequest extends FormRequest
             'district_id' => ['integer', 'required'],
             'address' => ['string', 'required'],
             'name' => ['string', 'required'],
+            'contact_name' => ['string', 'nullable'],
+            'contact_job_title' => ['string', 'nullable'],
+            'contact_value' => ['string', 'nullable'],
         ];
     }
 }

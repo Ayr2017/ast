@@ -25,7 +25,13 @@
                         </h5>
                     @endif
                     @if($farm->address)
-                        <h5 class="card-title"><span class="card-subtitle text-muted">Район: </span> {{$farm->address}}
+                        <h5 class="card-title"><span class="card-subtitle text-muted">Адрес: </span> {{$farm->address}}
+                        </h5>
+                    @endif
+                        <hr>
+                    @if($farm->contact_name)
+                        <h5 class="card-title"><span class="card-subtitle text-muted">Контакт: </span>
+                            {{$farm->contact_name}}  {{$farm->contact_value}} <span class="small">({{$farm->contact_job_title}})</span>
                         </h5>
                     @endif
 

@@ -20,6 +20,9 @@ return new class extends Migration
             $table->foreignId('region_id');
             $table->foreignId('district_id');
             $table->string('address');
+            $table->string('contact_name')->nullable();
+            $table->string('contact_job_title')->nullable();
+            $table->string('contact_value')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

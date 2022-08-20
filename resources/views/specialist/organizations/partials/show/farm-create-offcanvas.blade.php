@@ -11,7 +11,7 @@
         <h5 class="offcanvas-title" id="offcanvasBottomLabel">Добавить новую ферму к {{$organization->name}}</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="container">
+    <div class="container mb-5 overflow-auto scroll">
         <div class="offcanvas-body small">
             <form action="{{route('specialist.farms.store')}}" method="POST">
                 @csrf
@@ -24,6 +24,18 @@
                 <div class="mb-3">
                     <label for="address" class="form-label">Адрес</label>
                     <input type="text" class="form-control" id="address" name="address" placeholder="Казань, Фермское шоссе, д4">
+                </div>
+                <div class="mb-3">
+                    <label for="contact_name" class="form-label">ФИО</label>
+                    <input type="text" class="form-control" id="contact_name" name="contact_name" placeholder="Медведев Д.А.">
+                </div>
+                <div class="mb-3">
+                    <label for="contact_job_title" class="form-label">Должность</label>
+                    <input type="text" class="form-control" id="contact_job_title" name="contact_job_title" placeholder="Помощник">
+                </div>
+                <div class="mb-3">
+                    <label for="contact_value" class="form-label">Контакт</label>
+                    <input type="text" class="form-control" id="contact_value" name="contact_value" placeholder="+790123456789">
                 </div>
                 <button type="submit" class="btn btn-outline-primary">Сохранить</button>
             </form>
