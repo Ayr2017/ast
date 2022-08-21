@@ -6,21 +6,26 @@ use App\Actions\Specialist\Organizations\StoreOrganisation;
 use App\Actions\Specialist\Organizations\UpdateContacts;
 use App\Actions\Specialist\Organizations\UpdateOrganization;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\OrganizationsFilter;
 use App\Http\Requests\Specialist\Organizations\StoreOrganizationRequest;
 use App\Http\Requests\Specialist\Organizations\UpdateOrganizationRequest;
 use App\Models\Contact;
 use App\Models\Organization;
 use App\Services\DadataService;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
 class OrganizationsController extends Controller
 {
+    use SoftDeletes;
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(OrganizationsFilter $organizationsFilter)
     {
-        $organizations = Organization::all();
+        $organizations = Organization::filter($organizationsFilter)->paginate(2);
+
+        session()->flashInput(request()->input());
 
         return view('specialist.organizations.index',[
             'organizations' => $organizations,
@@ -98,6 +103,6 @@ class OrganizationsController extends Controller
     public function destroy($id)
     {
         Organization::withTrashed()->find($id)->delete();
-        return route('specialist.organizations.index');
+        return redirect()->route('specialist.organizations.index');
     }
 }

@@ -1,4 +1,3 @@
-{{--<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle bottom offcanvas</button>--}}
 <button class="btn btn-outline-primary" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasContactCreate" aria-controls="offcanvasContactCreate">
     <i class="fa-solid fa-file-signature"></i>

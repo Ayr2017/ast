@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Http\Filters\QueryFilter;
 use App\Models\Interfaces\Contactable;
 use App\Models\Traits\HasContacts;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -46,6 +48,11 @@ class Organization extends Model implements Contactable
     public function farms()
     {
         return $this->hasMany(Farm::class);
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
+        $filter->apply($builder);
     }
 
 

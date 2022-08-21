@@ -5,29 +5,34 @@
         <div class="row">
             <h3 class="h3">Организации</h3>
         </div>
-        <div class="d-flex">
+        <div class="row">
             <div class="col-2 my-1 ">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a href="{{route('specialist.organizations.create')}}" type="button"
                        class="btn btn-outline-primary">
-                        <i class="fa fa-solid fa-plus"></i>
-                        Создать
+                        <nobr>
+                            <i class="fa fa-solid fa-plus"></i>
+                            <span class="">Создать</span>
+                        </nobr>
                     </a>
                 </div>
             </div>
             <div class="col my-1 ms-auto">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="{{route('admin.users.index',['select' => null])}}" type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == null ? 'active' : ''}}">Все</a>
-                    <a href="{{route('admin.users.index',['select' =>'withoutTrashed'])}}" type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == 'withoutTrashed' ? 'active' : ''}}">Активные</a>
-                    <a href="{{route('admin.users.index',['select' => 'trashed']) }}" type="button"
+                    <a href="{{route('specialist.organizations.index',['select' => 'withTrashed'])}}" type="button"
+                       class="btn btn-outline-secondary {{request()->get('select') == 'withTrashed' ? 'active' : ''}}">Все</a>
+                    <a href="{{route('specialist.organizations.index',['select' =>null])}}" type="button"
+                       class="btn btn-outline-secondary {{request()->get('select') == '' ? 'active' : ''}}">Активные</a>
+                    <a href="{{route('specialist.organizations.index',['select' => 'trashed']) }}" type="button"
                        class="btn btn-outline-secondary {{request()->get('select') == 'trashed' ? 'active' : ''}}">Деактивированные</a>
                 </div>
             </div>
             <div class="col my-1 ms-auto">
                 <div class="form-group">
-                    <input type="text" id="serch_inn" class="form-control" placeholder="Поиск по ИНН">
+                    <form action="{{route(request()->route()->getName(),request()->getQueryString())}}">
+                        <input type="hidden" name="select" value="{{request()->select}}">
+                        <input type="text" id="inn" name="inn" class="form-control" placeholder="Поиск по ИНН" value="{{old('inn')}}">
+                    </form>
                 </div>
             </div>
         </div>
@@ -42,6 +47,7 @@
                     @endforeach
                 @endif
                 @include('specialist.organizations.partials.organizations-table')
+                    {!! $organizations->appends(request()->query())->links() !!}
             </div>
         </div>
 

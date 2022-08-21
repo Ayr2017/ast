@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\General;
 
 use App\Actions\General\Contacts\StoreContact;
+use App\Actions\General\Contacts\UpdateContact;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\General\Contacts\StoreContactRequest;
+use App\Http\Requests\General\Contacts\UpdateContactRequest;
 use App\Models\Contact;
 use App\Models\Interfaces\Contactable;
 use Illuminate\Http\Request;
@@ -69,15 +71,16 @@ class ContactsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateContactRequest $request
+     * @param $id
+     * @param UpdateContact $updateContact
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateContactRequest $request, $id, UpdateContact $updateContact)
     {
-        //
+        $validatedRequest = $request->validated();
+        $contact = $updateContact->execute($validatedRequest, $id);
+        return redirect()->back();
     }
 
     /**

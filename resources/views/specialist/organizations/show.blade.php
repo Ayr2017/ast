@@ -6,6 +6,11 @@
             <h3 class="h3"><span class="text-black-50 d-none d-sm-inline d-lg-inline d-md-inline">Организация</span> {{$organization->name}}</h3>
         </div>
         <div class="row">
+            <p>
+                <a class="btn btn-link" href="{{route('specialist.organizations.index')}}">Ко всем организациям</a>
+            </p>
+        </div>
+        <div class="row">
             <div class="col">
                 @if ($errors->any())
                     @foreach ($errors->all() as $error)
@@ -49,6 +54,7 @@
                             <i class="fa-solid fa-pen"></i>
                             Редактировать
                         </a>
+                        @include('specialist.organizations.partials.show.destroy-organization-modal')
                     </div>
                 </div>
 

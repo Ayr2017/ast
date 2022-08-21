@@ -31,10 +31,10 @@
                             </a>
                         </div>
                         <div class="py-1">
-                            <form action="{{route('specialist.organizations.update',['organization' => $organization?->id])}}"
+                            <form action="{{route('specialist.organizations.destroy',['organization' => $organization?->id])}}"
                                   method="POST">
                                 @csrf
-                                @method('PATCH')
+                                @method('DELETE')
                                 <input type="hidden" name="deleted_at"
                                        value="{{$organization?->deleted_at ? 0 : 1}}">
                                 <button type="submit" class="btn btn-outline-danger">

@@ -37,7 +37,7 @@
                         </h5>
                     @endif
 
-                    <a href="{{route('general.contacts.edit', ['contact' => $contact])}}">Изменить</a>
+                    @include('specialist.organizations.partials.show.contact-edit-offcanvas')
                     @include('general.contacts.partials.destroy-modal')
                 </div>
             @endforeach

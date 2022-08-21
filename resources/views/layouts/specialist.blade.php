@@ -20,7 +20,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="min-vh-100">
-<nav class="navbar navbar-dark navbar-expand-md  bg-dark shadow-sm sticky-top ">
+<nav class="navbar navbar-dark navbar-expand-md  bg-dark shadow-sm navbar-expand-lg">
     <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/">
         <h5 class="h5 fw-bold">{{ config('app.name', 'Laravel') }}</h5>
     </a>
