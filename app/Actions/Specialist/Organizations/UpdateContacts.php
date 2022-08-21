@@ -10,12 +10,9 @@ class UpdateContacts
     {
         $contact = new Contact();
         $validatedRequest['contact']['contactable_id'] = $organization->id;
-//        dd($validatedRequest);
         $contact->fill($validatedRequest['contact']);
-        dd($contact);
         $contact->organization()->associate($contact);
         $contact->save();
-
         return $contact;
     }
 }

@@ -45,7 +45,7 @@
                             Создано: {{$organization->created_at}} - {{$organization->creator?->name}}
                         </p>
 
-                        <a href="#" class="btn btn-outline-secondary">
+                        <a href="{{route('specialist.organizations.edit',['organization' => $organization])}}" class="btn btn-outline-secondary">
                             <i class="fa-solid fa-pen"></i>
                             Редактировать
                         </a>
@@ -63,6 +63,5 @@
 
             </div>
         </div>
-        @include('specialist.organizations.partials.show.contacts-create-offcanvas')
     </div>
 @endsection

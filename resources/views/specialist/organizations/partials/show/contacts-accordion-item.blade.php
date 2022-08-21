@@ -41,11 +41,7 @@
                     @include('general.contacts.partials.destroy-modal')
                 </div>
             @endforeach
-            <button class="btn btn-outline-primary" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                <i class="fa-solid fa-file-signature"></i>
-                Добавить контакт
-            </button>
+                @include('specialist.organizations.partials.show.contacts-create-offcanvas')
         </div>
     </div>
 </div>

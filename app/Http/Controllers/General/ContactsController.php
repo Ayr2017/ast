@@ -64,7 +64,8 @@ class ContactsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contact = Contact::withTrashed()->find($id);
+        return view('general.contacts.edit',['contact' => $contact]);
     }
 
     /**

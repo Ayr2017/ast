@@ -1,5 +1,7 @@
 <?php
-namespace App\Http\Livewire\Specialist\Organizations\Create;
+
+namespace App\Http\Livewire\Specialist\Organizations\Edit;
+
 
 use App\Models\District;
 use App\Models\Region;
@@ -16,7 +18,6 @@ class SelectRegionAndDistrict extends Component
     public $districtSearch = '';
     public $regionId = null;
     public $districtId = null;
-    public $farm = null;
 
     public function __construct()
     {
@@ -24,12 +25,13 @@ class SelectRegionAndDistrict extends Component
 
     }
 
-    public function mount($farm = null)
+    public function mount($organization)
     {
-        $this->farm = $farm;
-        $this->regionSearch = $farm?->region->name;
-        $this->regionId = $farm?->region_id;
-        $this->districtSearch = $farm?->district->name;
+        $this->organization = $organization;
+        $this->regionSearch = $organization?->region->name;
+        $this->regionId = $organization?->region_id;
+        $this->districtSearch = $organization?->district->name;
+        $this->districtId = $organization?->district_id;
 
     }
 
@@ -62,6 +64,6 @@ class SelectRegionAndDistrict extends Component
     }
     public function render()
     {
-        return view('livewire.specialist.organizations.create.select-region-and-district');
+        return view('livewire.specialist.organizations.edit.select-region-and-district');
     }
 }

@@ -24,7 +24,13 @@ class UpdateOrganizationRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => ['required'],
             'contact' => ['array'],
+            'region_id' =>['required', 'integer'],
+            'district_id' =>['required', 'integer'],
+            'address' =>['required', 'string'],
+            'inn' =>['required', 'string'],
+            'deleted_at' =>['required', 'boolean'],
         ];
     }
 }

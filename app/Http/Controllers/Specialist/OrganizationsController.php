@@ -67,44 +67,37 @@ class OrganizationsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $organization = Organization::withTrashed()->find($id);
+        return view('specialist.organizations.edit', ['organization' => $organization]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateOrganizationRequest $request
+     * @param $id
+     * @param UpdateOrganization $updateOrganization
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(UpdateOrganizationRequest $request, $organizationId, UpdateOrganization $updateOrganization, UpdateContacts $updateContacts )
+    public function update(UpdateOrganizationRequest $request, $id, UpdateOrganization $updateOrganization)
     {
         $validatedRequest = $request->validated();
-        $organization = Organization::with('contacts')->find($organizationId);
-
+        $organization = Organization::with('contacts')->find($id);
 
         $updateOrganization->execute($validatedRequest, $organization);
-        $updateContacts->execute($validatedRequest, $organization);
-
-        dd($organization);
-
+        return redirect()->route('specialist.organizations.show',['organization' => $organization]);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return string
      */
     public function destroy($id)
     {
-        //
+        Organization::withTrashed()->find($id)->delete();
+        return route('specialist.organizations.index');
     }
 }

@@ -29,7 +29,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label for="staticEmail" class="col-sm-2 col-form-label">Должность*</label>
+                <label for="staticEmail" class="col-sm-2 col-form-label"><nobr>Должность*</nobr></label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="job_title" name="job_title"
                            placeholder="Директор">
