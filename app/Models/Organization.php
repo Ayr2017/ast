@@ -19,15 +19,6 @@ class Organization extends Model implements Contactable
         'id' => 'string'
     ];
 
-    public function setIdAttribute($value)
-    {
-        if($value && Str::isUuid($value)){
-            $this->attributes['id'] = $value;
-        }else{
-            $this->attributes['id'] = Str::uuid();
-        }
-    }
-
     public function setDeletedAtAttribute($value)
     {
         if($value){
