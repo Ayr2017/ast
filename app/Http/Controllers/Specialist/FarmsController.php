@@ -13,13 +13,12 @@ use Illuminate\Http\Request;
 class FarmsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $farms = Farm::with(['organization', 'district', 'region'])->paginate(15);
+        return view('specialist.farms.index', ['farms' => $farms]);
     }
 
     /**
@@ -29,7 +28,7 @@ class FarmsController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->back()->withErrors(['message' => 'Для создания фермы перейдите к организации']);
     }
 
     /**
@@ -85,7 +84,12 @@ class FarmsController extends Controller
      */
     public function destroy($id)
     {
-        Farm::find($id)->delete();
-        return redirect()->back();
+        $farm = Farm::find($id);
+        if($farm) {
+            $farm->delete();
+            return redirect()->route('specialist.farms.index');
+        }
+        $farm = Farm::withTrashed()->find($id)->restore();
+        return redirect()->route('specialist.farms.show',['farm' => $farm]);
     }
 }

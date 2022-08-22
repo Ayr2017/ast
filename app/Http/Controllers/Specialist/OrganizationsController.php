@@ -102,7 +102,12 @@ class OrganizationsController extends Controller
      */
     public function destroy($id)
     {
-        Organization::withTrashed()->find($id)->delete();
-        return redirect()->route('specialist.organizations.index');
+        $organization = Organization::find($id);
+        if($organization) {
+            $organization->delete();
+            return redirect()->route('specialist.organizations.index');
+        }
+        $organization = Organization::withTrashed()->find($id)->restore();
+        return redirect()->route('specialist.organizations.show',['organization' => $organization]);
     }
 }
