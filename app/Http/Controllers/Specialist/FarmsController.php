@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Specialist;
 use App\Actions\Specialist\Farm\CreateFarm;
 use App\Actions\Specialist\Farm\UpdateFarm;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\FarmsFilter;
 use App\Http\Requests\Specialist\Farm\CreateFarmRequest;
 use App\Http\Requests\Specialist\Farm\UpdateFarmRequest;
 use App\Models\Farm;
@@ -15,9 +16,9 @@ class FarmsController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(FarmsFilter $farmsFilter)
     {
-        $farms = Farm::with(['organization', 'district', 'region'])->paginate(15);
+        $farms = Farm::filter($farmsFilter)->with(['organization', 'district', 'region'])->paginate(15);
         return view('specialist.farms.index', ['farms' => $farms]);
     }
 
