@@ -20,4 +20,9 @@ class Form extends Model
     {
         return $this->belongsTo(User::class, 'creator_id', 'id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(FormCategory::class, 'category_id', 'id');
+    }
 }

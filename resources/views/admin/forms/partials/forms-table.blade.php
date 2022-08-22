@@ -14,9 +14,14 @@
         @foreach($forms as $form)
             <tr>
                 <td>{{$form->id}}</td>
-                <td>{{$form->name}}</td>
-                <td>{{$form->creator_id}}</td>
-                <td>{{$form->category_id}}</td>
+                <td>
+                    <a href="{{route('admin.forms.show',['form' => $form->id])}}">
+                        {{$form->name}}
+                    </a>
+                </td>
+                <td>{{$form->creator->name}}</td>
+                <td>{{$form->category->name}}</td>
+                <td>{{$form->description}}</td>
                 <td>
                     <div class="d-flex justify-content-evenly">
                         <div class="py-1">

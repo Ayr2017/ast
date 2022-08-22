@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Admin\Forms\CreateForm;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Forms\StoreFormRequest;
 use App\Models\Form;
+use App\Models\FormCategory;
 use Illuminate\Http\Request;
 
 class FormsController extends Controller
@@ -22,18 +25,20 @@ class FormsController extends Controller
      */
     public function create()
     {
-        return view('admin.forms.create');
+        $formCategories = FormCategory::all();
+        return view('admin.forms.create', ['formCategories' => $formCategories]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreFormRequest $request
+     * @param CreateForm $createForm
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreFormRequest $request, CreateForm $createForm)
     {
-        dd($request);
+        $validatedRequest = $request->validated();
+        $createForm->execute($validatedRequest);
+        return redirect()->route('admin.forms.index');
     }
 
     /**
