@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\FieldCategoriesController;
+use App\Http\Controllers\Admin\FormCategoriesController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\Admin\FormsController as AdminFormsController;
 use App\Http\Controllers\General\ContactsController;
@@ -29,6 +31,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(function(){
     Route::resource('users', AdminUsersController::class);
     Route::resource('forms', AdminFormsController::class);
+    Route::resource('form-categories', FormCategoriesController::class);
+    Route::resource('field-categories', FieldCategoriesController::class);
 });
 
 Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist')->group(function(){
