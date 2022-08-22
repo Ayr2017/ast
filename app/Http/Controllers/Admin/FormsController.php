@@ -16,7 +16,7 @@ class FormsController extends Controller
      */
     public function index()
     {
-        $forms = Form::withTrashed()->paginate(15);
+        $forms = Form::withTrashed()->with(['fields','creator','category'])->paginate(15);
         return view('admin.forms.index', ['forms' => $forms]);
     }
 

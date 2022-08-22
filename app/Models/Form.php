@@ -13,7 +13,7 @@ class Form extends Model
 
     public function fields()
     {
-//        return $this->hasMany(Field::class);
+        return $this->hasMany(FormField::class);
     }
 
     public function creator()
