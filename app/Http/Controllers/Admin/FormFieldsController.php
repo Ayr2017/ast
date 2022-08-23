@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FormFields\StoreFormFieldRequest;
+use App\Models\FieldCategory;
 use App\Models\FormField;
 use Illuminate\Http\Request;
 
 class FormFieldsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $formFields = FormField::withTrashed()->get();
+        return view('admin.form-fields.index', ['form_fields' => $formFields]);
     }
 
     /**
@@ -41,25 +41,30 @@ class FormFieldsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
-        //
+        $formField = FormField::withTrashed()->find($id);
+        return view('admin.form-fields.show',['form_field' => $formField]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $fieldCategories = FieldCategory::all();
+        $fieldUnits = FormField::UNITS;
+        $formField = FormField::withTrashed()->find($id);
+
+        return view('admin.form-fields.edit',[
+            'form_field' => $formField,
+            'field_categories' => $fieldCategories,
+            'field_units' => $fieldUnits,
+            ]);
     }
 
     /**
@@ -75,13 +80,18 @@ class FormFieldsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        $formField = FormField::find($id);
+        if($formField){
+            $formField->delete();
+        } else {
+            FormField::withTrashed()->find($id)->restore();
+        }
+
+        return redirect()->back();
     }
 }

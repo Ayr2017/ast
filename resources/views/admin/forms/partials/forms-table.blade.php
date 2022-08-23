@@ -36,7 +36,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger">
-                                    <i class="fa {{$form->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
+                                        <i class="fa {{$form->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
                                 </button>
                             </form>
                         </div>

@@ -42,11 +42,24 @@
                             Создано: {{$form->created_at}} - {{$form->creator?->name}}
                         </p>
 
+                        <div class="d-flex">
                         <a href="{{route('admin.forms.edit',['form' => $form])}}" class="btn btn-outline-secondary">
                             <i class="fa-solid fa-pen"></i>
                             Редактировать
                         </a>
-                        {{--@include('admin.forms.partials.show.destroy-form-modal')--}}
+
+                        <form action="{{route('admin.forms.destroy',['form' => $form->id])}}" method="POST" class="mx-1">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-danger">
+                                @if(!$form->deleted_at)
+                                <i class="fa fa-trash"></i> Удалить
+                                @else
+                                    <i class="fa fa-trash-restore"></i> Восстановить
+                                @endif
+                            </button>
+                        </form>
+                        </div>
                     </div>
                 </div>
 

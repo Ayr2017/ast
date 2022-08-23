@@ -50,7 +50,7 @@ class FormsController extends Controller
     public function show($id)
     {
         $fieldCategories = FieldCategory::all();
-        $form = Form::with('fields')->find($id);
+        $form = Form::withTrashed()->with('fields')->find($id);
         $fieldUnits = FormField::UNITS;
 
         return view('admin.forms.show', ['form' => $form, 'field_categories' => $fieldCategories, 'field_units' => $fieldUnits]);
@@ -84,12 +84,12 @@ class FormsController extends Controller
      */
     public function destroy($id)
     {
-        $form = Form::find($id);
+        $form = Form::withTrashed()->find($id);
         if(!$form->deleted_at) {
             $form->delete();
-            return redirect()->route('specialist.forms.index');
+            return redirect()->back()->with(['form' => $form]);
         }
-        $form = Form::withTrashed()->find($id)->restore();
-        return redirect()->route('specialist.forms.show',['form' => $form]);
+        $form->restore();
+        return redirect()->back()->with(['form' => $form]);
     }
 }

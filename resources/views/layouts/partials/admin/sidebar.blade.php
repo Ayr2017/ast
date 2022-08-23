@@ -8,7 +8,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link {{request()->routeIs('admin.form-fields.*') ? ' border-start border-5 border-primary active' : ''}}" href="{{route('admin.form-fields.index')}}" >
                     <i class="fa-solid fa-align-justify"></i>
                     Поля
                 </a>
