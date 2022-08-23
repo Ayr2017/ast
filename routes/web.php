@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\FieldCategoriesController;
 use App\Http\Controllers\Admin\FormCategoriesController;
+use App\Http\Controllers\Admin\FormFieldsController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\Admin\FormsController as AdminFormsController;
 use App\Http\Controllers\General\ContactsController;
@@ -32,6 +33,7 @@ Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(functi
     Route::resource('users', AdminUsersController::class);
     Route::resource('forms', AdminFormsController::class);
     Route::resource('form-categories', FormCategoriesController::class);
+    Route::resource('form-fields', FormFieldsController::class);
     Route::resource('field-categories', FieldCategoriesController::class);
 });
 

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Admin\Forms\CreateForm;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Forms\StoreFormRequest;
+use App\Models\FieldCategory;
 use App\Models\Form;
 use App\Models\FormCategory;
+use App\Models\FormField;
 use Illuminate\Http\Request;
 
 class FormsController extends Controller
@@ -47,8 +49,11 @@ class FormsController extends Controller
      */
     public function show($id)
     {
-        $form = Form::find($id);
-        return view('admin.forms.show', ['form' => $form]);
+        $fieldCategories = FieldCategory::all();
+        $form = Form::with('fields')->find($id);
+        $fieldUnits = FormField::UNITS;
+
+        return view('admin.forms.show', ['form' => $form, 'field_categories' => $fieldCategories, 'field_units' => $fieldUnits]);
     }
 
     /**

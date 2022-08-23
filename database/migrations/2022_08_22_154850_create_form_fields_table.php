@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('type');
+            $table->string('unit');
+            $table->foreignId('form_id');
             $table->foreignId('field_category_id')
                 ->references('id')->on('field_categories');
             $table->json('select_fields')->nullable();

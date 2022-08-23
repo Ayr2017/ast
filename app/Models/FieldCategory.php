@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FieldCategory extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
     protected $guarded = ['id'];
-    protected $table = ['field_categories'];
+    protected $table = 'field_categories';
+
 }

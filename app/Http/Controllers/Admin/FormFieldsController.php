@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\FormFields\StoreFormFieldRequest;
+use App\Models\FormField;
 use Illuminate\Http\Request;
 
 class FormFieldsController extends Controller
@@ -28,14 +30,14 @@ class FormFieldsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreFormFieldRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreFormFieldRequest $request)
     {
-        //
+        $validatedRequest = $request->validated();
+        $formField = FormField::firstOrCreate(['name' => $validatedRequest['name']], $validatedRequest);
+        return redirect()->back();
     }
 
     /**
