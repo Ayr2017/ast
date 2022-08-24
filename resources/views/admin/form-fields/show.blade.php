@@ -86,15 +86,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="card w-100 my-1">
-                    <div class="card-body">
-                        <div class="accordion" id="accordionFormFields">
-{{--                            @include('admin.forms.partials.show.form-fields-accordion-item')--}}
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

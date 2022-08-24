@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Admin\FormFields\UpdateFormField;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FormFields\StoreFormFieldRequest;
+use App\Http\Requests\Admin\FormFields\UpdateFormFieldRequest;
 use App\Models\FieldCategory;
 use App\Models\FormField;
 use Illuminate\Http\Request;
@@ -68,15 +70,17 @@ class FormFieldsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateFormFieldRequest $request
+     * @param $id
+     * @param UpdateFormField $updateFormField
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateFormFieldRequest $request, $id, UpdateFormField $updateFormField)
     {
-        //
+        $validatedRequest = $request->validated();
+        $formField = $updateFormField->execute($validatedRequest, $id);
+        return redirect()->route('admin.form-fields.show',['form_field' => $formField]);
+
     }
 
     /**

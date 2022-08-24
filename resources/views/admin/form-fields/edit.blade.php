@@ -24,8 +24,9 @@
 
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
-                <form action="{{route('admin.form-fields.store')}}" method="POST">
+                <form action="{{route('admin.form-fields.update',['form_field' => $form_field])}}" method="POST">
                     @csrf
+                    @method('PATCH')
                     <input type="hidden" name="form_id" value="{{$form_field->form_id}}">
                     <div class="mb-3">
                         <label for="name" class="form-label">Название</label>
@@ -78,7 +79,7 @@
                         <select class="form-select mb-3" aria-label=".form-select-lg example" name="operator_a" id="operator_a">
                             <option value="sum" {{(old('operator_a') ?? $form_field->operator_a) == "sum" ? 'selected' : ''}}>Сумма</option>
                             <option value="avg" {{(old('operator_a') ?? $form_field->operator_a) == "avg" ? 'selected' : ''}}>Среднее</option>
-                            <option value="join" {{(old('operator_a') ?? $form_field->operator_a) == "join" ? 'selected' : ''}}>Склейка</option>
+                            <option value="join" {{(old('operator_a') ?? $form_field->operator_a) == "join" ? 'selected' : ''}}>Объединение</option>
                             <option value="count" {{(old('operator_a') ?? $form_field->operator_a) == "count" ? 'selected' : ''}}>Количество</option>
                         </select>
                         <div id="operator_aHelp" class="form-text">We'll never share your email with anyone else.</div>
@@ -89,7 +90,7 @@
                         <select class="form-select mb-3" aria-label=".form-select-lg example" name="operator_b" id="operator_b">
                             <option value="sum" {{(old('operator_b')?? $form_field->operator_b) == "sum" ? 'selected' : ''}}>Сумма</option>
                             <option value="avg" {{(old('operator_b')?? $form_field->operator_b) == "avg" ? 'selected' : ''}}>Среднее</option>
-                            <option value="join" {{(old('operator_b')?? $form_field->operator_b) == "join" ? 'selected' : ''}}>Склейка</option>
+                            <option value="join" {{(old('operator_b')?? $form_field->operator_b) == "join" ? 'selected' : ''}}>Объединение</option>
                             <option value="count" {{(old('operator_b')?? $form_field->operator_b) == "count" ? 'selected' : ''}}>Количество</option>
                         </select>
                         <div id="operator_bHelp" class="form-text">We'll never share your email with anyone else.</div>
@@ -98,14 +99,14 @@
                     <div class="mb-3">
                         <label for="operator_c" class="form-label">Оператор C</label>
                         <select class="form-select mb-3" aria-label=".form-select-lg example" name="operator_c" id="operator_c">
-                            <option value="sum" {{(old('operator_b')?? $form_field->operator_c) == "sum" ? 'selected' : ''}}>Сумма</option>
-                            <option value="avg" {{(old('operator_b')?? $form_field->operator_c) == "avg" ? 'selected' : ''}}>Среднее</option>
-                            <option value="join" {{(old('operator_b')?? $form_field->operator_c) == "join" ? 'selected' : ''}}>Склейка</option>
-                            <option value="count" {{(old('operator_b')?? $form_field->operator_c) == "count" ? 'selected' : ''}}>Количество</option>
+                            <option value="sum" {{(old('operator_c')?? $form_field->operator_c) == "sum" ? 'selected' : ''}}>Сумма</option>
+                            <option value="avg" {{(old('operator_c')?? $form_field->operator_c) == "avg" ? 'selected' : ''}}>Среднее</option>
+                            <option value="join" {{(old('operator_c')?? $form_field->operator_c) == "join" ? 'selected' : ''}}>Объединение</option>
+                            <option value="count" {{(old('operator_c')?? $form_field->operator_c) == "count" ? 'selected' : ''}}>Количество</option>
                         </select>
                         <div id="operator_cHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary">Обновить</button>
                 </form>
 
             </div>
