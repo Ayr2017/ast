@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Admin\Forms\CreateForm;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Forms\StoreFormRequest;
+use App\Http\Requests\Admin\Forms\UpdateFormRequest;
 use App\Models\FieldCategory;
 use App\Models\Form;
 use App\Models\FormCategory;
@@ -52,7 +53,6 @@ class FormsController extends Controller
         $fieldCategories = FieldCategory::all();
         $form = Form::withTrashed()->with('fields')->find($id);
         $fieldUnits = FormField::UNITS;
-
         return view('admin.forms.show', ['form' => $form, 'field_categories' => $fieldCategories, 'field_units' => $fieldUnits]);
     }
 
@@ -62,20 +62,22 @@ class FormsController extends Controller
      */
     public function edit($id)
     {
-        $form = Form::find($id);
-        return view('admin.forms.edit', ['form' => $form]);
+        $form = Form::withTrashed()->find($id);
+        $formCategories = FormCategory::all();
+        return view('admin.forms.edit',['form' => $form, 'form_categories' => $formCategories]);
     }
 
     /**
-     * @param Request $request
+     * @param UpdateFormRequest $request
      * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateFormRequest $request, $id)
     {
-        dd($request);
+        $validatedRequest = $request->validated();
         $form = Form::find($id);
-        return view('admin.forms.show', ['form' => $form]);
+        $form->update($validatedRequest);
+        return redirect()->route('admin.forms.show', ['form' => $form]);
     }
 
     /**
