@@ -45,14 +45,13 @@ class FarmsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
         $farm = Farm::withTrashed()->find($id);
+        session()->put('farm_id', $id);
         return view('specialist.farms.show',['farm' => $farm]);
     }
 
@@ -85,12 +84,12 @@ class FarmsController extends Controller
      */
     public function destroy($id)
     {
-        $farm = Farm::find($id);
-        if($farm) {
+        $farm = Farm::withTrashed()->find($id);
+        if(!$farm->deleted_at) {
             $farm->delete();
             return redirect()->route('specialist.farms.index');
         }
-        $farm = Farm::withTrashed()->find($id)->restore();
-        return redirect()->route('specialist.farms.show',['farm' => $farm]);
+        $farm->restore();
+        return redirect()->route('specialist.farms.index');
     }
 }

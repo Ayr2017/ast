@@ -3,7 +3,15 @@
 @section('content')
     <div class="container py-4">
         <div class="row">
-            <h3 class="h3"><span class="text-black-50 d-none d-sm-inline d-lg-inline d-md-inline">Ферма</span> {{$farm->name}}</h3>
+            <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
+                <div class="d-flex justify-content-between">
+                    <h3 class="h3"><span
+                            class="text-black-50 d-none d-sm-inline d-lg-inline d-md-inline">Ферма</span> {{$farm->name}}
+                    </h3>
+                    <a class="btn btn-link" href="{{route('specialist.reports.create')}}">Подать отчёт</a>
+                </div>
+
+            </div>
         </div>
         <div class="row">
             <div class="col">

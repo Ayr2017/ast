@@ -4,6 +4,7 @@
         <tr>
             <th>Id</th>
             <th>Название</th>
+            <th>Принадлежит форме</th>
             <th>Е.и.</th>
             <th>Тип</th>
             <th>Категория</th>
@@ -15,6 +16,7 @@
             <tr class="">
                 <td>{{$field->id}}</td>
                 <td>{{$field->name}}</td>
+                <td>{{$field->form->name}} <a href="{{route('admin.forms.show',['form'=>$field->form->id])}}">(id: {{$field->form->id}})</a></td>
                 <td>{{$field->unit}}</td>
                 <td>{{$field->type}}</td>
                 <td>{{$field->category->name}}</td>
