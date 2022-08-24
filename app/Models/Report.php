@@ -10,6 +10,10 @@ class Report extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $casts =[
+        'data' => 'array',
+    ];
+
     public function farm()
     {
         return $this->belongsTo(Farm::class);
