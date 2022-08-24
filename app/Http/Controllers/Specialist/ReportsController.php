@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Specialist;
 
 use App\Http\Controllers\Controller;
 use App\Models\Farm;
+use App\Models\Form;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -15,7 +16,8 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $reports = Report::withTrashed()->get();
+        $reports = Report::withTrashed()->paginate(15);
+
         return view('specialist.reports.index',['reports' => $reports]);
     }
 
@@ -29,7 +31,8 @@ class ReportsController extends Controller
         if($farmId){
             $farm = Farm::find($farmId) ?? null;
         }
-        return view('specialist.reports.create',['farm' => $farm]);
+        $forms = Form::all();
+        return view('specialist.reports.create',['farm' => $farm, 'forms' => $forms]);
     }
 
     /**

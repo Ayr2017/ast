@@ -21,16 +21,28 @@
                         @if($farm)
                             <div class="mb-3">
                                 <label for="inn" class="form-label fw-bolder">Ферма</label>
-                                <input type="text" disabled="true" readonly class="form-control" name="farm_name" value="{{old('farm_name') ?? $farm->name}}">
+                                <input type="text" disabled="true" readonly class="form-control" name="farm_name"
+                                       value="{{old('farm_name') ?? $farm->name}}">
                             </div>
                             <input type="hidden" name="farm_id" id="farm_id" value="{{$farm->id}}">
                         @else
-                            <div class="mb-3">
-                                <label for="inn" class="form-label fw-bolder">ИНН</label>
-                                <input type="text" class="form-control" id="inn" name="inn" value="{{old('inn') ?? $organization?->inn}}" required>
-                                <div id="innHelp" class="form-text">We'll never share your email with anyone else.</div>
-                            </div>
+                            <livewire:specialist.report.create.select-organization-and-farm />
                         @endif
+                        <div class="mb-3">
+                            <label for="inn" class="form-label fw-bolder">Форма</label>
+                            <select class="form-select" id="form_id" name="form_id">
+                                @foreach($forms as $form)
+                                    <option value="{{$form->id}} {{old('form_id') == $form->id ? 'selected' : ''}}">{{$form->name}}</option>
+                                @endforeach
+                            </select>
+                            <div id="innHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inn" class="form-label fw-bolder">Организация</label>
+                            <input type="date" class="form-control" id="date" name="date"
+                                   value="{{old('date') ?? date("Y-m-d")}}" required>
+                            <div id="innHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
                         @include('specialist.reports.partials.create-report-form')
                         <button type="submit" class="btn btn-primary">Создать</button>
                     </div>
