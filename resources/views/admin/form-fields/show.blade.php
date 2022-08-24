@@ -37,6 +37,11 @@
                             <h5 class="card-title">{{$form_field?->typeName}}</h5>
                         </div>
 
+                        <div class="p-2 mb-2 bg-info bg-opacity-10">
+                            <h6 class="card-subtitle mb-2 text-muted">Единица измерения</h6>
+                            <h5 class="card-title">{{$form_field?->unit}}</h5>
+                        </div>
+
                         @if(in_array($form_field?->type, ['select', 'checkbox', 'radio'] ))
                             <div class="p-2 mb-2 bg-info bg-opacity-10">
                                 <h6 class="card-subtitle mb-2 text-muted">Значения для типа {{$form_field?->typeName}} </h6>
@@ -46,19 +51,19 @@
 
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
                             <h6 class="card-subtitle mb-2 text-muted">Оператор А</h6>
-                            <h5 class="card-title">{{$form_field?->operator_a}}</h5>
+                            <h5 class="card-title">{{$form_field?->translatedOperatorA}}</h5>
                         </div>
 
 
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
                             <h6 class="card-subtitle mb-2 text-muted">Оператор B</h6>
-                            <h5 class="card-title">{{$form_field?->operator_b}}</h5>
+                            <h5 class="card-title">{{$form_field?->translatedOperatorB}}</h5>
                         </div>
 
 
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
                             <h6 class="card-subtitle mb-2 text-muted">Оператор C</h6>
-                            <h5 class="card-title">{{$form_field?->operator_c}}</h5>
+                            <h5 class="card-title">{{$form_field?->translatedOperatorC}}</h5>
                         </div>
 
 

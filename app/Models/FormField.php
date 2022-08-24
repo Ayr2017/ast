@@ -43,15 +43,15 @@ class FormField extends Model
         return $this->belongsTo(FieldCategory::class, 'field_category_id', 'id');
     }
 
-    public function getOperatorAAttribute():string
+    public function getTranslatedOperatorAAttribute():string
     {
         return $this->getTranslatedOperatorName($this->attributes['operator_a']);
     }
-    public function getOperatorBAttribute():string
+    public function getTranslatedOperatorBAttribute():string
     {
         return $this->getTranslatedOperatorName($this->attributes['operator_b']);
     }
-    public function getOperatorCAttribute():string
+    public function getTranslatedOperatorCAttribute():string
     {
         return $this->getTranslatedOperatorName($this->attributes['operator_c']);
     }
