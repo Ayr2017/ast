@@ -9,6 +9,9 @@ use Livewire\Component;
 
 class SelectOrganizationAndFarm extends Component
 {
+    /*
+     * TODO::удалить весь компонент
+     */
     public \Illuminate\Database\Eloquent\Collection $organizations;
     public mixed $farms;
     public mixed $forms;
