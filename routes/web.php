@@ -41,6 +41,7 @@ Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(functi
 Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist')->group(function(){
     Route::resource('organizations', OrganizationsController::class);
     Route::resource('farms', FarmsController::class);
+    Route::get('reports/select', [ReportsController::class, 'select']);
     Route::resource('reports', ReportsController::class);
 });
 

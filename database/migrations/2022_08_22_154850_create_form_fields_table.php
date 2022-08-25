@@ -25,6 +25,10 @@ return new class extends Migration
             $table->string('operator_a')->default('sum');
             $table->string('operator_b')->default('sum');
             $table->string('operator_c')->default('sum');
+            $table->boolean('required')->default(0);
+            $table->float('min')->default(0);
+            $table->float('max')->default(10000);
+            $table->float('step')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

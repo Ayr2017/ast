@@ -7,34 +7,56 @@ use App\Models\Form;
 use App\Models\Organization;
 use Livewire\Component;
 
-class SelectOrganizationAndFarm extends Component
+class SelectForm extends Component
 {
-    public \Illuminate\Database\Eloquent\Collection $organizations;
+    public mixed $formId;
+    public mixed $farmId;
+    public mixed $organizationId = null;
+    public mixed $form;
+    public mixed $organization = null;
+    public mixed $farm;
+    public mixed $organizations;
+    public bool  $noFarms = false;
+
+    public string  $organizationSearch = '';
+    public string  $farmSearch = '';
+
     public mixed $farms;
     public mixed $forms;
-    public mixed $organizationSearch = '';
-    public mixed $farmSearch;
-    public $organizationId = null;
-    public $farmId = null;
-    public int $formId;
-    public bool $noFarms;
+
+    public mixed $formFields;
 
     public function __construct()
     {
+        $this->formId = session()->get('form_id') ?? null;
+        $this->farmId = session()->get('farm_id') ?? null;
         $this->organizations = Organization::all();
-        $this->farms = $this->organizations?->first()?->farms;
         $this->forms = Form::all();
-        $this->formId = $this->forms->first()->id;
-        $this->noFarms = true;
+
+        if($this->farmId){
+            $this->farm = Farm::find($this->farmId) ?? null;
+            $this->organization = $this->farm->organization;
+            $this->organizationId = $this->organization?->id;
+            $this->farms = $this->organization->farms;
+        } else {
+            $this->farms = $this->organization?->farms;
+        }
+        if($this->formId){
+            $this->form = Form::find($this->formId) ?? null;
+            $this->formFields = $this->form?->fields ?? [];
+        }
     }
 
     public function mount()
     {
-        $this->organizations = Organization::all();
-        $this->forms = Form::all();
-        $this->formId = $this->forms->first()->id;
-        session()->put('form_id', $this->formId);
-        $this->farms = $this->organizations?->first()?->farms;
+        $this->farm = Farm::find($this->farmId) ?? null;
+        $this->form = Form::find($this->formId) ?? null;
+        $this->organization = $this->form?->organization?->id;
+    }
+
+    public function render()
+    {
+        return view('livewire.specialist.report.create.select-form');
     }
 
     public function hydrate()
@@ -60,12 +82,8 @@ class SelectOrganizationAndFarm extends Component
 
     public function updatedFormId()
     {
-        session()->put('form_id', $this->formId);
-    }
-
-    public function render()
-    {
-        return view('livewire.specialist.report.create.select-organization-and-farm');
+        $this->form = Form::find($this->formId);
+        $this->formFields = $this->form?->fields ?? [];
     }
 
     private function getFarms()

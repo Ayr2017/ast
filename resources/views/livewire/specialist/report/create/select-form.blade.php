@@ -4,10 +4,11 @@
         <input class="form-control" list="organizations" id="organizationsDataList" placeholder="Type to search..." wire:model="organizationSearch">
         <datalist id="organizations">
             @foreach($organizations as $organization)
-            <option value="{{$organization?->name}}">
+                <option value="{{$organization?->name}}">
             @endforeach
         </datalist>
         <input type="hidden" name="organization_id" value="{{$organizationId}}">
+        {{$organizationId}}
     </div>
 
     <div class="mb-3">
@@ -15,10 +16,11 @@
         <input class="form-control" {{($organizationId && !$noFarms) ? '' : 'disabled'}} list="farms" id="farmsDataList"  name="farmsDataList" placeholder="Type to search..." wire:model="farmSearch">
         <datalist id="farms">
             @foreach($farms as $farm)
-            <option value="{{$farm?->name}}">
+                <option value="{{$farm?->name}}">
             @endforeach
         </datalist>
         <input type="hidden" name="farm_id" value="{{$farmId}}">
+        {{$farmId}}
     </div>
 
     <div class="mb-3">
@@ -28,12 +30,20 @@
                 <option
                     value="{{$form->id}}" {{old('form_id') == $form->id ? 'selected' : ''}}>{{$form->name}}</option>
             @endforeach
-                <option
-                    value="2" >test</option>
+            <option
+                value="2" >test</option>
         </select>
         <div id="innHelp" class="form-text">We'll never share your email with anyone else.</div>
+        {{$formId}}
     </div>
 
-    <button type="submit" class="btn btn-primary {{($farmId) ? '' :'disabled' }}" >Далее</button>
+    @foreach($formFields as $formField)
+        @switch($formField->type)
+            @case('number')
+                <livewire:specialist.reports.create.partials.number-form-item />
+            @break
+        @endswitch
+    @endforeach
 
+    @dump($formFields)
 </div>

@@ -22,18 +22,21 @@ class ReportsController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function create()
     {
-        $farm = null;
-        $farmId = Session::get('farm_id') ?? null;
-        if($farmId){
-            $farm = Farm::find($farmId) ?? null;
-        }
-        $forms = Form::all();
-        return view('specialist.reports.create',['farm' => $farm, 'forms' => $forms]);
+        $farmId = Session::get('farm_id') ?? 0;
+        $formId = Session::get('form_id') ?? 0;
+        $form = Form::with('fields')->find($formId) ?? null;
+        $farm = Farm::with('organization')->find($farmId) ?? null;
+
+//        if(!$farm || !$form){
+//            return redirect()->back()->withErrors(['message' => "Не выбрана ферма или форма для заполнения"]);
+//        }
+        return view('specialist.reports.create',['farm' => $farm, 'form' => $form]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -88,5 +91,11 @@ class ReportsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function select()
+    {
+        $forms = Form::all();
+        return view('specialist.reports.select',['forms' => $forms]);
     }
 }
