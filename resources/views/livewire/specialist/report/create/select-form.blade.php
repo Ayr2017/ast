@@ -40,7 +40,7 @@
     @foreach($formFields as $formField)
         @switch($formField->type)
             @case('number')
-                <livewire:specialist.reports.create.partials.number-form-item />
+                <livewire:specialist.report.create.partials.number-form-item :formField="$formField"/>
             @break
         @endswitch
     @endforeach

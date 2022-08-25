@@ -29,6 +29,8 @@ return new class extends Migration
             $table->float('min')->default(0);
             $table->float('max')->default(10000);
             $table->float('step')->default(1);
+            $table->string('placeholder')->nullable();
+            $table->string('hint')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
