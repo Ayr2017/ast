@@ -32,7 +32,9 @@ class FormFieldsController extends Controller
             return redirect()->route('admin.forms.index')->withErrors(['message' => 'Сперва нужно создать хотьб одну форму']);
         }
 
-        return view('admin.form-fields.create');
+        $field_categories = FieldCategory::all();
+        $field_units = FormField::UNITS;
+        return view('admin.form-fields.create', ['field_categories' => $field_categories, 'field_units' => $field_units]);
     }
 
     /**
