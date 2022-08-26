@@ -7,12 +7,12 @@
                 <input class="form-control" list="organizations" id="organizationsDataList"
                        placeholder="Type to search..." wire:model="organizationSearch">
                 <datalist id="organizations">
-                    @foreach($organizations as $organization)
-                        <option value="{{$organization?->name}}">
-                    @endforeach
+                    {{--                    @foreach($organizations as $organization)--}}
+                    {{--                        <option value="{{$organization?->name}}">--}}
+                    {{--                    @endforeach--}}
                 </datalist>
-                <input type="hidden" name="organization_id" value="{{$organizationId}}">
-                {{$organizationId}}
+                {{--            <input type="hidden" name="organization_id" value="{{$organizationId}}">--}}
+                {{--            {{$organizationId}}--}}
             </div>
 
             <div class="mb-3">
@@ -29,7 +29,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="inn" class="form-label fw-bolder">Форма</label>
+                <label for="form_id" class="form-label fw-bolder">Форма</label>
                 <select class="form-select" id="form_id" name="form_id" wire:model="formId">
                     @foreach($forms as $form)
                         <option
@@ -49,12 +49,17 @@
                 <div id="dateHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
 
-            @foreach($formFields as $formField)
-                @switch($formField->type)
-                    @case('number')
-                        <livewire:specialist.report.create.partials.number-form-item :formField="$formField"/>
-                        @break
-                @endswitch
+            @foreach($formFields as $key =>$formFieldGroup)
+                <h6 class="h6 fw-bold bg-secondary bg-opacity-10 p-2">{{$fieldCategories[$loop->iteration]->name}}</h6>
+                <div class="alert" style="background-color: {{$colors[$loop->iteration]}}">
+                    @foreach($formFieldGroup as $formField)
+                        @switch($formField->type)
+                            @case('number')
+                                <livewire:specialist.report.create.partials.number-form-item :formField="$formField"/>
+                                @break
+                        @endswitch
+                    @endforeach
+                </div>
             @endforeach
             <button type="submit" class="btn btn-primary">Создать</button>
         </div>

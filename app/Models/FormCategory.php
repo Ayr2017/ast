@@ -10,4 +10,5 @@ class FormCategory extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $table = 'form_categories';
+
 }

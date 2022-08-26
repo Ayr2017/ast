@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Specialist\Report\Create;
 
 use App\Models\Farm;
+use App\Models\FieldCategory;
 use App\Models\Form;
+use App\Models\FormCategory;
 use App\Models\Organization;
 use Livewire\Component;
 
@@ -25,14 +27,23 @@ class SelectForm extends Component
     public mixed $forms;
 
     public mixed $formFields;
+    /**
+     * @var string[]
+     */
+    public array $colors;
+    public $fieldCategories;
 
-    public function __construct()
+    public function __construct($fieldCategories)
     {
         $this->formId = session()->get('form_id') ?? Form::first()->id;
         $this->farmId = session()->get('farm_id') ?? null;
         $this->organizations = Organization::all();
         $this->forms = Form::all();
         $this->farms = Farm::with('organization')->get();
+        $this->colors = FieldCategory::CATEGORY_COLORS;
+
+        $this->fieldCategories = $fieldCategories;
+
 
         if(!$this->farmId){
             $this->farm = Farm::with('organization')->first();
@@ -48,8 +59,8 @@ class SelectForm extends Component
         $this->farmSearch = $this->farm->name;
 
         if($this->formId){
-            $this->form = Form::with('fields')->find($this->formId) ?? null;
-            $this->formFields = $this->form->fields;
+            $this->form = Form::with('fields.category')->find($this->formId) ?? null;
+            $this->formFields = collect($this->form->fields?->groupBy('field_category_id'));
         }
     }
 
@@ -88,8 +99,8 @@ class SelectForm extends Component
 
     public function updatedFormId()
     {
-        $this->form = Form::find($this->formId);
-        $this->formFields = $this->form?->fields ?? [];
+        $this->form = Form::with(['fields.category'])->find($this->formId);
+        $this->formFields = collect($this->form?->fields?->groupBy('field_category_id')) ?? [];
     }
 
     private function getFarms()

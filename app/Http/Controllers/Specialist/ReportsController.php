@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Specialist;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Specialist\Report\CreateReportRequest;
 use App\Models\Farm;
+use App\Models\FieldCategory;
 use App\Models\Form;
+use App\Models\FormField;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -28,15 +30,8 @@ class ReportsController extends Controller
      */
     public function create()
     {
-        $farmId = Session::get('farm_id') ?? 0;
-        $formId = Session::get('form_id') ?? 0;
-        $form = Form::with('fields')->find($formId) ?? null;
-        $farm = Farm::with('organization')->find($farmId) ?? null;
-
-//        if(!$farm || !$form){
-//            return redirect()->back()->withErrors(['message' => "Не выбрана ферма или форма для заполнения"]);
-//        }
-        return view('specialist.reports.create',['farm' => $farm, 'form' => $form]);
+        $fieldCategories = FieldCategory::all();
+        return view('specialist.reports.create', ['fieldCategories' => $fieldCategories]);
     }
 
 
@@ -62,8 +57,9 @@ class ReportsController extends Controller
      */
     public function show($id)
     {
-        $report = Report::withTrashed()->find($id);
-        return view('specialist.reports.show',['report' => $report]);
+        $report = Report::with(['organization.region','organization.district','farm.region','farm.district'])->withTrashed()->find($id);
+        $formFields = FormField::where('form_id', $report->form->id)->get();
+        return view('specialist.reports.show',['report' => $report, 'formFields' => $formFields]);
     }
 
     /**
