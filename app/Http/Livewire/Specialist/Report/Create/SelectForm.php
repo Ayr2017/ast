@@ -28,22 +28,28 @@ class SelectForm extends Component
 
     public function __construct()
     {
-        $this->formId = session()->get('form_id') ?? null;
+        $this->formId = session()->get('form_id') ?? Form::first()->id;
         $this->farmId = session()->get('farm_id') ?? null;
         $this->organizations = Organization::all();
         $this->forms = Form::all();
+        $this->farms = Farm::with('organization')->get();
 
-        if($this->farmId){
-            $this->farm = Farm::find($this->farmId) ?? null;
-            $this->organization = $this->farm->organization;
-            $this->organizationId = $this->organization?->id;
-            $this->farms = $this->organization->farms;
+        if(!$this->farmId){
+            $this->farm = Farm::with('organization')->first();
+            $this->farmId = $this->farm->id;
         } else {
-            $this->farms = $this->organization?->farms;
+            $this->farm = Farm::with('organization')->find($this->farmId);
         }
+
+        $this->organization = $this->farm->organization;
+        $this->organizationId = $this->organization->id;
+
+        $this->organizationSearch = $this->organization->name;
+        $this->farmSearch = $this->farm->name;
+
         if($this->formId){
-            $this->form = Form::find($this->formId) ?? null;
-            $this->formFields = $this->form?->fields ?? [];
+            $this->form = Form::with('fields')->find($this->formId) ?? null;
+            $this->formFields = $this->form->fields;
         }
     }
 

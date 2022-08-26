@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\Admin\FormsController as AdminFormsController;
 use App\Http\Controllers\General\ContactsController;
 use App\Http\Controllers\Specialist\FarmsController;
+use App\Http\Controllers\Specialist\FormsController;
 use App\Http\Controllers\Specialist\OrganizationsController;
 use App\Http\Controllers\Specialist\ReportsController;
 use Illuminate\Support\Facades\Route;
@@ -41,8 +42,8 @@ Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(functi
 Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist')->group(function(){
     Route::resource('organizations', OrganizationsController::class);
     Route::resource('farms', FarmsController::class);
-    Route::get('reports/select', [ReportsController::class, 'select']);
     Route::resource('reports', ReportsController::class);
+    Route::resource('forms', FormsController::class);
 });
 
 Route::prefix('general')->name('general.')->middleware('role:admin|specialist|super-admin')->group(function(){

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Specialist;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Specialist\Report\CreateReportRequest;
 use App\Models\Farm;
 use App\Models\Form;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class ReportsController extends Controller
 {
@@ -44,9 +46,14 @@ class ReportsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateReportRequest $request)
     {
-        //
+        $validatedRequest = $request->validated();
+        $validatedRequest['uuid'] = Str::uuid();
+        $validatedRequest['user_id'] = auth()->id();
+        $report = Report::create($validatedRequest);
+
+        return redirect()->route('specialist.reports.index');
     }
 
     /**

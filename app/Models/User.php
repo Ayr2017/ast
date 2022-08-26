@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -55,5 +56,12 @@ class User extends Authenticatable
         }else{
             $this->attributes['deleted_at'] = null;
         }
+    }
+
+    public function fullName() : Attribute
+    {
+        return new Attribute(
+            get: fn() => "$this->surname $this->name",
+        );
     }
 }

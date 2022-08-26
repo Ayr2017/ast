@@ -21,13 +21,13 @@
                     <a href="{{route('specialist.forms.show',['form' => $report->form->id])}}">{{$report?->form?->name}}</a>
                 </td>
                 <td>
-                    <a href="{{route('specialist.farms.show',['form' => $report->farm->id])}}">{{$report?->farm?->name}}</a>
+                    <a href="{{route('specialist.farms.show',['farm' => $report->farm->id])}}">{{$report?->farm?->name}}</a>
                 </td>
                 <td>
-                    <a href="{{route('specialist.organizations.show',['form' => $report->farm->organization->id])}}">{{$report?->farm?->organization?->name}}</a>
+                    <a href="{{route('specialist.organizations.show',['organization' => $report->organization->id])}}">{{$report?->organization?->name}}</a>
                 </td>
                 <td>{{$report?->creator->fullName}}</td>
-                <td>{{$report?->data}}</td>
+                <td><a href="{{route('specialist.reports.show', ['report' => $report])}}">Данные</a></td>
                 <td>{{$report?->date}}</td>
                 <td>{{$report?->created_at}}</td>
                 <td>
