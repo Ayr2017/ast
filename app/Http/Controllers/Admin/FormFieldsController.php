@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FormFields\StoreFormFieldRequest;
 use App\Http\Requests\Admin\FormFields\UpdateFormFieldRequest;
 use App\Models\FieldCategory;
+use App\Models\Form;
 use App\Models\FormField;
 use Illuminate\Http\Request;
 
@@ -22,13 +23,16 @@ class FormFieldsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function create()
     {
-        //
+        $form = Form::first();
+        if(!isset($form)){
+            return redirect()->route('admin.forms.index')->withErrors(['message' => 'Сперва нужно создать хотьб одну форму']);
+        }
+
+        return view('admin.form-fields.create');
     }
 
     /**
