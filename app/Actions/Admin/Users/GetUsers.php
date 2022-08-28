@@ -3,6 +3,7 @@
 namespace App\Actions\Admin\Users;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class GetUsers
@@ -26,10 +27,9 @@ class GetUsers
 
         if($user->hasRole('super-admin')){
             return $users->where('id', '!=', $user->id);
-        } if($user->hasRole('admin')){
-            return $users->whereHas('roles', function($query){
-                return $query->whereNotIn('name', ['admin','super-admin']);
-            });
+        } elseif($user->hasRole('admin')){
+//            TODO: доделать это место. Выводить только тех кто не админ и суперадмин.
+            return User::role('specialist')->get();
         }
     }
 }
