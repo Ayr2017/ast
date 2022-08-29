@@ -30,7 +30,7 @@ class GetUsers
         } elseif($user->hasRole('admin')){
 //            TODO: доделать это место. Выводить только тех кто не админ и суперадмин.
             $newUsers =  User::doesntHave('roles')->get();
-            return  User::doesntHave('roles')->get()->merge($newUsers);
+            return  User::role('specialist')->get()->merge($newUsers);
         }
     }
 }
