@@ -10,6 +10,7 @@ use App\Http\Controllers\Specialist\FarmsController;
 use App\Http\Controllers\Specialist\FormsController;
 use App\Http\Controllers\Specialist\OrganizationsController;
 use App\Http\Controllers\Specialist\ReportsController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/test', function(){
+    return bcrypt('aleksey.eldashev@tatar.ru');
 });
 
 Auth::routes();
@@ -49,3 +54,5 @@ Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist'
 Route::prefix('general')->name('general.')->middleware('role:admin|specialist|super-admin')->group(function(){
     Route::resource('contacts', ContactsController::class);
 });
+
+
