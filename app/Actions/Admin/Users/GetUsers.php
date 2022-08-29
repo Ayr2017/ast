@@ -11,17 +11,17 @@ class GetUsers
     public function execute($request)
     {
         if($request->select == 'withoutTrashed' ) {
-            $users = User::with('roles');
+            $users = User::with('roles')->get();
         } elseif($request->select == 'trashed' ){
-            $users = User::onlyTrashed()->with('roles');
+            $users = User::onlyTrashed()->with('roles')->get();
         } else {
-            $users = User::withTrashed()->with('roles');
+            $users = User::withTrashed()->with('roles')->get();
         }
 
         return $this->filterUsers($users);
     }
 
-    private function filterUsers( $users)
+    private function filterUsers(Collection $users)
     {
         $user = auth()->user();
 
@@ -29,8 +29,9 @@ class GetUsers
             return $users->where('id', '!=', $user->id)->get();
         } elseif($user->hasRole('admin')){
 //            TODO: доделать это место. Выводить только тех кто не админ и суперадмин.
-            $newUsers =  $users->doesntHave('roles')->get();
-            return  $users->role('specialist')->get()->merge($newUsers);
+            return $users->filter(function($item){
+                return !$item->hasRole('admin');
+            });
         }
     }
 }
