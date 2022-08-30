@@ -35,30 +35,6 @@
                         </tr>
                         </tbody>
                     </table>
-{{--                    @if($farm->name)--}}
-{{--                        <h5 class="card-title"><span--}}
-{{--                                class="card-subtitle text-muted">Название: </span> <a href="{{route('specialist.farms.show',['farm' => $farm->id])}}">{{$farm->name}}</a>--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                    @if($farm->region)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Регион: </span> {{$farm->region->name}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                    @if($farm->district)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Район: </span> {{$farm->district->name}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                    @if($farm->address)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Адрес: </span> {{$farm->address}}--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-{{--                        <hr>--}}
-{{--                    @if($farm->contact_name)--}}
-{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Контакт: </span>--}}
-{{--                            {{$farm->contact_name}}  {{$farm->contact_value}} <span class="small">({{$farm->contact_job_title}})</span>--}}
-{{--                        </h5>--}}
-{{--                    @endif--}}
-
                     <a href="{{route('specialist.farms.edit', ['farm' => $farm])}}">Изменить</a>
                     @include('specialist.farms.partials.destroy-modal')
                 </div>
