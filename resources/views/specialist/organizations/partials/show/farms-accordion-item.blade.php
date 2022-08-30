@@ -8,32 +8,56 @@
     </h2>
     <div id="collapseFarms" class="accordion-collapse collapse hide"
          aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
+        <div class="accordion-body p-0">
             @foreach($organization->farms as $farm)
-                <div class="p-2 mb-2 bg-info bg-opacity-10">
-                    @if($farm->name)
-                        <h5 class="card-title"><span
-                                class="card-subtitle text-muted">Название: </span> {{$farm->name}}
-                        </h5>
-                    @endif
-                    @if($farm->region)
-                        <h5 class="card-title"><span class="card-subtitle text-muted">Регион: </span> {{$farm->region->name}}
-                        </h5>
-                    @endif
-                    @if($farm->district)
-                        <h5 class="card-title"><span class="card-subtitle text-muted">Район: </span> {{$farm->district->name}}
-                        </h5>
-                    @endif
-                    @if($farm->address)
-                        <h5 class="card-title"><span class="card-subtitle text-muted">Адрес: </span> {{$farm->address}}
-                        </h5>
-                    @endif
-                        <hr>
-                    @if($farm->contact_name)
-                        <h5 class="card-title"><span class="card-subtitle text-muted">Контакт: </span>
-                            {{$farm->contact_name}}  {{$farm->contact_value}} <span class="small">({{$farm->contact_job_title}})</span>
-                        </h5>
-                    @endif
+                <div class="p-2 mb-2 bg-secondary    bg-opacity-10">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th scope="row" class="col-2">Имя</th>
+                            <td><a href="{{route('specialist.farms.show', ['farm' => $farm->id])}}">{{$farm->name}}</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Регион</th>
+                            <td>{{$farm->region->name}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Район</th>
+                            <td>{{$farm->district->name}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Адрес</th>
+                            <td>{{$farm->address}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Контакт</th>
+                            <td>{{$farm->contact_name}}: {{$farm->contact_value}} ({{$farm->contact_job_title}})</td>
+                        </tr>
+                        </tbody>
+                    </table>
+{{--                    @if($farm->name)--}}
+{{--                        <h5 class="card-title"><span--}}
+{{--                                class="card-subtitle text-muted">Название: </span> <a href="{{route('specialist.farms.show',['farm' => $farm->id])}}">{{$farm->name}}</a>--}}
+{{--                        </h5>--}}
+{{--                    @endif--}}
+{{--                    @if($farm->region)--}}
+{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Регион: </span> {{$farm->region->name}}--}}
+{{--                        </h5>--}}
+{{--                    @endif--}}
+{{--                    @if($farm->district)--}}
+{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Район: </span> {{$farm->district->name}}--}}
+{{--                        </h5>--}}
+{{--                    @endif--}}
+{{--                    @if($farm->address)--}}
+{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Адрес: </span> {{$farm->address}}--}}
+{{--                        </h5>--}}
+{{--                    @endif--}}
+{{--                        <hr>--}}
+{{--                    @if($farm->contact_name)--}}
+{{--                        <h5 class="card-title"><span class="card-subtitle text-muted">Контакт: </span>--}}
+{{--                            {{$farm->contact_name}}  {{$farm->contact_value}} <span class="small">({{$farm->contact_job_title}})</span>--}}
+{{--                        </h5>--}}
+{{--                    @endif--}}
 
                     <a href="{{route('specialist.farms.edit', ['farm' => $farm])}}">Изменить</a>
                     @include('specialist.farms.partials.destroy-modal')
