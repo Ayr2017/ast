@@ -33,7 +33,7 @@ class UpdateFormFieldRequest extends FormRequest
             'operator_a' => ['required','string'],
             'operator_b' => ['required','string'],
             'operator_c' => ['required','string'],
-            'select_fields' => [new RequiredIf(in_array($this->type,['select', 'checkbox','radio'] )), 'string'],
+            'select_fields' => [new RequiredIf(in_array($this->type,['select', 'checkbox','radio'] )), 'string', 'nullable'],
         ];
     }
 }

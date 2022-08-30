@@ -7,12 +7,12 @@
                 <input class="form-control" list="organizations" id="organizationsDataList"
                        placeholder="Type to search..." wire:model="organizationSearch">
                 <datalist id="organizations">
-                    {{--                    @foreach($organizations as $organization)--}}
-                    {{--                        <option value="{{$organization?->name}}">--}}
-                    {{--                    @endforeach--}}
+                    @foreach($organizations as $organization)
+                        <option value="{{$organization?->name}}" wire:key="{{$organization->id}}" id="{{$organization->id}}">
+                    @endforeach
                 </datalist>
-                {{--            <input type="hidden" name="organization_id" value="{{$organizationId}}">--}}
-                {{--            {{$organizationId}}--}}
+                <input type="hidden" name="organization_id" value="{{$organizationId}}">
+                {{$organizationId}}
             </div>
 
             <div class="mb-3">
@@ -21,11 +21,17 @@
                        id="farmsDataList" name="farmsDataList" placeholder="Type to search..." wire:model="farmSearch">
                 <datalist id="farms">
                     @foreach($farms as $farm)
-                        <option value="{{$farm?->name}}">
+                        <option value="{{$farm?->name}}" wire:key="{{$farm->id}}">
                     @endforeach
                 </datalist>
                 <input type="hidden" name="farm_id" value="{{$farmId}}">
                 {{$farmId}}
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label fw-bolder">Дата</label>
+                <input type="date" class="form-control" name="date" id="date" value="{{date("Y-m-d")}}">
+                <div id="dateHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
 
             <div class="mb-3">
@@ -35,19 +41,11 @@
                         <option
                             value="{{$form->id}}" {{old('form_id') == $form->id ? 'selected' : ''}}>{{$form->name}}</option>
                     @endforeach
-                    <option
-                        value="2">test
-                    </option>
                 </select>
                 <div id="innHelp" class="form-text">We'll never share your email with anyone else.</div>
                 {{$formId}}
             </div>
 
-            <div class="mb-3">
-                <label for="date" class="form-label fw-bolder">Дата</label>
-                <input type="date" class="form-control" name="date" id="date" value="{{date("Y-m-d")}}">
-                <div id="dateHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
 
             @foreach($formFields as $key =>$formFieldGroup)
                 <h6 class="h6 fw-bold bg-secondary bg-opacity-10 p-2">{{$fieldCategories[$loop->iteration]->name}}</h6>
@@ -55,12 +53,25 @@
                     @foreach($formFieldGroup as $formField)
                         @switch($formField->type)
                             @case('number')
-                                <livewire:specialist.report.create.partials.number-form-item :formField="$formField"/>
+                                @include('livewire.specialist.report.create.partials.number-form-item')
+                                @break
+                            @case('text')
+                                @include('livewire.specialist.report.create.partials.text-form-item')
+                                @break
+                            @case('checkbox')
+                                @include('livewire.specialist.report.create.partials.checkbox-form-item')
+                                @break
+                            @case('select')
+                                @include('livewire.specialist.report.create.partials.select-form-item')
+                                @break
+                            @case('radio')
+                                @include('livewire.specialist.report.create.partials.radio-form-item')
                                 @break
                         @endswitch
                     @endforeach
                 </div>
             @endforeach
+
             <button type="submit" class="btn btn-primary">Создать</button>
         </div>
     </form>

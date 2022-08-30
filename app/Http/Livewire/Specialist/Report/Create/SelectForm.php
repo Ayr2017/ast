@@ -6,7 +6,9 @@ use App\Models\Farm;
 use App\Models\FieldCategory;
 use App\Models\Form;
 use App\Models\FormCategory;
+use App\Models\FormField;
 use App\Models\Organization;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class SelectForm extends Component
@@ -33,7 +35,7 @@ class SelectForm extends Component
     public array $colors;
     public $fieldCategories;
 
-    public function __construct($fieldCategories)
+    public function __construct()
     {
         $this->formId = session()->get('form_id') ?? Form::first()->id;
         $this->farmId = session()->get('farm_id') ?? null;
@@ -41,8 +43,7 @@ class SelectForm extends Component
         $this->forms = Form::all();
         $this->farms = Farm::with('organization')->get();
         $this->colors = FieldCategory::CATEGORY_COLORS;
-
-        $this->fieldCategories = $fieldCategories;
+        $this->fieldCategories = FieldCategory::all();
 
 
         if(!$this->farmId){
@@ -59,62 +60,44 @@ class SelectForm extends Component
         $this->farmSearch = $this->farm->name;
 
         if($this->formId){
-            $this->form = Form::with('fields.category')->find($this->formId) ?? null;
-            $this->formFields = collect($this->form->fields?->groupBy('field_category_id'));
+            $this->form = Form::with('fields.category')->find($this->formId) ?? collect([]);
+            $this->formFields = $this->form->fields?->groupBy('field_category_id')->collect();
         }
     }
 
     public function mount()
     {
-        $this->farm = Farm::find($this->farmId) ?? null;
-        $this->form = Form::find($this->formId) ?? null;
-        $this->organization = $this->form?->organization?->id;
     }
+
+    public function hydrate()
+    {
+        $this->form = Form::with('fields.category')->find($this->formId) ?? collect([]);
+        $this->formFields = FormField::where('form_id',$this->formId)->get()?->groupBy('field_category_id')->collect();
+
+//        $this->organizations = Organization::where('name', 'like', '%'.$this->organizationSearch.'%')->get();
+    }
+
+    public function updatedOrganizationSearch($value)
+    {
+        $this->organizationSearch = $value;
+        $this->organizations = Organization::where('name', 'like', '%'.$value.'%')->get();
+        $this->organizationId = $this->organizations->first()->id;
+        $this->farms = Farm::where('organization_id', $this->organizationId)->get();
+        $this->farmSearch = '';
+        $this->farmId = null;
+
+    }
+
+    public function updatedFormId($value)
+    {
+        $this->formFields = FormField::where('form_id',$value)->get()?->groupBy('field_category_id')->collect();
+    }
+
 
     public function render()
     {
         return view('livewire.specialist.report.create.select-form');
     }
 
-    public function hydrate()
-    {
-        $this->organizations = Organization::where('name', 'like', '%' . $this->organizationSearch . '%')->get();
-    }
 
-    public function updatedOrganizationSearch()
-    {
-        $this->organizations = Organization::with('farms')->where('name', 'like', '%' . $this->organizationSearch . '%')->get();
-        $this->organizationId = Organization::where('name', $this->organizationSearch)?->first()?->id;
-        $this->farmSearch = '';
-        $this->farmId = null;
-        $this->getFarms();
-    }
-
-    public function updatedFarmSearch()
-    {
-        $this->farmId = Farm::where('name', $this->farmSearch)?->first()?->id;
-        $this->getFarms();
-        session()->put('farm_id', $this->farmId);
-    }
-
-    public function updatedFormId()
-    {
-        $this->form = Form::with(['fields.category'])->find($this->formId);
-        $this->formFields = collect($this->form?->fields?->groupBy('field_category_id')) ?? [];
-    }
-
-    private function getFarms()
-    {
-        $this->farms = Farm::where('region_id', $this->organizationId)
-            ->where('name', 'like', '%' . $this->farmSearch . '%')
-            ->get();
-
-        if(!$this->farms?->count()) {
-            $this->farmSearch = 'Не найдено ферм у данной организации';
-            $this->noFarms = true;
-            session()->remove('farm_id');
-        } else {
-            $this->noFarms = false;
-        }
-    }
 }

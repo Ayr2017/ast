@@ -11,7 +11,7 @@
         @foreach($formFields as $field)
         <tr>
             <td>{{$field->name}}</td>
-            <td>{{($report->data)["field_$field->id"]}}</td>
+            <td>{{($report->data)["field_".$field->id] ?? '~'}}</td>
             <td>{{$field->unit}}</td>
         </tr>
         @endforeach

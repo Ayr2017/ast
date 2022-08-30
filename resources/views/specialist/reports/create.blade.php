@@ -15,7 +15,7 @@
                     @endforeach
                 @endif
 
-                <livewire:specialist.report.create.select-form :fieldCategories="$fieldCategories"/>
+                <livewire:specialist.report.create.select-form />
 
             </div>
         </div>

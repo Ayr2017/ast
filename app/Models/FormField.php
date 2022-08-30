@@ -11,6 +11,10 @@ class FormField extends Model
     use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'select_fields' => 'array',
+    ];
+
     const UNITS = [
         'кг',
         'т',

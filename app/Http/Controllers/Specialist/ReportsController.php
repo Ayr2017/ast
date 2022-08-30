@@ -30,8 +30,7 @@ class ReportsController extends Controller
      */
     public function create()
     {
-        $fieldCategories = FieldCategory::all();
-        return view('specialist.reports.create', ['fieldCategories' => $fieldCategories]);
+        return view('specialist.reports.create');
     }
 
 
