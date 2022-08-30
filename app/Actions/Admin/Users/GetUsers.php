@@ -26,7 +26,7 @@ class GetUsers
         $user = auth()->user();
 
         if($user->hasRole('super-admin')){
-            return $users->where('id', '!=', $user->id)->get();
+            return $users->where('id', '!=', $user->id);
         } elseif($user->hasRole('admin')){
 //            TODO: доделать это место. Выводить только тех кто не админ и суперадмин.
             return $users->filter(function($item){
