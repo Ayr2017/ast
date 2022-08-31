@@ -9,8 +9,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" {{request()->routeIs('specialist.farms.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('specialist.farms.index')}}">
-                    <i class="fa fa-thin fa-crop" aria-hidden="true"></i>
+                <a class="nav-link {{request()->routeIs('specialist.farms.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('specialist.farms.index')}}">
+                    <i class="fa fa-thin fa-crop"></i>
                     Фермы
                 </a>
             </li>
