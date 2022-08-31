@@ -23,7 +23,7 @@ class OrganizationsController extends Controller
      */
     public function index(OrganizationsFilter $organizationsFilter)
     {
-        $organizations = Organization::filter($organizationsFilter)->paginate(2);
+        $organizations = Organization::filter($organizationsFilter)->paginate(12);
 
         session()->flashInput(request()->input());
 
