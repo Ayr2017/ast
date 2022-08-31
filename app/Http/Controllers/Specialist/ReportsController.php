@@ -35,10 +35,8 @@ class ReportsController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateReportRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateReportRequest $request)
     {
@@ -46,8 +44,12 @@ class ReportsController extends Controller
         $validatedRequest['uuid'] = Str::uuid();
         $validatedRequest['user_id'] = auth()->id();
         $report = Report::create($validatedRequest);
+        
+        if($report) {
+            return redirect()->route('specialist.reports.index')->with('success', 'Отчёт удачно сохранён!');
+        }
 
-        return redirect()->route('specialist.reports.index');
+        return redirect()->route('specialist.reports.index')->withErrors('message', 'Ошибка при сохраниении');
     }
 
     /**

@@ -18,10 +18,6 @@ class Report extends Model
         'data' => 'array',
     ];
 
-//    public function user()
-//    {
-//        return $this->belongsTo(User::class);
-//    }
 
     public function farm()
     {
