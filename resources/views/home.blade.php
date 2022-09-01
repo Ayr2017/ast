@@ -29,7 +29,9 @@
                         <div class="d-flex flex-column align-content-start">
 
                         @if(auth()->user()->hasRole('admin'))
-                            <a class="btn btn-link" href="{{route('admin.users.index')}}">Все пользователи</a>
+                            <a class="btn btn-light" href="{{route('admin.users.index')}}">Все пользователи</a>
+                                <a class="btn btn-light" href="{{route('admin.forms.index')}}">Все фoрмы</a>
+                                <a class="btn btn-light" href="{{route('admin.form-fields.index')}}">Все поля</a>
                         @elseif(auth()->user()->hasRole('specialist'))
                                 <a class="btn btn-light" href="{{route('specialist.organizations.index')}}">Все организации</a>
                                 <a class="btn btn-light" href="{{route('specialist.farms.index')}}">Все фермы</a>
