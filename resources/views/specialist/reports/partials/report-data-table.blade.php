@@ -15,6 +15,15 @@
             <td>{{$field->unit}}</td>
         </tr>
         @endforeach
+        <tr>
+            <td>Файлы</td>
+            <td></td>
+            <td>
+                @foreach($report->getMedia('reports') as $item)
+                    <a download href="{{$item->getFullUrl()}}">{{$item->name}}</a>
+                @endforeach
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

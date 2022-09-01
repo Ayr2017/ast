@@ -53,6 +53,12 @@ class ReportsController extends Controller
         $report = Report::create($validatedRequest);
 
         if($report) {
+            if ($request->hasFile('files')) {
+                $fileAdders = $report->addMultipleMediaFromRequest(['files'])
+                    ->each(function ($fileAdder) {
+                        $fileAdder->toMediaCollection('reports');
+                    });
+            }
             return redirect()->route('specialist.reports.index')->with('success', 'Отчёт удачно сохранён!');
         }
 
@@ -65,7 +71,7 @@ class ReportsController extends Controller
      */
     public function show($id)
     {
-        $report = Report::with(['organization.region','organization.district','farm.region','farm.district'])->withTrashed()->find($id);
+        $report = Report::with(['organization.region','organization.district','farm.region','farm.district','media'])->withTrashed()->find($id);
         $formFields = FormField::where('form_id', $report->form->id)->get();
         return view('specialist.reports.show',['report' => $report, 'formFields' => $formFields]);
     }

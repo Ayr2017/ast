@@ -1,5 +1,5 @@
 <div>
-    <form action="{{route('specialist.reports.store')}}" method="POST">
+    <form action="{{route('specialist.reports.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="col-lg-6">
             <div class="mb-3">
@@ -71,6 +71,11 @@
                     @endforeach
                 </div>
             @endforeach
+
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Файлы</label>
+                <input class="form-control" type="file" id="formFiles" name="files[]" multiple>
+            </div>
 
             <button type="submit" class="btn btn-primary">Создать</button>
         </div>
