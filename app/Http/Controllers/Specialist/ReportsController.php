@@ -30,6 +30,13 @@ class ReportsController extends Controller
      */
     public function create()
     {
+        $this->formId = session()->get('form_id') ?? Form::first()?->id;
+        $this->farmId = session()->get('farm_id') ?? null;
+
+        if(!$this->formId) {
+            return redirect()->back()->withErrors(['msg' => "Нет форм для создания отчёта"]);
+        }
+
         return view('specialist.reports.create');
     }
 
@@ -44,7 +51,7 @@ class ReportsController extends Controller
         $validatedRequest['uuid'] = Str::uuid();
         $validatedRequest['user_id'] = auth()->id();
         $report = Report::create($validatedRequest);
-        
+
         if($report) {
             return redirect()->route('specialist.reports.index')->with('success', 'Отчёт удачно сохранён!');
         }

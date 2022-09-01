@@ -40,11 +40,6 @@ class SelectForm extends Component
         $this->formId = session()->get('form_id') ?? Form::first()?->id;
         $this->farmId = session()->get('farm_id') ?? null;
 
-        if(!$this->formId) {
-            dd($this->formId);
-            return redirect()->back()->withErrors(['msg' => "Нет форм для создания отчёта"]);
-        }
-
         $this->organizations = Organization::all();
         $this->forms = Form::all();
         $this->farms = Farm::with('organization')->get();
