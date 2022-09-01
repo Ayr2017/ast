@@ -37,7 +37,7 @@ class ReportsController extends Controller
             return redirect()->back()->withErrors(['msg' => "Нет форм для создания отчёта"]);
         }
 
-        return view('specialist.reports.create');
+        return view('specialist.reports.create', ['form_id' => $this->formId, 'farm_id' => $this->farmId]);
     }
 
 
