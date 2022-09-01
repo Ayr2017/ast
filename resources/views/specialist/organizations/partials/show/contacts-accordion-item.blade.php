@@ -8,7 +8,7 @@
     </h2>
     <div id="collapseContacts" class="accordion-collapse collapse hide"
          aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
+        <div class="accordion-body p-0">
             @foreach($organization->contacts as $contact)
                 <div class="p-2 mb-2 bg-secondary bg-opacity-10">
                     <table class="table">
