@@ -28,36 +28,58 @@
             <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
                 <div class="card w-100 my-1">
                     <div class="card-body">
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Огранизация (регион / район)</h6>
-                            <h5 class="card-title">
-                                <a href="{{route('specialist.organizations.show',['organization' => $report->organization])}}">
-                                    {{$report->organization->name}}
-                                    <span class="text-muted">({{$report->organization->region->name}}, {{$report->organization->district->name}})</span>
-                                </a>
-                            </h5>
+                        <div class="table-responsive">
+                            <table class="table table-secondary">
+                                <tbody>
+                                <tr>
+                                    <th>Огранизация</th>
+                                    <td>
+                                        <a href="{{route('specialist.organizations.show',['organization' => $report->organization])}}">
+                                            {{$report->organization->name}}
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Регион и район организации</th>
+                                    <td>
+                                        {{$report->organization->region->name}}, {{$report->organization->district->name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Ферма</th>
+                                    <td>
+                                        <a href="{{route('specialist.farms.show',['farm' => $report->farm])}}">
+                                            {{$report->farm->name}}
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Регион и район фермы</th>
+                                    <td>
+                                        {{$report->farm->region->name}}, {{$report->farm->district->name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Дата отчёта</th>
+                                    <td>
+                                        {{$report->date}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Дата внесения</th>
+                                    <td>
+                                        {{$report->created_at}} / {{$report->updated_at}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Имя специалиста</th>
+                                    <td>
+                                        {{$report->creator->fullName}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Ферма (регион / район)</h6>
-                            <h5 class="card-title">{{$report->farm->name}}
-                                <span class="text-muted">({{$report->farm->region->name}}, {{$report->farm->district->name}}) </span>
-                            </h5>
-                        </div>
-
-{{--                        <div class="p-2 mb-2 bg-info bg-opacity-10">--}}
-{{--                            <h6 class="card-subtitle mb-2 text-muted">Создано / Обновлено</h6>--}}
-{{--                            <h5 class="card-title">{{$report->created_at}} / {{$report->updated_at}}--}}
-{{--                                / {{$report->creator->fullName}}</h5>--}}
-{{--                        </div>--}}
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Дата</h6>
-                            <h5 class="card-title">{{$report->date}}</h5>
-                        </div>
-
-                        <p class="card-text text-muted">
-                            Создано: {{$report->created_at}} / {{$report->updated_at}} - {{$report->creator->fullName}}
-                        </p>
 
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
                             <h6 class="card-subtitle mb-2 text-muted">Данные</h6>
