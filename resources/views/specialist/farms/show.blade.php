@@ -29,47 +29,48 @@
             <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
                 <div class="card w-100 my-1">
                     <div class="card-body">
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Организация</h6>
-                            <h5 class="card-title"><a href="{{route('specialist.organizations.show',['organization' =>$farm?->organization_id])}}">{{$farm?->organization?->name}}</a></h5>
+                        <div class="table-responsive">
+                            <table class="table table-secondary">
+                                <tbody>
+                                <tr>
+                                    <th>Организация</th>
+                                    <td>
+                                        <a href="{{route('specialist.organizations.show',['organization' =>$farm?->organization_id])}}">{{$farm?->organization?->name}}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Регион</th>
+                                    <td>
+                                        {{$farm?->region?->name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Район</th>
+                                    <td> {{$farm?->district?->name}} </td>
+                                </tr>
+                                <tr>
+                                    <th>Адрес</th>
+                                    <td> {{$farm?->address}} </td>
+                                </tr>
+                                <tr>
+                                    <th>Имя контакта</th>
+                                    <td> {{$farm?->contact_name}} </td>
+                                </tr>
+                                <tr>
+                                    <th>Должность контакта</th>
+                                    <td> {{$farm?->contact_job_title}} </td>
+                                </tr>
+                                <tr>
+                                    <th>Значение контакта</th>
+                                    <td> {{$farm?->contact_value}} </td>
+                                </tr>
+                                <tr>
+                                    <th>Активен</th>
+                                    <td> {{$farm?->deleted_at ? 'нет' : "да"}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Регион</h6>
-                            <h5 class="card-title">{{$farm?->region?->name}}</h5>
-                        </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Район</h6>
-                            <h5 class="card-title">{{$farm?->district?->name}}</h5>
-                        </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Адрес</h6>
-                            <h5 class="card-title">{{$farm?->address}}</h5>
-                        </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Имя контакта</h6>
-                            <h5 class="card-title">{{$farm?->contact_name}}</h5>
-                        </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Должность контакта</h6>
-                            <h5 class="card-title">{{$farm?->contact_job_title}}</h5>
-                        </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Значение контакта</h6>
-                            <h5 class="card-title">{{$farm?->contact_value}}</h5>
-                        </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Активен</h6>
-                            <h5 class="card-title">{{$farm?->deleted_at ? 'нет' : "да"}}</h5>
-                        </div>
-
                     </div>
                 </div>
                 <div class="d-flex">
