@@ -24,7 +24,7 @@ class FormField extends Model
         'л',
         'м',
         'см',
-        ' ',
+        '-',
     ];
 
     public function form()
