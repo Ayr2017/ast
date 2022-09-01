@@ -39,7 +39,9 @@
                     @include('specialist.farms.partials.destroy-modal')
                 </div>
             @endforeach
+
             @include('specialist.organizations.partials.show.farm-create-offcanvas')
+
         </div>
     </div>
 </div>

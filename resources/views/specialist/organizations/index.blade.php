@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <form action="{{route(request()->route()->getName(),request()->getQueryString())}}">
                         <input type="hidden" name="select" value="{{request()->select}}">
-                        <input type="text" id="inn" name="inn" class="form-control" placeholder="Поиск по ИНН" value="{{old('inn')}}">
+                        <input type="text" id="nameSearch" name="nameSearch" class="form-control" placeholder="Поиск по названию" value="{{old('nameSearch')}}">
                     </form>
                 </div>
             </div>

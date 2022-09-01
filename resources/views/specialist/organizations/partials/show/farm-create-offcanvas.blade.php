@@ -1,4 +1,4 @@
-<button class="btn btn-outline-primary" data-bs-toggle="offcanvas"
+<button class="btn btn-outline-primary m-2" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
     <i class="fa-solid fa-file-signature"></i>
     Добавить ферму
