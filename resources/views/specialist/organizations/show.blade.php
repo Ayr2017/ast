@@ -26,29 +26,33 @@
             <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
                 <div class="card w-100 my-1">
                     <div class="card-body">
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Регион</h6>
-                            <h5 class="card-title">{{$organization?->region?->name}}</h5>
-                        </div>
 
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Район</h6>
-                            <h5 class="card-title">{{$organization?->district?->name}}</h5>
+                        <div class="table-responsive">
+                            <table class="table table-secondary">
+                                <thead>
+                                <tr>
+                                    <th>Регион</th>
+                                    <td>{{$organization?->region?->name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Район</th>
+                                    <td>{{$organization?->district?->name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Адрес</th>
+                                    <td>{{$organization?->address}}</td>
+                                </tr>
+                                <tr>
+                                    <th>ИНН</th>
+                                    <td>{{$organization?->inn}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Создано</th>
+                                    <td>{{$organization->created_at}} - {{$organization->creator?->name}}</td>
+                                </tr>
+                                </thead>
+                            </table>
                         </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Адрес</h6>
-                            <h5 class="card-title">{{$organization?->inn}}</h5>
-                        </div>
-
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">ИНН</h6>
-                            <h5 class="card-title">{{$organization?->address}}</h5>
-                        </div>
-
-                        <p class="card-text text-muted">
-                            Создано: {{$organization->created_at}} - {{$organization->creator?->name}}
-                        </p>
 
                         <a href="{{route('specialist.organizations.edit',['organization' => $organization])}}" class="btn btn-outline-secondary">
                             <i class="fa-solid fa-pen"></i>
