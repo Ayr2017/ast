@@ -29,6 +29,7 @@ class CreateReportRequest extends FormRequest
             'organization_id' => ['required'],
             'data' => ['required','array'],
             'date' => ['required','date'],
+            'form_files.*' =>['nullable'],
         ];
     }
 }
