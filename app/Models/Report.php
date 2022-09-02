@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +41,11 @@ class Report extends Model implements HasMedia
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
+        $filter->apply($builder);
     }
 
 }

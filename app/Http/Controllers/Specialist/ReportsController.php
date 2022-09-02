@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Specialist;
 
+use App\Actions\Specialist\Reports\UpdateReport;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\ReportsFilter;
 use App\Http\Requests\Specialist\Report\CreateReportRequest;
+use App\Http\Requests\Specialist\Report\UpdateReportRequest;
 use App\Models\Farm;
 use App\Models\FieldCategory;
 use App\Models\Form;
@@ -12,17 +15,18 @@ use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ReportsController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(ReportsFilter $reportsFilter)
     {
-        $reports = Report::withTrashed()->paginate(15);
+        $reports = Report::filter($reportsFilter)->paginate(15);
 
-        return view('specialist.reports.index',['reports' => $reports]);
+        return view('specialist.reports.index', ['reports' => $reports]);
     }
 
     /**
@@ -33,7 +37,7 @@ class ReportsController extends Controller
         $this->formId = session()->get('form_id') ?? Form::first()?->id;
         $this->farmId = session()->get('farm_id') ?? null;
 
-        if(!$this->formId) {
+        if (!$this->formId) {
             return redirect()->back()->withErrors(['msg' => "Нет форм для создания отчёта"]);
         }
 
@@ -52,7 +56,7 @@ class ReportsController extends Controller
         $validatedRequest['user_id'] = auth()->id();
         $report = Report::create($validatedRequest);
 
-        if($report) {
+        if ($report) {
             if ($request->hasFile('files')) {
                 $fileAdders = $report->addMultipleMediaFromRequest(['files'])
                     ->each(function ($fileAdder) {
@@ -71,48 +75,74 @@ class ReportsController extends Controller
      */
     public function show($id)
     {
-        $report = Report::with(['organization.region','organization.district','farm.region','farm.district','media'])->withTrashed()->find($id);
+        $report = Report::with(['organization.region', 'organization.district', 'farm.region', 'farm.district', 'media'])->withTrashed()->find($id);
         $formFields = FormField::where('form_id', $report->form->id)->get();
-        return view('specialist.reports.show',['report' => $report, 'formFields' => $formFields]);
+        return view('specialist.reports.show', ['report' => $report, 'formFields' => $formFields]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $report = Report::find($id);
+        $formFields = FormField::where('form_id', $report->form_id)->get()->groupBy('field_category_id');
+        $fieldCategories = FieldCategory::all();
+        $colors = FieldCategory::CATEGORY_COLORS;
+
+        return view('specialist.reports.edit', [
+            'report' => $report,
+            'formFields' => $formFields,
+            'fieldCategories' => $fieldCategories,
+            'colors' => $colors]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateReportRequest $request
+     * @param $id
+     * @param UpdateReport $updateReport
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateReportRequest $request, $id, UpdateReport $updateReport)
     {
-        //
+        $report = Report::find($id);
+        $validatedRequest = $request->validated();
+
+        $result = $updateReport->execute($validatedRequest, $report);
+        if ($result) {
+            if ($request->hasFile('files')) {
+                $fileAdders = $report->addMultipleMediaFromRequest(['files'])
+                    ->each(function ($fileAdder) {
+                        $fileAdder->toMediaCollection('reports');
+                    });
+            }
+            $mediaItems = $validatedRequest['media_items'] ?? [];
+            foreach ($mediaItems as $key => $item) {
+                if ($item) {
+                    Media::find($item)->delete();
+                }
+            }
+        }
+        return redirect()->route('specialist.reports.show', ['report' => $report]);
     }
+
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
-        //
+        $report = Report::find($id);
+        if ($report) {
+            $report->delete();
+            return redirect()->route('specialist.reports.index');
+        }
+        $report = Report::withTrashed()->find($id)->restore();
+        return redirect()->route('specialist.reports.show', ['report' => $report]);
+
     }
 
-    public function select()
-    {
-        $forms = Form::all();
-        return view('specialist.reports.select',['forms' => $forms]);
-    }
 }
