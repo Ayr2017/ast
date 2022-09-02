@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="row">
-            <h3 class="h3">Фермы</h3>
+            <h3 class="h3">Отчёты</h3>
         </div>
         <div class="row">
             <div class="col-2 my-1 ">

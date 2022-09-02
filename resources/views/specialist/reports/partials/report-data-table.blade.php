@@ -9,11 +9,18 @@
         </thead>
         <tbody class="tbody">
         @foreach($formFields as $field)
-        <tr>
-            <td>{{$field->name}}</td>
-            <td>{{($report->data)["field_".$field->id] ?? '~'}}</td>
-            <td>{{$field->unit}}</td>
-        </tr>
+            <tr>
+                <td>{{$field->name}}</td>
+                <td>
+                    @if($field->type == 'checkbox')
+                        {{implode(',',($report->data)["field_".$field->id] ?? []) }}
+
+                    @else
+                        {{($report->data)["field_".$field->id] ?? ''}}</td>
+                @endif
+                </td>
+                <td>{{$field->unit}}</td>
+            </tr>
         @endforeach
         <tr>
             <td>Файлы</td>
