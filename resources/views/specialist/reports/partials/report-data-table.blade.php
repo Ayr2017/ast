@@ -27,7 +27,16 @@
             <td></td>
             <td>
                 @foreach($report->getMedia('reports') as $item)
-                    <a download href="{{$item->getFullUrl()}}">{{$item->name}}</a>
+                    <p>
+                    <a href="{{$item->getFullUrl()}}">
+                        <i class="fa fa-eye" aria-hidden="true"></i> {{$item->name}}
+                    </a>
+                    <br>
+                    <a download href="{{$item->getFullUrl()}}">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                        {{$item->name}}
+                    </a>
+                    </p>
                 @endforeach
             </td>
         </tr>
