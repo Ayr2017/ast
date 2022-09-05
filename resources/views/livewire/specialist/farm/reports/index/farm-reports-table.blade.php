@@ -1,11 +1,36 @@
 <div>
+    <div class="row alert alert-secondary">
+        <div class="col-3">
+            <div class="">
+                <label for="exampleInputEmail1" class="form-label">Форма</label>
+                <select class="form-select" aria-label="Default select example" wire:model="formId">
+                    @foreach($this->forms as $form)
+                        <option value="{{$form->id}}">{{$form->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
 
-    <div class="my-3">
-        <select class="form-select" aria-label="Default select example" wire:model="formId">
-            @foreach($this->forms as $form)
-                <option value="{{$form->id}}">{{$form->name}}</option>
-            @endforeach
-        </select>
+            <div class="">
+                <label for="dateFrom" class="form-label">Дата от</label>
+                <input type="date" class="form-control" id="dateFrom" wire:model="dateFrom" aria-describedby="dateFromHelp">
+                <div id="dateHelp" class="form-text">Дата от</div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="">
+                <label for="dateTo" class="form-label">Дата до</label>
+                <input type="date" class="form-control" id="dateTo" wire:model="dateTo" aria-describedby="dateToHelp">
+                <div id="dateHelp" class="form-text">Дата до</div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="d-flex flex-column align-content-stretch">
+                <label for="dateTo" class="form-label">_</label>
+                <button class="btn btn-outline-dark " wire:click="showReports">Показать</button>
+            </div>
+        </div>
     </div>
 
     @if(!$reports?->isEmpty())
