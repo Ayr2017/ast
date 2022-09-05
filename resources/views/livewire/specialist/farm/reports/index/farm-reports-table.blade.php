@@ -63,9 +63,9 @@
                         @foreach($formFields as $formField)
                             <td>
                                 @if($formField->type != 'checkbox')
-                                    {{$report->data["field_$formField->id"]}}
+                                    {{$report->data["field_$formField->id"] ?? '-'}}
                                 @else
-                                    {{implode(',', $report->data["field_$formField->id"])}}
+                                    {{implode(',', $report->data["field_$formField->id"] ?? '-')}}
                                 @endif
                             </td>
                         @endforeach
