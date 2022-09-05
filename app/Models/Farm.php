@@ -29,6 +29,11 @@ class Farm extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
     public function scopeFilter(Builder $builder, QueryFilter $filter)
     {
         $filter->apply($builder);

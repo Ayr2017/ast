@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\Admin\FormsController as AdminFormsController;
 use App\Http\Controllers\General\ContactsController;
 use App\Http\Controllers\Specialist\FarmsController;
+use App\Http\Controllers\Specialist\FarmsReportsController;
 use App\Http\Controllers\Specialist\FormsController;
 use App\Http\Controllers\Specialist\OrganizationsController;
 use App\Http\Controllers\Specialist\ReportsController;
@@ -49,6 +50,7 @@ Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist'
     Route::resource('farms', FarmsController::class);
     Route::resource('reports', ReportsController::class);
     Route::resource('forms', FormsController::class);
+    Route::resource('farms.reports', FarmsReportsController::class);
 });
 
 Route::prefix('general')->name('general.')->middleware('role:admin|specialist|super-admin')->group(function(){

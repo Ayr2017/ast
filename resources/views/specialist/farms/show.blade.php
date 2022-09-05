@@ -68,6 +68,14 @@
                                     <th>Активен</th>
                                     <td> {{$farm?->deleted_at ? 'нет' : "да"}}</td>
                                 </tr>
+                                <tr>
+                                    <th>Всего отчётов</th>
+                                    <td>
+                                        <a href="{{route('specialist.farms.reports.index',['farm' => $farm])}}">
+                                            {{$farm?->reports?->count()}}
+                                        </a>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

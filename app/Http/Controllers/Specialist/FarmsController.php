@@ -50,7 +50,7 @@ class FarmsController extends Controller
      */
     public function show($id)
     {
-        $farm = Farm::withTrashed()->find($id);
+        $farm = Farm::with(['reports','region','district','organization'])->withTrashed()->find($id);
         session()->put('farm_id', $id);
         return view('specialist.farms.show',['farm' => $farm]);
     }
