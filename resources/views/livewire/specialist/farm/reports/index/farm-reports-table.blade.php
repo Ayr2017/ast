@@ -50,7 +50,7 @@
                     <th>Податель</th>
 
                     <th>Создано</th>
-                    <th>Управление</th>
+                    <th>-</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -74,26 +74,7 @@
 
                         <td>{{$report?->created_at}}</td>
                         <td>
-                            <div class="d-flex justify-content-evenly">
-                                <div class="py-1">
-                                    <a href="{{route('specialist.reports.edit',['report' => $report?->id])}}"
-                                       class="btn btn-outline-info">
-                                        <i class="fa fa-pen"></i>
-                                    </a>
-                                </div>
-                                <div class="py-1">
-                                    <form action="{{route('specialist.reports.destroy',['report' => $report?->id])}}"
-                                          method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" name="deleted_at"
-                                               value="{{$report?->deleted_at ? 0 : 1}}">
-                                        <button type="submit" class="btn btn-outline-danger">
-                                            <i class="fa {{$report?->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                            -
                         </td>
                     </tr>
                 @endforeach
@@ -107,6 +88,10 @@
 
             @if($selectedReports?->count())
                 <button class="btn btn-outline-primary" wire:click="resetSelectedReports">Сбросить</button>
+            @endif
+
+            @if($selectedReports?->count())
+                <button class="btn btn-outline-primary" wire:click="recoverSelectedReports">К полному списку</button>
             @endif
         </div>
     @else

@@ -62,13 +62,23 @@ class FarmReportsTable extends Component
     public function compareReports()
     {
         $this->selectedReports = Report::whereIn('id', $this->checkedReports)->get();
-        $this->reportService->compareSelectedReports($this->selectedReports, $this->formFields);
+//        $result = $this->reportService->compareSelectedReports($this->selectedReports, $this->formFields);
+        $this->reports = $this->selectedReports;
     }
 
     public function resetSelectedReports()
     {
         $this->selectedReports = new Collection([]);
         $this->checkedReports = [];
+
+    }
+    public function recoverSelectedReports()
+    {
+        $this->reports = Report::where('farm_id', $this->farm->id)
+            ->where('form_id', $this->formId)
+            ->where('created_at', '>=', $this->dateFrom)
+            ->where('created_at', '<=', $this->dateTo)
+            ->get();
 
     }
 
