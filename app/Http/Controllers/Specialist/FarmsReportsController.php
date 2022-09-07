@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Farm;
 use App\Models\FormField;
 use App\Models\Report;
+use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Illuminate\Http\Request;
 
 class FarmsReportsController extends Controller

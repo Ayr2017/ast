@@ -97,5 +97,13 @@
     @else
         <h5 class="h5">Нет данных для этой формы</h5>
     @endif
+    <div class="row">
+        <div class="col">
+            <livewire:livewire-column-chart
+                key="{{ $columnChartModel->reactiveKey() }}"
+                :column-chart-model="$columnChartModel"
+            />
+        </div>
+    </div>
 
 </div>

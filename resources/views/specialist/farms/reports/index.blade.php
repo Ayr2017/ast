@@ -39,14 +39,17 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col">
+            <div class="col" style="min-height:500px">
                 <livewire:specialist.farm.reports.index.farm-reports-table :farm="$farm" />
 {{--                {!! $reports->appends(request()->query())->links() !!}--}}
             </div>
         </div>
-
-
-
     </div>
+
+
+
+
+
 @endsection

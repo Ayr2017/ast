@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\Specialist\Farm\Reports\Index;
 
 use App\Models\Farm;
+use App\Models\FieldCategory;
 use App\Models\Form;
+use App\Models\FormCategory;
 use App\Models\FormField;
 use App\Models\Report;
 use App\Services\Specialist\ReportService;
+use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
@@ -26,6 +29,7 @@ class FarmReportsTable extends Component
     private ReportService $reportService;
     public  $dateFrom;
     public  $dateTo;
+    private ColumnChartModel $columnChartModel;
 
     public function __construct()
     {
@@ -34,6 +38,12 @@ class FarmReportsTable extends Component
         $this->reportService = new ReportService();
         $this->dateFrom = Carbon::now()->subMonth()->format('Y-m-d');
         $this->dateTo = Carbon::now()->format('Y-m-d');
+        $this->columnChartModel =
+            (new ColumnChartModel())
+                ->setTitle('Expenses by Type')
+                ->addColumn('Food', 100, '#f6ad55')
+                ->addColumn('Shopping', 200, '#fc8181')
+                ->addColumn('Travel', 300, '#90cdf4');
     }
 
     public function mount(Farm $farm)
@@ -41,6 +51,7 @@ class FarmReportsTable extends Component
         $this->farm = $farm;
         $this->reports = Report::where('farm_id', $farm->id)->where('form_id', $this->formId)->get();
         $this->formFields = FormField::where('form_id', $this->formId)->get();
+
     }
 
     public function showReports()
@@ -64,6 +75,9 @@ class FarmReportsTable extends Component
         $this->selectedReports = Report::whereIn('id', $this->checkedReports)->get();
 //        $result = $this->reportService->compareSelectedReports($this->selectedReports, $this->formFields);
         $this->reports = $this->selectedReports;
+
+        $this->columnChartModel = $this->getColumnChartModel();
+
     }
 
     public function resetSelectedReports()
@@ -90,6 +104,21 @@ class FarmReportsTable extends Component
             'form' => $this->form,
             'forms' => $this->forms,
             'formId' => $this->formId,
+            'columnChartModel' => $this->columnChartModel,
             ]);
+    }
+
+    private function getColumnChartModel()
+    {
+        $colors = FieldCategory::CATEGORY_COLORS;
+        $col = new ColumnChartModel();
+        $col->setTitle('Title');
+        $this->formFields->each(function($item, $key) use ($col, $colors){
+            foreach($this->reports as $report) {
+                $col->addColumn($item->name, ($report->data)['field_'.$item->id], $colors[$key]);
+            }
+        });
+
+        return $col;
     }
 }

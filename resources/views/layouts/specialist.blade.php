@@ -13,6 +13,10 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    @livewireChartsScripts
+    <script defer src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
+
     <!-- Livewire styles -->
     @livewireStyles
 
