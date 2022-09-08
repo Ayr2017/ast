@@ -16,20 +16,20 @@
         <div class="row">
             <h3 class="h3">Отчёты фермы {{$farm->name}}</h3>
         </div>
-        <div class="row">
-            <div class="col my-1 ms-auto">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="{{route('specialist.farms.reports.index',['farm'=>$farm, 'select' => 'withTrashed'])}}"
-                       type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == 'withTrashed' ? 'active' : ''}}">Все</a>
-                    <a href="{{route('specialist.farms.reports.index',['farm'=>$farm,'select' =>null])}}" type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == '' ? 'active' : ''}}">Активные</a>
-                    <a href="{{route('specialist.farms.reports.index',['farm'=>$farm,'select' => 'trashed']) }}"
-                       type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == 'trashed' ? 'active' : ''}}">Деактивированные</a>
-                </div>
-            </div>
-        </div>
+{{--        <div class="row">--}}
+{{--            <div class="col my-1 ms-auto">--}}
+{{--                <div class="btn-group" role="group" aria-label="Basic example">--}}
+{{--                    <a href="{{route('specialist.farms.reports.index',['farm'=>$farm, 'select' => 'withTrashed'])}}"--}}
+{{--                       type="button"--}}
+{{--                       class="btn btn-outline-secondary {{request()->get('select') == 'withTrashed' ? 'active' : ''}}">Все</a>--}}
+{{--                    <a href="{{route('specialist.farms.reports.index',['farm'=>$farm,'select' =>null])}}" type="button"--}}
+{{--                       class="btn btn-outline-secondary {{request()->get('select') == '' ? 'active' : ''}}">Активные</a>--}}
+{{--                    <a href="{{route('specialist.farms.reports.index',['farm'=>$farm,'select' => 'trashed']) }}"--}}
+{{--                       type="button"--}}
+{{--                       class="btn btn-outline-secondary {{request()->get('select') == 'trashed' ? 'active' : ''}}">Деактивированные</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
         <div class="row">
             <div class="col">
