@@ -52,7 +52,6 @@ class ReportsController extends Controller
     public function store(CreateReportRequest $request)
     {
         $validatedRequest = $request->validated();
-        $validatedRequest['uuid'] = Str::uuid();
         $validatedRequest['user_id'] = auth()->id();
         $report = Report::create($validatedRequest);
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Filters\QueryFilter;
+use App\Observers\ReportObserver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,7 +22,6 @@ class Report extends Model implements HasMedia
     protected $casts =[
         'data' => 'array',
     ];
-
 
     public function farm()
     {
@@ -47,5 +47,12 @@ class Report extends Model implements HasMedia
     {
         $filter->apply($builder);
     }
+
+    public static function boot(): void
+    {
+        parent::boot();
+        static::creating(fn(Model $model) => $model->uuid = Str::uuid());
+    }
+
 
 }
