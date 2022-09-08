@@ -103,7 +103,10 @@
                 key="{{ $columnChartModel->reactiveKey() }}"
                 :column-chart-model="$columnChartModel"
             />
-            @dump($columnChartModel)
+             <livewire:livewire-line-chart
+                key="{{ $lineChartModel->reactiveKey() }}"
+                :line-chart-model="$lineChartModel"
+            />
         </div>
     </div>
 

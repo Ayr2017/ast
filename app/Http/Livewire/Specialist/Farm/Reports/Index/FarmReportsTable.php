@@ -10,6 +10,7 @@ use App\Models\FormField;
 use App\Models\Report;
 use App\Services\Specialist\ReportService;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
+use Asantibanez\LivewireCharts\Models\LineChartModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
@@ -30,6 +31,7 @@ class FarmReportsTable extends Component
     public  $dateFrom;
     public  $dateTo;
     private ColumnChartModel $columnChartModel;
+    private LineChartModel $lineChartModel;
 
     public function __construct()
     {
@@ -41,6 +43,11 @@ class FarmReportsTable extends Component
         $this->columnChartModel =
             (new ColumnChartModel())
                 ->setTitle('График таблицы');
+
+        $this->lineChartModel =
+            (new LineChartModel())->setTitle($this->form->name)
+                ->addColor('#aa33ff');
+
     }
 
     public function mount(Farm $farm)
@@ -74,6 +81,7 @@ class FarmReportsTable extends Component
         $this->reports = $this->selectedReports;
 
         $this->columnChartModel = $this->getColumnChartModel();
+        $this->lineChartModel = $this->getLineChartModel();
 
     }
 
@@ -102,6 +110,7 @@ class FarmReportsTable extends Component
             'forms' => $this->forms,
             'formId' => $this->formId,
             'columnChartModel' => $this->columnChartModel,
+            'lineChartModel' => $this->lineChartModel,
             ]);
     }
 
@@ -109,7 +118,7 @@ class FarmReportsTable extends Component
     {
         $colors = FieldCategory::CATEGORY_COLORS;
         $col = new ColumnChartModel();
-        $col->setTitle($this->form->name);
+        $col->setTitle($this->form->name)->setColumnWidth(10);
         $this->formFields->each(function($item, $key) use ($col, $colors){
             if($item->type == 'number') {
                 foreach($this->reports as $key=>$report) {
@@ -120,5 +129,23 @@ class FarmReportsTable extends Component
         });
 
         return $col;
+    }
+
+    private function getLineChartModel()
+    {
+        $colors = FieldCategory::CATEGORY_COLORS;
+        $line = new LineChartModel();
+        $line->setTitle($this->form->name)->multiLine();
+
+        $this->formFields->each(function($item, $key) use ($line, $colors){
+            if($item->type == 'number') {
+                foreach($this->reports as $key=>$report) {
+                    $title = $item->name." ".$report->date;
+                    $line->addSeriesPoint($title, $item->name, ($report->data)['field_'.$item->id])->addColor($colors[$key]);
+                }
+            }
+        });
+
+        return $line;
     }
 }
