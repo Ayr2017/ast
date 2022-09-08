@@ -40,10 +40,7 @@ class FarmReportsTable extends Component
         $this->dateTo = Carbon::now()->format('Y-m-d');
         $this->columnChartModel =
             (new ColumnChartModel())
-                ->setTitle('Expenses by Type')
-                ->addColumn('Food', 100, '#f6ad55')
-                ->addColumn('Shopping', 200, '#fc8181')
-                ->addColumn('Travel', 300, '#90cdf4');
+                ->setTitle('График таблицы');
     }
 
     public function mount(Farm $farm)
@@ -112,10 +109,13 @@ class FarmReportsTable extends Component
     {
         $colors = FieldCategory::CATEGORY_COLORS;
         $col = new ColumnChartModel();
-        $col->setTitle('Title');
+        $col->setTitle($this->form->name);
         $this->formFields->each(function($item, $key) use ($col, $colors){
-            foreach($this->reports as $report) {
-                $col->addColumn($item->name, ($report->data)['field_'.$item->id], $colors[$key]);
+            if($item->type == 'number') {
+                foreach($this->reports as $key=>$report) {
+                    $title = $item->name." ".$report->date;
+                    $col->addColumn($title, ($report->data)['field_'.$item->id], $colors[$key]);
+                }
             }
         });
 
