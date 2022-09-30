@@ -6,6 +6,8 @@ use App\Models\Interfaces\Contactable;
 use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +29,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        DB::listen(function ($query) {
+//            $query->sql; // выполненная sql-строка
+//            $query->bindings; // параметры, переданные в запрос (то, что подменяет '?' в sql-строке)
+//            $query->time; // время выполнения запроса
+//            Log::info([$query->sql, $query->time ]);
+        });
     }
 }

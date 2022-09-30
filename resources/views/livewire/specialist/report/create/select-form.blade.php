@@ -12,7 +12,6 @@
                     @endforeach
                 </datalist>
                 <input type="hidden" name="organization_id" value="{{$organizationId}}">
-                {{$organizationId}}
             </div>
 
             <div class="mb-3">
@@ -25,7 +24,6 @@
                     @endforeach
                 </datalist>
                 <input type="hidden" name="farm_id" value="{{$farmId}}">
-                {{$farmId}}
             </div>
 
             <div class="mb-3">
@@ -43,14 +41,12 @@
                     @endforeach
                 </select>
                 <div id="innHelp" class="form-text">We'll never share your email with anyone else.</div>
-                {{$formId}}
             </div>
 
-
-            @foreach($formFields as $key =>$formFieldGroup)
-                <h6 class="h6 fw-bold bg-secondary bg-opacity-10 p-2">{{$fieldCategories[$loop->iteration]->name}}</h6>
+            @foreach($formFieldsGroupedByCategory as $key =>$formFieldsCategory)
+                <h6 class="h6 fw-bold bg-secondary bg-opacity-10 p-2">{{$formFieldsCategory->name}}</h6>
                 <div class="alert" style="background-color: {{$colors[$loop->iteration]}}">
-                    @foreach($formFieldGroup as $formField)
+                    @foreach($formFieldsCategory->fields as $formField)
                         @switch($formField->type)
                             @case('number')
                                 @include('livewire.specialist.report.create.partials.number-form-item')

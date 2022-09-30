@@ -30,4 +30,9 @@ class FieldCategory extends Model
         '#556B2F',
         '#8FBC8F',
     ];
+
+    public function fields()
+    {
+        return $this->hasMany(FormField::class);
+    }
 }

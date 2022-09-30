@@ -26,6 +26,13 @@
                 <div id="field_category_idHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
 
+
+            <div class="mb-3">
+                <input type="hidden" name="required" value="0">
+                <input class="form-check-input" type="checkbox" value="1" name="required" id="required">
+                <label for="required" class="form-label">Обязательное поле</label>
+            </div>
+
             <div class="mb-3">
                 <label for="type" class="form-label">Тип</label>
                 <select class="form-select mb-3" aria-label=".form-select example" name="type" id="type">
@@ -38,6 +45,19 @@
                 <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
 
+
+            <div class="mb-3">
+                <label for="step" class="form-label">Шаг</label>
+                <select class="form-select mb-3" aria-label=".form-select example" name="step" id="step">
+                    <option value="1" {{old('step') == "1" ? 'selected' : ''}}>1</option>
+                    <option value="0.1" {{old('step') == "0.1" ? 'selected' : ''}}>0.1</option>
+                    <option value="0.01" {{old('step') == "0.01" ? 'selected' : ''}}>0.01</option>
+                    <option value="0.001" {{old('step') == "0.001" ? 'selected' : ''}}>0.001</option>
+                    <option value="0.0001" {{old('step') == "0.0001" ? 'selected' : ''}}>0.0001</option>
+                    <option value="0.00001" {{old('step') == "0.00001" ? 'selected' : ''}}>0.00001</option>
+                </select>
+                <div id="stepHelp" class="form-text">Если тип число.</div>
+            </div>
 
             <div class="mb-3">
                 <label for="select_fields" class="form-label">Элементы для выбора</label>

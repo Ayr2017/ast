@@ -28,7 +28,7 @@ return new class extends Migration
             $table->boolean('required')->default(0);
             $table->float('min')->default(0);
             $table->float('max')->default(10000);
-            $table->float('step')->default(1);
+            $table->float('step', 5, 4)->default(1);
             $table->string('placeholder')->nullable();
             $table->string('hint')->nullable();
             $table->softDeletes();

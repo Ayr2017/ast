@@ -31,6 +31,8 @@ class StoreFormFieldRequest extends FormRequest
             'unit' => ['string','nullable'],
             'form_id' => ['required'],
             'field_category_id' => ['required','numeric'],
+            'step' => ['required_if:type,number','numeric'],
+            'required' => ['boolean'],
             'operator_a' => ['required','string'],
             'operator_b' => ['required','string'],
             'operator_c' => ['required','string'],

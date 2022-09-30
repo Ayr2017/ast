@@ -29,6 +29,8 @@ class UpdateFormFieldRequest extends FormRequest
             'type' => ['required','in:text,number,select,checkbox,radio'],
             'unit' => ['string','nullable'],
             'form_id' => ['required'],
+            'step' => ['required_if:type,number','numeric'],
+            'required' => ['boolean'],
             'field_category_id' => ['required','numeric'],
             'operator_a' => ['required','string'],
             'operator_b' => ['required','string'],

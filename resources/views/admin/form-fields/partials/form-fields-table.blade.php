@@ -14,12 +14,12 @@
         <tbody>
         @forelse($form_fields as $field)
             <tr class="">
-                <td>{{$field->id}}</td>
-                <td>{{$field->name}}</td>
-                <td>{{$field->form->name}} <a href="{{route('admin.forms.show',['form'=>$field->form->id])}}">(id: {{$field->form->id}})</a></td>
-                <td>{{$field->unit}}</td>
-                <td>{{$field->type}}</td>
-                <td>{{$field->category->name}}</td>
+                <td>{{$field?->id}}</td>
+                <td>{{$field?->name}}</td>
+                <td>{{$field?->form?->name}} <a href="{{route('admin.forms.show',['form'=>$field?->form?->id])}}">(id: {{$field?->form?->id}})</a></td>
+                <td>{{$field?->unit}}</td>
+                <td>{{$field?->type}}</td>
+                <td>{{$field?->category?->name}}</td>
                 <td>
                     <div class="d-flex">
                         <div>

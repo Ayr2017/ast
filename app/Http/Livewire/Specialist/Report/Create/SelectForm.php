@@ -29,6 +29,7 @@ class SelectForm extends Component
     public mixed $forms;
 
     public mixed $formFields;
+    public mixed $formFieldsGroupedByCategory;
     /**
      * @var string[]
      */
@@ -62,7 +63,13 @@ class SelectForm extends Component
 
         if($this->formId){
             $this->form = Form::with('fields.category')->find($this->formId) ?? collect([]);
-            $this->formFields = $this->form->fields?->groupBy('field_category_id')->collect();
+//            $this->formFields = $this->form->fields?->groupBy('field_category_id')->collect();
+            $this->formFieldsGroupedByCategory =
+                FieldCategory::with(['fields' => fn($query) => $query->where('id', 'in', $this->form->fields->pluck('id'))])
+                ->whereHas('fields', function($query){
+                    return $query;
+                })
+                ->get()->load('fields');
         }
     }
 
