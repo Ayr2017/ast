@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Organization extends Model implements Contactable
@@ -59,6 +60,26 @@ class Organization extends Model implements Contactable
     public function scopeFilter(Builder $builder, QueryFilter $filter)
     {
         $filter->apply($builder);
+    }
+
+    // Удаление-восстановление фермы при удалении-восстановлении организации
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleted(function (Organization $organization) {
+            foreach ($organization->farms as $farm) {
+                $farm->delete();
+            };
+
+        });
+
+        self::restored(function (Organization $organization) {
+
+            foreach ($organization->farms as $farm) {
+                $farm->restore();
+            };
+        });
     }
 
 

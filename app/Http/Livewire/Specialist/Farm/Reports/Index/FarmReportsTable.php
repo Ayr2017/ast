@@ -23,7 +23,7 @@ class FarmReportsTable extends Component
     public Collection $reports;
     public Collection $formFields;
     public Form $form;
-    public int $formId =  1;
+    public int $formId = 1;
     public Collection $forms;
     public $checkedReports = [];
     public Collection $selectedReports;
@@ -53,7 +53,7 @@ class FarmReportsTable extends Component
     public function mount(Farm $farm)
     {
         $this->farm = $farm;
-        $this->reports = Report::where('farm_id', $farm->id)->where('form_id', $this->formId)->get();
+        $this->reports = Report::where('farm_id', $farm->id)->where('form_id', Form::first()->id)->get();
         $this->formFields = FormField::where('form_id', $this->formId)->get();
 
     }
@@ -65,6 +65,11 @@ class FarmReportsTable extends Component
             ->where('created_at', '>=', $this->dateFrom)
             ->where('created_at', '<=', $this->dateTo)
             ->get();
+        dump($this->formId);
+        dump($this->farm->id);
+        dump($this->dateFrom);
+        dump($this->dateTo);
+
         $this->formFields = FormField::where('form_id', $this->formId)->get();
     }
 

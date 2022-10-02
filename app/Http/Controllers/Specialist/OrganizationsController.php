@@ -107,7 +107,9 @@ class OrganizationsController extends Controller
             $organization->delete();
             return redirect()->route('specialist.organizations.index');
         }
-        $organization = Organization::withTrashed()->find($id)->restore();
+
+        $organization = Organization::withTrashed()->find($id);
+        $organization->restore();
         return redirect()->route('specialist.organizations.show',['organization' => $organization]);
     }
 }
