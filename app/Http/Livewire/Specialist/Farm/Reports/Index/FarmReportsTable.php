@@ -23,7 +23,7 @@ class FarmReportsTable extends Component
     public Collection $reports;
     public Collection $formFields;
     public Form $form;
-    public int $formId = 1;
+    public int $formId;
     public Collection $forms;
     public $checkedReports = [];
     public Collection $selectedReports;
@@ -36,6 +36,7 @@ class FarmReportsTable extends Component
     public function __construct()
     {
         $this->forms = Form::all();
+        $this->formId = Form::first()->id;
         $this->form = $this->forms->first();
         $this->reportService = new ReportService();
         $this->dateFrom = Carbon::now()->subMonth()->format('Y-m-d');
@@ -65,10 +66,6 @@ class FarmReportsTable extends Component
             ->where('created_at', '>=', $this->dateFrom)
             ->where('created_at', '<=', $this->dateTo)
             ->get();
-        dump($this->formId);
-        dump($this->farm->id);
-        dump($this->dateFrom);
-        dump($this->dateTo);
 
         $this->formFields = FormField::where('form_id', $this->formId)->get();
     }
@@ -128,7 +125,11 @@ class FarmReportsTable extends Component
             if($item->type == 'number') {
                 foreach($this->reports as $key=>$report) {
                     $title = $item->name." ".$report->date;
-                    $col->addColumn($title, ($report->data)['field_'.$item->id], $colors[$key]);
+                    if(isset(($report->data)['field_'.$item->id])) {
+                        $col->addColumn($title, ($report->data)['field_'.$item->id], $colors[$key]);
+                    } else {
+                        $col->addColumn($title, 0, $colors[$key]);
+                    }
                 }
             }
         });
@@ -146,7 +147,11 @@ class FarmReportsTable extends Component
             if($item->type == 'number') {
                 foreach($this->reports as $key=>$report) {
                     $title = $item->name." ".$report->date;
-                    $line->addSeriesPoint($title, $item->name, ($report->data)['field_'.$item->id])->addColor($colors[$key]);
+                    if(isset(($report->data)['field_'.$item->id])) {
+                        $line->addSeriesPoint($title, $item->name, ($report->data)['field_' . $item->id])->addColor($colors[$key]);
+                    } else {
+                        $line->addSeriesPoint($title, $item->name, 0)->addColor($colors[$key]);
+                    }
                 }
             }
         });
