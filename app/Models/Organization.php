@@ -75,8 +75,7 @@ class Organization extends Model implements Contactable
         });
 
         self::restored(function (Organization $organization) {
-
-            foreach ($organization->farms as $farm) {
+            foreach ($organization->farms()->withTrashed()->get() as $farm) {
                 $farm->restore();
             };
         });
