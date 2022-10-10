@@ -24,6 +24,8 @@ class FormField extends Model
         'гол',
         'м',
         '%',
+        'руб.',
+        'мин.',
         '-',
     ];
 
