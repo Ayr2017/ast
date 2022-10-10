@@ -25,4 +25,9 @@ class Form extends Model
     {
         return $this->belongsTo(FormCategory::class, 'category_id', 'id');
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
 }

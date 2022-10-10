@@ -89,9 +89,22 @@ class FormsController extends Controller
         $form = Form::withTrashed()->find($id);
         if(!$form->deleted_at) {
             $form->delete();
+            foreach($form->fields as $field){
+                $field->delete();
+            }
+            foreach($form->reports as $report){
+                $report->delete();
+            }
             return redirect()->back()->with(['form' => $form]);
         }
+
         $form->restore();
+        foreach($form->fields()->withTrashed()->get() as $field){
+            $field->restore();
+        }
+        foreach($form->reports()->withTrashed()->get() as $report){
+            $report->restore();
+        }
         return redirect()->back()->with(['form' => $form]);
     }
 }
