@@ -42,15 +42,18 @@
                                     @csrf
                                     @method('DELETE')
                                     <div>
-                                        <buton type="submit" class="btn btn-outline-danger mx-1">
+                                        <button type="submit" class="btn btn-outline-danger mx-1">
                                             <i class="fa fa-trash"></i>
-                                        </buton>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <p>Поля отсутствуют</p>
+
+                        @endforelse
                 </tbody>
             </table>
             </div>
