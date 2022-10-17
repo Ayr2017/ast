@@ -96,9 +96,19 @@ class SelectForm extends Component
 
     }
 
-    public function updatedFormId($value)
+    public function updatedFormId( int $value)
     {
         $this->formFields = FormField::where('form_id',$value)->get()?->groupBy('field_category_id')->collect();
+        if($value){
+            $this->form = Form::with('fields.category')->find($value) ?? collect([]);
+
+            $this->formFieldsGroupedByCategory =
+                FieldCategory::with(['fields' => fn($query) => $query->whereIn('id', $this->form->fields->pluck('id'))])
+                    ->whereHas('fields', function($query){
+                        return $query;
+                    })
+                    ->get();
+        }
     }
 
 

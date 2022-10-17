@@ -44,6 +44,7 @@
             </div>
 
             @foreach($formFieldsGroupedByCategory as $key =>$formFieldsCategory)
+                @if($formFieldsCategory->fields->count())
                 <h6 class="h6 fw-bold bg-secondary bg-opacity-10 p-2">{{$formFieldsCategory->name}}</h6>
                 <div class="alert" style="background-color: {{$colors[$loop->iteration]}}">
                     @foreach($formFieldsCategory->fields as $formField)
@@ -66,6 +67,7 @@
                         @endswitch
                     @endforeach
                 </div>
+                @endif
             @endforeach
 
             <div class="mb-3">
