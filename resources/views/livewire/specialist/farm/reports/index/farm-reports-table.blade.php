@@ -62,7 +62,9 @@
                         </td>
                         @foreach($formFields as $formField)
                             <td>
-                                @dump($report?->data["field_$formField?->id"])
+                                @isset($report?->data["field_$formField?->id"])
+                                    @dump($report?->data["field_$formField?->id"])
+                                @endisset
 {{--                                @if($formField->type != 'checkbox')--}}
 {{--                                    {{$report->data["field_$formField->id"] ?? '-'}}--}}
 {{--                                @else--}}
