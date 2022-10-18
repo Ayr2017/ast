@@ -70,7 +70,7 @@
                                         {{implode(',', $report->data["field_$formField->id"] ?? '-')}}
                                     @endif
                                 @else
-                                    @if(!is_array($report?->data["field_$formField?->id"]))
+                                    @if(isset($report?->data["field_$formField?->id"]) && !is_array($report?->data["field_$formField?->id"]))
                                         {{$report->data["field_$formField->id"] ?? '-'}}
                                     @else
                                         {{implode(',', $report->data["field_$formField->id"] ?? '-')}}
