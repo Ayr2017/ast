@@ -63,12 +63,16 @@
                         @foreach($formFields as $formField)
                             <td>
                                 @php
-                                if($formField->type != 'checkbox'){
-                                    echo $report->data["field_$formField->id"] ?? '-';
-                                }
-                                else{
-                                    echo implode(',', $report->data["field_$formField->id"] ?? '-');
-                                }
+                                try {
+                                    if($formField->type != 'checkbox'){
+                                        echo $report->data["field_$formField->id"] ?? '-';
+                                    }
+                                    else{
+                                        echo implode(',', $report->data["field_$formField->id"] ?? '-');
+                                    }
+                                 } catch (Exception $exception) {
+                                    dump($report->data["field_$formField->id"]);
+                                 }
                                 @endphp
                             </td>
                         @endforeach
