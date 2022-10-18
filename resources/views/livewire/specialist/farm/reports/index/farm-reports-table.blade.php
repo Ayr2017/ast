@@ -62,18 +62,12 @@
                         </td>
                         @foreach($formFields as $formField)
                             <td>
-                                <?php
-                                try {
-                                    if($formField->type != 'checkbox'){
-                                        echo $report->data["field_$formField->id"] ?? '-';
-                                    }
-                                    else{
-                                        echo implode(',', $report->data["field_$formField->id"] ?? '-');
-                                    }
-                                 } catch (Exception $exception) {
-                                    dump($report->data["field_$formField->id"]);
-                                 }
-                                ?>
+                                @dump($report->data["field_$formField->id"])
+{{--                                @if($formField->type != 'checkbox')--}}
+{{--                                    {{$report->data["field_$formField->id"] ?? '-'}}--}}
+{{--                                @else--}}
+{{--                                    {{implode(',', $report->data["field_$formField->id"] ?? '-')}}--}}
+{{--                                @endif--}}
                             </td>
                         @endforeach
                         <td>{{$report?->date}}</td>
