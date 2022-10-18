@@ -14,8 +14,7 @@
 
             <div class="">
                 <label for="dateFrom" class="form-label">Дата от</label>
-                <input type="date" class="form-control" id="dateFrom" wire:model="dateFrom"
-                       aria-describedby="dateFromHelp">
+                <input type="date" class="form-control" id="dateFrom" wire:model="dateFrom" aria-describedby="dateFromHelp">
                 <div id="dateHelp" class="form-text">Дата от</div>
             </div>
         </div>
@@ -63,19 +62,14 @@
                         </td>
                         @foreach($formFields as $formField)
                             <td>
-                                @if($formField->type != 'checkbox' && isset($report?->data["field_$formField?->id"]))
-                                    @if(!is_array($report?->data["field_$formField?->id"]))
-                                        {{$report->data["field_$formField->id"] ?? '-'}}
-                                    @else
-                                        {{implode(',', $report->data["field_$formField->id"] ?? '-')}}
-                                    @endif
-                                @else
-                                    @if(isset($report?->data["field_$formField?->id"]) && !is_array($report?->data["field_$formField?->id"]))
-                                        {{$report->data["field_$formField->id"] ?? '-'}}
-                                    @else
-                                        {{implode(',', $report->data["field_$formField->id"] ?? '-')}}
-                                    @endif
-                                @endif
+                                @php
+                                if($formField->type != 'checkbox'){
+                                    echo $report->data["field_$formField->id"] ?? '-';
+                                }
+                                else{
+                                    echo implode(',', $report->data["field_$formField->id"] ?? '-');
+                                }
+                                @endphp
                             </td>
                         @endforeach
                         <td>{{$report?->date}}</td>
@@ -108,11 +102,11 @@
     @endif
     <div class="row">
         <div class="col" style="height: 32rem;">
-            <livewire:livewire-column-chart
+             <livewire:livewire-column-chart
                 key="{{ $columnChartModel->reactiveKey() }}"
                 :column-chart-model="$columnChartModel"
             />
-            <livewire:livewire-line-chart
+             <livewire:livewire-line-chart
                 key="{{ $lineChartModel->reactiveKey() }}"
                 :line-chart-model="$lineChartModel"
             />
