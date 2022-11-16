@@ -16,7 +16,14 @@
             <tr class="">
                 <td>{{$field?->id}}</td>
                 <td>{{$field?->name}}</td>
-                <td>{{$field?->form?->name}} <a href="{{route('admin.forms.show',['form'=>$field?->form?->id])}}">(id: {{$field?->form?->id}})</a></td>
+                <td>{{$field?->form?->name}}
+                    @if(!$field?->form?->deleted_at)
+                        <a href="{{route('admin.forms.show',['form'=>$field?->form?->id])}}">(id: {{$field?->form?->id}})</a>
+                    @else
+                        <a href="{{route('admin.forms.show',['form'=>$field?->form?->id])}}">(id: {{$field?->form?->id}})</a>
+                        <span class="text-muted"> форма не активна</span>
+                    @endif
+                </td>
                 <td>{{$field?->unit}}</td>
                 <td>{{$field?->type}}</td>
                 <td>{{$field?->category?->name}}</td>
