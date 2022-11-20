@@ -34,7 +34,11 @@ class FormFieldsController extends Controller
 
         $field_categories = FieldCategory::all();
         $field_units = FormField::UNITS;
-        return view('admin.form-fields.create', ['field_categories' => $field_categories, 'field_units' => $field_units]);
+        return view('admin.form-fields.create', [
+            'field_categories' => $field_categories,
+            'field_units' => $field_units,
+            'form' => $form,
+        ]);
     }
 
     /**
@@ -43,6 +47,7 @@ class FormFieldsController extends Controller
      */
     public function store(StoreFormFieldRequest $request)
     {
+
         $validatedRequest = $request->validated();
         $formField = FormField::firstOrCreate(['name' => $validatedRequest['name']], $validatedRequest);
         return redirect()->back();

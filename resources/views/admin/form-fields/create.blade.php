@@ -27,7 +27,7 @@
                 <form action="{{route('admin.form-fields.store')}}" method="POST">
                     @csrf
 
-                    <input type="hidden" name="form_id" value="">
+                    <input type="hidden" name="form_id" value="{{$form->id}}">
                     <div class="mb-3">
                         <label for="name" class="form-label">Название</label>
                         <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" value="{{old('name') }}" required>
@@ -47,7 +47,7 @@
 
                     <div class="mb-3">
                         <input type="hidden" name="required" value="0">
-                        <input class="form-check-input" type="checkbox" value="1" {{$form_field->required ? 'checked' : ''}}name="required" id="required">
+                        <input class="form-check-input" type="checkbox" value="1" {{old('required') ? 'checked' : ''}} name="required" id="required">
                         <label for="required" class="form-label">Обязательное поле</label>
                     </div>
 
