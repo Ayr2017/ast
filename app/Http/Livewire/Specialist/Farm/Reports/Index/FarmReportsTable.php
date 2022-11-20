@@ -56,7 +56,7 @@ class FarmReportsTable extends Component
     {
         $this->farm = $farm;
         $this->reports = Report::where('farm_id', $farm->id)->where('form_id', Form::first()->id)->get();
-        $this->formFields = FormField::where('form_id', $this->formId)->get();
+        $this->formFields = FormField::where('form_id', $this->formId)->get()->sortBy('field_category_id');
 
     }
 
@@ -68,7 +68,7 @@ class FarmReportsTable extends Component
             ->where('created_at', '<=', $this->dateTo)
             ->get();
 
-        $this->formFields = FormField::where('form_id', $this->formId)->get();
+        $this->formFields = FormField::where('form_id', $this->formId)->get()->sortBy('field_category_id');
     }
 
     public function updatedFormId($value)
@@ -108,7 +108,7 @@ class FarmReportsTable extends Component
     {
         return view('livewire.specialist.farm.reports.index.farm-reports-table',[
             'reports' => $this->reports,
-            'formFields' => $this->formFields,
+            'formFields' => $this->formFields->sortBy('field_category_id'),
             'form' => $this->form,
             'forms' => $this->forms,
             'formId' => $this->formId,
