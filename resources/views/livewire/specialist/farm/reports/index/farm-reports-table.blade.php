@@ -62,7 +62,7 @@
                             <input type="checkbox" wire:model="checkedReports" value="{{$report->id}}">
                         </td>
                         @foreach($formFields as $formField)
-                            <td>
+                            <td style="background-color: {{$this->colors[$formField->field_category_id]}}">
                                 @isset($report?->data["field_$formField?->id"])
                                     @if($formField->type != 'checkbox' && !is_array($report->data["field_$formField->id"]))
                                         {{$report->data["field_$formField->id"] ?? '-'}}

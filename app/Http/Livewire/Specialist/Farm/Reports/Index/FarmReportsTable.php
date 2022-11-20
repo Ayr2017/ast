@@ -20,6 +20,7 @@ use Livewire\Component;
 class FarmReportsTable extends Component
 {
     public Farm $farm;
+    public array $colors;
     public Collection $reports;
     public Collection $formFields;
     public Form $form;

@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col">
                 <div>
-                    <livewire:specialist.farm.reports.index.farm-reports-table :farm="$farm"/>
+                    <livewire:specialist.farm.reports.index.farm-reports-table :farm="$farm" :colors="$colors"/>
                 </div>
                 {{--                {!! $reports->appends(request()->query())->links() !!}--}}
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Specialist;
 
 use App\Http\Controllers\Controller;
 use App\Models\Farm;
+use App\Models\FieldCategory;
 use App\Models\FormField;
 use App\Models\Report;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
@@ -20,11 +21,13 @@ class FarmsReportsController extends Controller
         $reports = Report::where('farm_id', $farm->id)->with(['form','farm','organization','creator'])->paginate(15);
         $formIds = $reports->pluck('form_id')->unique();
         $formFields = FormField::whereIn('form_id', $formIds)->get()->groupBy('form_id');
+        $colors = FieldCategory::CATEGORY_COLORS;
 
         return view('specialist.farms.reports.index',[
             'farm' => $farm,
             'reports' => $reports,
             'formFields' => $formFields,
+            'colors' => $colors,
         ]);
     }
 
