@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\Admin\Forms\CreateForm;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\FormsFilter;
+use App\Http\Requests\Admin\Forms\IndexRequest;
 use App\Http\Requests\Admin\Forms\StoreFormRequest;
 use App\Http\Requests\Admin\Forms\UpdateFormRequest;
 use App\Models\FieldCategory;
@@ -17,9 +19,9 @@ class FormsController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(FormsFilter $formsFilter)
     {
-        $forms = Form::withTrashed()->with(['fields','creator','category'])->paginate(15);
+        $forms = Form::filter($formsFilter)->with(['fields','creator','category'])->paginate(15);
         return view('admin.forms.index', ['forms' => $forms]);
     }
 
