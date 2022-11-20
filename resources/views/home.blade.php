@@ -36,7 +36,10 @@
                                 <a class="btn btn-light" href="{{route('specialist.organizations.index')}}">Все организации</a>
                                 <a class="btn btn-light" href="{{route('specialist.farms.index')}}">Все фермы</a>
                                 <a class="btn btn-light" href="{{route('specialist.reports.index')}}">Все отчёты</a>
-                        @endif
+                            @else
+                                <p class="p">Дождитесь, пока администратор одобрит ваше заявку</p>
+
+                            @endif
                     </div>
                     </div>
 
