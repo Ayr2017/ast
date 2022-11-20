@@ -27,7 +27,8 @@ class FormFieldsController extends Controller
      */
     public function create()
     {
-        $form = Form::first();
+//        $form = Form::first();
+        $forms = Form::all();
         if(!isset($form)){
             return redirect()->route('admin.forms.index')->withErrors(['message' => 'Сперва нужно создать хотьб одну форму']);
         }
@@ -37,7 +38,7 @@ class FormFieldsController extends Controller
         return view('admin.form-fields.create', [
             'field_categories' => $field_categories,
             'field_units' => $field_units,
-            'form' => $form,
+            'forms' => $forms,
         ]);
     }
 
@@ -47,7 +48,6 @@ class FormFieldsController extends Controller
      */
     public function store(StoreFormFieldRequest $request)
     {
-
         $validatedRequest = $request->validated();
         $formField = FormField::firstOrCreate(['name' => $validatedRequest['name']], $validatedRequest);
         return redirect()->back();

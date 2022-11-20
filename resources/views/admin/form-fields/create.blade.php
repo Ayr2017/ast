@@ -27,7 +27,16 @@
                 <form action="{{route('admin.form-fields.store')}}" method="POST">
                     @csrf
 
-                    <input type="hidden" name="form_id" value="{{$form->id}}">
+                    <div class="mb-3">
+                        <label for="field_category_id" class="form-label">Название формы</label>
+                        <select class="form-select mb-3" aria-label=".form-select example" name="form_id" id="form_id">
+                            @foreach($forms as $form)
+                                <option value="{{$form->id}}" {{old('form_id') == $form->id ? 'selected' : ''}}>{{$form->name}}</option>
+                            @endforeach
+                        </select>
+                        <div id="field_category_idHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Название</label>
                         <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" value="{{old('name') }}" required>
