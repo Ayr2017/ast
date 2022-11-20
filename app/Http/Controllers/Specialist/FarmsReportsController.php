@@ -20,7 +20,7 @@ class FarmsReportsController extends Controller
     {
         $reports = Report::where('farm_id', $farm->id)->with(['form','farm','organization','creator'])->paginate(15);
         $formIds = $reports->pluck('form_id')->unique();
-        $formFields = FormField::whereIn('form_id', $formIds)->get()->groupBy('form_id');
+        $formFields = FormField::whereIn('form_id', $formIds)->sortBy('field_category_id')->get()->groupBy('form_id');
         $colors = FieldCategory::CATEGORY_COLORS;
 
         return view('specialist.farms.reports.index',[
