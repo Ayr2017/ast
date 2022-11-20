@@ -91,7 +91,7 @@ class OrganizationsController extends Controller
     public function update(UpdateOrganizationRequest $request, $id, UpdateOrganization $updateOrganization)
     {
         $validatedRequest = $request->validated();
-        $organization = Organization::with('contacts')->find($id);
+        $organization = Organization::withTrashed()->with('contacts')->find($id);
 
         $updateOrganization->execute($validatedRequest, $organization);
         return redirect()->route('specialist.organizations.show',['organization' => $organization]);
