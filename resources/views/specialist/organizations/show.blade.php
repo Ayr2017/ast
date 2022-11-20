@@ -4,6 +4,7 @@
     <div class="container py-4">
         <div class="row">
             <h3 class="h3"><span class="text-black-50 d-none d-sm-inline d-lg-inline d-md-inline">Организация</span> {{$organization->name}}</h3>
+            <span class="text-black-50 d-none d-sm-inline d-lg-inline d-md-inline">{{$organization->deleted_at ? 'деактивирована' : ''}}</span>
         </div>
         <div class="row">
             <p>
