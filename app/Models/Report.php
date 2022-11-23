@@ -25,12 +25,12 @@ class Report extends Model implements HasMedia
 
     public function farm()
     {
-        return $this->belongsTo(Farm::class);
+        return $this->belongsTo(Farm::class)->withTrashed();
     }
 
     public function form()
     {
-        return $this->belongsTo(Form::class);
+        return $this->belongsTo(Form::class)->withTrashed();
     }
 
     public function organization()
@@ -40,7 +40,7 @@ class Report extends Model implements HasMedia
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->withTrashed();
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filter)

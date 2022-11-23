@@ -42,9 +42,12 @@
                     <th>№</th>
                     <th>Выбор</th>
                     @foreach($formFields as $formField)
-                        <th class="text-dark">
-                            <span class="text-primary">{{$formField->category->name}}</span>
-                            {{$formField->name}}
+                        <th class="text-dark align-top">
+                            <div class="d-flex flex-column align-items-start">
+                                <input wire:model="checkedFields" type="checkbox" id="formfield_checkbox[{{$formField->id}}]" value="{{$formField->id}}">
+                                <span class="text-primary">{{$formField->category->name}}</span>
+                                <p>{{$formField->name}}</p>
+                            </div>
                         </th>
                     @endforeach
                     <th>Дата</th>
@@ -93,6 +96,7 @@
 
             @if($selectedReports?->count())
                 <button class="btn btn-outline-primary" wire:click="resetSelectedReports">Сбросить</button>
+                <button class="btn btn-outline-primary" wire:click="resetSelectedReportsWithoutFields">Сбросить только отчёты</button>
             @endif
 
             @if($selectedReports?->count())
@@ -104,10 +108,10 @@
     @endif
     <div class="row">
         <div class="col" style="height: 32rem;">
-            <livewire:livewire-column-chart
-                key="{{ $columnChartModel->reactiveKey() }}"
-                :column-chart-model="$columnChartModel"
-            />
+{{--            <livewire:livewire-column-chart--}}
+{{--                key="{{ $columnChartModel->reactiveKey() }}"--}}
+{{--                :column-chart-model="$columnChartModel"--}}
+{{--            />--}}
             <livewire:livewire-line-chart
                 key="{{ $lineChartModel->reactiveKey() }}"
                 :line-chart-model="$lineChartModel"

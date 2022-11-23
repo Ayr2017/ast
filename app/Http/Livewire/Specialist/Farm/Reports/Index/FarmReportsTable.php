@@ -33,6 +33,7 @@ class FarmReportsTable extends Component
     public  $dateTo;
     private ColumnChartModel $columnChartModel;
     private LineChartModel $lineChartModel;
+    public $checkedFields = [];
 
     public function __construct()
     {
@@ -49,6 +50,8 @@ class FarmReportsTable extends Component
         $this->lineChartModel =
             (new LineChartModel())->setTitle($this->form->name)
                 ->addColor('#aa33ff');
+
+        $this->checkedFields = $this->form->fields->pluck('id')->toArray();
 
     }
 
@@ -82,6 +85,7 @@ class FarmReportsTable extends Component
         $this->selectedReports = Report::whereIn('id', $this->checkedReports)->get();
 //        $result = $this->reportService->compareSelectedReports($this->selectedReports, $this->formFields);
         $this->reports = $this->selectedReports;
+        $this->formFields = $this->formFields->whereIn('id', $this->checkedFields);
 
         $this->columnChartModel = $this->getColumnChartModel();
         $this->lineChartModel = $this->getLineChartModel();
@@ -92,6 +96,24 @@ class FarmReportsTable extends Component
     {
         $this->selectedReports = new Collection([]);
         $this->checkedReports = [];
+        $this->checkedFields = $this->form->fields->pluck('id')->toArray();
+        $this->formFields = $this->form->fields->whereIn('id', $this->checkedFields);
+        $this->reports = Report::where('farm_id', $this->farm->id)
+            ->where('form_id', $this->formId)
+            ->where('created_at', '>=', $this->dateFrom)
+            ->where('created_at', '<=', $this->dateTo)
+            ->get();
+
+    }
+    public function resetSelectedReportsWithoutFields()
+    {
+        $this->selectedReports = new Collection([]);
+        $this->checkedReports = [];
+        $this->reports = Report::where('farm_id', $this->farm->id)
+            ->where('form_id', $this->formId)
+            ->where('created_at', '>=', $this->dateFrom)
+            ->where('created_at', '<=', $this->dateTo)
+            ->get();
 
     }
     public function recoverSelectedReports()

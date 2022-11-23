@@ -21,6 +21,13 @@
                     Отчеты
                 </a>
             </li>
+
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link {{request()->routeIs('specialist.reports.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('specialist.reports.index')}}">--}}
+{{--                    <i class="fa fa-thin fa-file"></i>--}}
+{{--                    Шаблоны отчётов--}}
+{{--                </a>--}}
+{{--            </li>--}}
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
