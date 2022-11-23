@@ -61,7 +61,7 @@ class FarmsController extends Controller
      */
     public function edit($id)
     {
-        $farm = Farm::find($id);
+        $farm = Farm::withTrashed()->find($id);
         return view('specialist.farms.edit',['farm' => $farm]);
     }
 
