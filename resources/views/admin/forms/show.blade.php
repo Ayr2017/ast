@@ -53,7 +53,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger">
                                 @if(!$form->deleted_at)
-                                <i class="fa fa-trash"></i> Удалить
+                                <i class="fa fa-trash"></i> Деактивировать
                                 @else
                                     <i class="fa fa-trash-restore"></i> Восстановить
                                 @endif

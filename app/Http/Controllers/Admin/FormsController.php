@@ -77,7 +77,7 @@ class FormsController extends Controller
     public function update(UpdateFormRequest $request, $id)
     {
         $validatedRequest = $request->validated();
-        $form = Form::find($id);
+        $form = Form::withTrashed()->find($id);
         $form->update($validatedRequest);
         return redirect()->route('admin.forms.show', ['form' => $form]);
     }
