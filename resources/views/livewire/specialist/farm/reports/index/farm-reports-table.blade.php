@@ -34,6 +34,10 @@
         </div>
     </div>
 
+    <div wire:loading.delay.short>
+        Идёт загрузка контента. Пожалуйста, подождите ...
+    </div>
+
     @if(!$reports?->isEmpty())
         <div class="table-responsive mt-2">
             <table class="table table-striped">
@@ -88,6 +92,9 @@
                 @endforeach
                 </tbody>
             </table>
+        </div>
+        <div wire:loading.delay.short>
+            Идёт загрузка контента. Пожалуйста, подождите ...
         </div>
         <div class="my-2">
             @if($checkedReports)
