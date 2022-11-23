@@ -14,6 +14,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{request()->routeIs('admin.computed-form-fields.*') ? ' border-start border-5 border-primary active' : ''}}" href="{{route('admin.computed-form-fields.index')}}" >
+                    <i class="fa-solid fa-align-justify"></i>
+                    Вычисляемые поля
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{request()->routeIs('admin.users.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('admin.users.index')}}" >
                     <i class="fa-solid fa-user-group"></i>
                     Пользователи

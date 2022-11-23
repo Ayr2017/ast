@@ -32,6 +32,7 @@
                             <a class="btn btn-light" href="{{route('admin.users.index')}}">Все пользователи</a>
                                 <a class="btn btn-light" href="{{route('admin.forms.index')}}">Все фoрмы</a>
                                 <a class="btn btn-light" href="{{route('admin.form-fields.index')}}">Все поля</a>
+                                <a class="btn btn-light" href="{{route('admin.computed-form-fields.index')}}">Вычисляемые поля</a>
                         @elseif(auth()->user()->hasRole('specialist'))
                                 <a class="btn btn-light" href="{{route('specialist.organizations.index')}}">Все организации</a>
                                 <a class="btn btn-light" href="{{route('specialist.farms.index')}}">Все фермы</a>

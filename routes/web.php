@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ComputedFormFieldsController;
 use App\Http\Controllers\Admin\FieldCategoriesController;
 use App\Http\Controllers\Admin\FormCategoriesController;
 use App\Http\Controllers\Admin\FormFieldsController;
@@ -42,6 +43,7 @@ Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(functi
     Route::resource('forms', AdminFormsController::class);
     Route::resource('form-categories', FormCategoriesController::class);
     Route::resource('form-fields', FormFieldsController::class);
+    Route::resource('computed-form-fields', ComputedFormFieldsController::class);
     Route::resource('field-categories', FieldCategoriesController::class);
 });
 
