@@ -19,7 +19,7 @@
 <body class="min-vh-100">
 <nav class="navbar navbar-dark navbar-expand-md  bg-dark shadow-sm sticky-top ">
     <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/">
-        <h5 class="h5 fw-bold">{{ config('app.name', 'Laravel') }}</h5>
+        <h5 class="h5 fw-bold">{{ config('app.name', 'AST') }}</h5>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
