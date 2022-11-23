@@ -8,6 +8,7 @@
             <th>Регион</th>
             <th>Район</th>
             <th>Адрес</th>
+            <th>Телефон</th>
             <th>Управление</th>
         </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{$organization?->region?->name}}</td>
                 <td>{{$organization?->district->name}}</td>
                 <td>{{$organization?->address}}</td>
+                <td>{{$organization?->contacts?->first()?->phone ?? $organization?->contacts?->first()?->mobile ?? $organization?->contacts?->first()?->work_number}}</td>
                 <td>
                     <div class="d-flex justify-content-evenly">
                         <div class="py-1">
