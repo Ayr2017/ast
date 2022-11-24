@@ -91,7 +91,7 @@
                             </td>
                         @endforeach
                         @foreach($computedFormFields as $computedFormField)
-                            <td style="background-color: {{$this->colors[$formField->field_category_id]}}">
+                            <td style="background-color: {{$this->colors[$computedFormField->field_category_id]}}">
                                 {{\App\Services\ComputedFieldsService::execute($computedFormField, $formFields, $report)}}
                             </td>
                         @endforeach

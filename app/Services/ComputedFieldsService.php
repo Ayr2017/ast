@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use ParseError;
+
 class ComputedFieldsService
 {
     public static function execute($computedFormField, $formFields, $report)
@@ -19,6 +21,12 @@ class ComputedFieldsService
             }
         }
 
-        return eval(" return ".$formula. ';');
+        try {
+            $result = eval(" return ".$formula. ';');
+        } catch(ParseError $exception){
+            $result = 'Требуется исправление формулы или данных';
+        }
+
+        return $result;
     }
 }
