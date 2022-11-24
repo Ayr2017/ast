@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div wire:loading.delay.short>
+    <div wire:loading.delay.long>
         Идёт загрузка контента. Пожалуйста, подождите ...
     </div>
 
@@ -51,6 +51,15 @@
                                 <input wire:model="checkedFields" type="checkbox" id="formfield_checkbox[{{$formField->id}}]" value="{{$formField->id}}">
                                 <span class="text-primary">{{$formField->category->name}}</span>
                                 <p>{{$formField->name}}</p>
+                            </div>
+                        </th>
+                    @endforeach
+                    @foreach($computedFormFields as $computedFormField)
+                        <th class="text-dark align-top">
+                            <div class="d-flex flex-column align-items-start">
+                                <input wire:model="checkedComputedFields" type="checkbox" id="computed_formfield_checkbox[{{$computedFormField->id}}]" value="{{$computedFormField->id}}">
+                                <span class="text-primary">{{$computedFormField->category->name}}</span>
+                                <p>{{$computedFormField->name}}</p>
                             </div>
                         </th>
                     @endforeach
@@ -81,6 +90,11 @@
                                 @endisset
                             </td>
                         @endforeach
+                        @foreach($computedFormFields as $computedFormField)
+                            <td style="background-color: {{$this->colors[$formField->field_category_id]}}">
+                                {{\App\Services\ComputedFieldsService::execute($computedFormField, $formFields, $report)}}
+                            </td>
+                        @endforeach
                         <td>{{$report?->date}}</td>
                         <td>{{$report?->creator->fullName}}</td>
 
@@ -93,7 +107,7 @@
                 </tbody>
             </table>
         </div>
-        <div wire:loading.delay.short>
+        <div wire:loading.delay.long>
             Идёт загрузка контента. Пожалуйста, подождите ...
         </div>
         <div class="my-2">

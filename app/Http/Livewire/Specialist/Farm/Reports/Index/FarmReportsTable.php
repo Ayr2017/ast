@@ -34,6 +34,8 @@ class FarmReportsTable extends Component
     private ColumnChartModel $columnChartModel;
     private LineChartModel $lineChartModel;
     public $checkedFields = [];
+    public $checkedComputedFields = [];
+    public Collection $computedFormFields ;
 
     public function __construct()
     {
@@ -52,6 +54,7 @@ class FarmReportsTable extends Component
                 ->addColor('#aa33ff');
 
         $this->checkedFields = $this->form->fields->pluck('id')->toArray();
+        $this->computedFormFields = $this->form->computedFields;
 
     }
 
@@ -60,6 +63,7 @@ class FarmReportsTable extends Component
         $this->farm = $farm;
         $this->reports = Report::where('farm_id', $farm->id)->where('form_id', Form::first()->id)->get();
         $this->formFields = FormField::where('form_id', $this->formId)->get()->sortBy('field_category_id');
+        $this->computedFormFields = $this->form->computedFields;
 
     }
 

@@ -17,6 +17,10 @@ class Form extends Model
     {
         return $this->hasMany(FormField::class);
     }
+    public function computedFields()
+    {
+        return $this->hasMany(ComputedFormField::class);
+    }
 
     public function creator()
     {
