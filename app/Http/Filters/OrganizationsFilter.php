@@ -19,4 +19,9 @@ class OrganizationsFilter extends QueryFilter
     {
         $this->builder->where('inn', $inn);
     }
+
+    public function name(string $name)
+    {
+        $this->builder->where('name', 'like', '%'.$name.'%');
+    }
 }

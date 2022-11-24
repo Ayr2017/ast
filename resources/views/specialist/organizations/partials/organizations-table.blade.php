@@ -3,12 +3,12 @@
         <thead>
         <tr>
             <th>№</th>
-            <th>Название</th>
+            <th>Наименование</th>
             <th>ИНН</th>
             <th>Регион</th>
             <th>Район</th>
             <th>Адрес</th>
-            <th>Телефон</th>
+            <th>Контакт</th>
             <th>Управление</th>
         </tr>
         </thead>
@@ -23,7 +23,7 @@
                 <td>{{$organization?->region?->name}}</td>
                 <td>{{$organization?->district->name}}</td>
                 <td>{{$organization?->address}}</td>
-                <td>{{$organization?->contacts?->first()?->phone ?? $organization?->contacts?->first()?->mobile ?? $organization?->contacts?->first()?->work_number}}</td>
+                <td>{{$organization?->contacts?->first()?->phone ?? $organization?->contacts?->first()?->mobile ?? $organization?->contacts?->first()?->work_number}} <br> {{$organization?->contacts?->first()?->name}} {{$organization?->contacts?->first()?->surname}}</td>
                 <td>
                     <div class="d-flex justify-content-evenly">
                         <div class="py-1">

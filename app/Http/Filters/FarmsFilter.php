@@ -14,4 +14,9 @@ class FarmsFilter extends QueryFilter
             $this->builder;
         }
     }
+
+    public function name(string $name)
+    {
+        $this->builder->where('name', 'like', '%'.$name.'%');
+    }
 }
