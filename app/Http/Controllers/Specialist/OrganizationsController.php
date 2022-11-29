@@ -48,7 +48,8 @@ class OrganizationsController extends Controller
     public function store(StoreOrganizationRequest $request, StoreOrganisation $storeOrganisation)
     {
         $validatedRequest = $request->validated();
-        $dadataService = new DadataService();
+
+//        $dadataService = new DadataService();
 
 //        $organizationFromDadata = $dadataService->getOrganizationByInn($validatedRequest['inn']);
 //
