@@ -1,5 +1,3 @@
-
-@dump($formFields)
 <div>
     <div class="row alert alert-secondary">
         <div class="col-3">
@@ -125,6 +123,8 @@
             @if($selectedReports?->count())
                 <button class="btn btn-outline-primary" wire:click="recoverSelectedReports">К полному списку</button>
             @endif
+                <button class="btn btn-outline-primary" wire:click="saveFieldsCollection">Сохранить коллекцию полей в шаблон</button>
+
         </div>
     @else
         <h5 class="h5">Нет данных для этой формы</h5>

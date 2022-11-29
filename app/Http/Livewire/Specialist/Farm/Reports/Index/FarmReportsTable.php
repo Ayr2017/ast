@@ -193,4 +193,9 @@ class FarmReportsTable extends Component
 
         return $line;
     }
+
+    public function saveFieldsCollection()
+    {
+        dump('Функционал в разработке. Нажмите Esc.');
+    }
 }
