@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-2">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="{{route('admin.form-fields.create')}}" type="button"
+                    <a href="{{route('admin.form-fields.create',['from' => 'form_fields'])}}" type="button"
                        class="btn btn-outline-primary">
                         <nobr>
                             <i class="fa fa-solid fa-plus"></i>

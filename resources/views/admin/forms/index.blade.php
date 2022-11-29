@@ -1,5 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="my-3">
+            <div class="alert alert-danger" role="alert">
+                {{$error}}
+            </div>
+            </div>
+        @endforeach
+    @endif
     <div class="container py-4">
         <div class="row">
             <h3 class="h3">Формы</h3>

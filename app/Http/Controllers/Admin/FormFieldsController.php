@@ -25,12 +25,16 @@ class FormFieldsController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public function create(Request $request)
     {
 //        $form = Form::first();
         $forms = Form::all();
+        if($request->get('from') == 'form_fields'){
+            return redirect()->route('admin.forms.index')->withErrors(['message' => 'Выберите нужную форму и создайте там поле']);
+        }
+
         if(!isset($form)){
-            return redirect()->route('admin.forms.index')->withErrors(['message' => 'Сперва нужно создать хотьб одну форму']);
+            return redirect()->route('admin.forms.index')->withErrors(['message' => 'Сперва нужно создать хотья бы одну форму']);
         }
 
         $field_categories = FieldCategory::all();
