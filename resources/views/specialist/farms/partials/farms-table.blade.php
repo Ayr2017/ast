@@ -8,6 +8,7 @@
             <th>Регион</th>
             <th>Район</th>
             <th>Адрес</th>
+            <th>Контакт</th>
             <th>Управление</th>
         </tr>
         </thead>
@@ -26,6 +27,7 @@
                 <td>{{$farm?->region?->name}}</td>
                 <td>{{$farm?->district->name}}</td>
                 <td>{{$farm?->address}}</td>
+                <td>{{$farm?->contact_value}} {{$farm?->contact_name}}</td>
                 <td>
                     <div class="d-flex justify-content-evenly">
                         <div class="py-1">
