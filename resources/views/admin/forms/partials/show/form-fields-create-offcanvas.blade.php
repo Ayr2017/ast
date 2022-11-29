@@ -17,6 +17,12 @@
             </div>
 
             <div class="mb-3">
+                <label for="number" class="form-label">Порядковый номер</label>
+                <input type="number" min="1" class="form-control" id="number" name="number" aria-describedby="numberHelp" value="{{old('number')}}" required>
+                <div id="numberHelp" class="form-text">Используется при отображении.</div>
+            </div>
+
+            <div class="mb-3">
                 <label for="field_category_id" class="form-label">Категория поля</label>
                 <select class="form-select mb-3" aria-label=".form-select example" name="field_category_id" id="field_category_id">
                     @foreach($field_categories as $category)

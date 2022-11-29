@@ -26,6 +26,7 @@ class UpdateFormFieldRequest extends FormRequest
     {
         return [
             'name' => ['required','string'],
+            'number' => ['nullable','numeric'],
             'type' => ['required','in:text,number,select,checkbox,radio'],
             'unit' => ['string','nullable'],
             'form_id' => ['required'],

@@ -62,7 +62,15 @@ class FarmReportsTable extends Component
     {
         $this->farm = $farm;
         $this->reports = Report::where('farm_id', $farm->id)->where('form_id', Form::first()->id)->get();
-        $this->formFields = FormField::where('form_id', $this->formId)->get()->sortBy('field_category_id');
+        $this->formFields = FormField::where('form_id', $this->formId)
+//            ->orderBy('field_category_id','asc')
+//            ->orderBy('number','asc')
+            ->get()
+            ->sortBy('field_category_id')
+            ->sortBy(function($item){
+            return $item->number ?? PHP_INT_MAX;
+        });
+
         $this->computedFormFields = $this->form->computedFields;
 
     }

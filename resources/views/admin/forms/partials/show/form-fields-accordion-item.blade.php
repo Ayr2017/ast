@@ -12,12 +12,13 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Название</th>
-                    <th>Е.и.</th>
-                    <th>Тип</th>
-                    <th>Категория</th>
-                    <th></th>
+                    <th class="align-top">Id</th>
+                    <th class="align-top">Название</th>
+                    <th class="align-top">Е.и.</th>
+                    <th class="align-top">Тип</th>
+                    <th class="align-top">Категория</th>
+                    <th class="align-top">Порядковый номер</th>
+                    <th class="align-top"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,7 +28,8 @@
                         <td>{{$field->name}}</td>
                         <td>{{$field->unit}}</td>
                         <td>{{$field->type}}</td>
-                        <td>{{$field->category->name}}</td>
+                        <td>{{$field?->category?->name}}</td>
+                        <td>{{$field?->number ?? "Не задан"}}</td>
                         <td>
                             <div class="d-flex">
                                 <div>

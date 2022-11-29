@@ -33,6 +33,11 @@
                         </div>
 
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
+                            <h6 class="card-subtitle mb-2 text-muted">Порядковый номер</h6>
+                            <h5 class="card-title">{{$form_field?->number}}</h5>
+                        </div>
+
+                        <div class="p-2 mb-2 bg-info bg-opacity-10">
                             <h6 class="card-subtitle mb-2 text-muted">Тип</h6>
                             <h5 class="card-title">{{$form_field?->typeName}}</h5>
                         </div>
@@ -50,21 +55,26 @@
                         @endif
 
                         <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Оператор А</h6>
-                            <h5 class="card-title">{{$form_field?->translatedOperatorA}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Форма</h6>
+                            <h5 class="card-title"><a href="{{route('admin.forms.show',['form'=>$form_field?->form])}}">{{$form_field?->form?->name}}</a></h5>
                         </div>
 
+{{--                        <div class="p-2 mb-2 bg-info bg-opacity-10">--}}
+{{--                            <h6 class="card-subtitle mb-2 text-muted">Оператор А</h6>--}}
+{{--                            <h5 class="card-title">{{$form_field?->translatedOperatorA}}</h5>--}}
+{{--                        </div>--}}
 
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Оператор B</h6>
-                            <h5 class="card-title">{{$form_field?->translatedOperatorB}}</h5>
-                        </div>
+
+{{--                        <div class="p-2 mb-2 bg-info bg-opacity-10">--}}
+{{--                            <h6 class="card-subtitle mb-2 text-muted">Оператор B</h6>--}}
+{{--                            <h5 class="card-title">{{$form_field?->translatedOperatorB}}</h5>--}}
+{{--                        </div>--}}
 
 
-                        <div class="p-2 mb-2 bg-info bg-opacity-10">
-                            <h6 class="card-subtitle mb-2 text-muted">Оператор C</h6>
-                            <h5 class="card-title">{{$form_field?->translatedOperatorC}}</h5>
-                        </div>
+{{--                        <div class="p-2 mb-2 bg-info bg-opacity-10">--}}
+{{--                            <h6 class="card-subtitle mb-2 text-muted">Оператор C</h6>--}}
+{{--                            <h5 class="card-title">{{$form_field?->translatedOperatorC}}</h5>--}}
+{{--                        </div>--}}
 
 
                         <p class="card-text text-muted">

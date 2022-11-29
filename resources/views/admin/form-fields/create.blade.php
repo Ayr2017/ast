@@ -40,7 +40,13 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Название</label>
                         <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" value="{{old('name') }}" required>
-                        <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="nameHelp" class="form-text">Название должно быть уникальным.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="number" class="form-label">Порядковый номер</label>
+                        <input type="number" class="form-control" id="number" name="number" aria-describedby="numberHelp" value="{{old('number') ?? $form_field->number}}" required>
+                        <div id="nameHelp" class="form-text">Будет формировать порядок при отображении.</div>
                     </div>
 
                     <div class="mb-3">

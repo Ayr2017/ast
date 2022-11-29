@@ -8,6 +8,7 @@
             <th>Е.и.</th>
             <th>Тип</th>
             <th>Категория</th>
+            <th>Порядковый номер</th>
             <th></th>
         </tr>
         </thead>
@@ -27,6 +28,7 @@
                 <td>{{$field?->unit}}</td>
                 <td>{{$field?->type}}</td>
                 <td>{{$field?->category?->name}}</td>
+                <td>{{$field?->number ?? 'не задан'}}</td>
                 <td>
                     <div class="d-flex">
                         <div>
