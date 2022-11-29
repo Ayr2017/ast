@@ -10,13 +10,13 @@ use function App\Helpers\collectR;
 
 class StoreOrganisation
 {
-    public function execute($validatedRequest, $organizationFromDadata)
+    public function execute($validatedRequest, $organizationFromDadata=null)
     {
 
 
-        $validatedRequest['kpp'] = $organizationFromDadata->get('data')?->get('kpp');
-        $validatedRequest['ogrn'] = $organizationFromDadata->get('data')?->get('ogrn');
-        $validatedRequest['data'] = $organizationFromDadata->get('data');
+        $validatedRequest['kpp'] = '';
+        $validatedRequest['ogrn'] = '';
+        $validatedRequest['data'] = '[]';
         $validatedRequest['creator_id'] = auth()->id();
 
         return Organization::firstOrCreate(['inn' => $validatedRequest['inn']],$validatedRequest);
