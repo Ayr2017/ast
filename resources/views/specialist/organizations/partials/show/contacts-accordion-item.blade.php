@@ -77,8 +77,8 @@
 {{--                        </h5>--}}
 {{--                    @endif--}}
 
-                    @include('specialist.organizations.partials.show.contact-edit-offcanvas')
-                    @include('general.contacts.partials.destroy-modal')
+                    @include('specialist.organizations.partials.show.contact-edit-offcanvas',['id' => $contact->id])
+                    @include('general.contacts.partials.destroy-modal',['id' => $contact->id])
                 </div>
             @endforeach
                 @include('specialist.organizations.partials.show.contacts-create-offcanvas')
