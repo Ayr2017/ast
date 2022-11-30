@@ -44,14 +44,20 @@ class SelectRegionAndDistrict extends Component
         $this->regions = Region::where('name', 'like', '%' . $this->regionSearch . '%')->get();
         $this->regionId = Region::where('name', $this->regionSearch)?->first()?->id;
         $this->districtSearch = '';
+        $this->districtId = null;
         $this->getDistricts();
+        if($this->regionId){
+            $this->regions = [];
+        }
     }
 
     public function updatedDistrictSearch()
     {
         $this->getDistricts();
         $this->districtId = District::where('name', $this->districtSearch)?->first()?->id;
-
+        if($this->districtId){
+            $this->districts = [];
+        }
     }
 
     public function getDistricts()
