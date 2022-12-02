@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Specialist\Farm\Reports\Index;
 
 use App\Models\Farm;
 use App\Models\FieldCategory;
+use App\Models\FieldTemplate;
 use App\Models\Form;
 use App\Models\FormCategory;
 use App\Models\FormField;
@@ -36,6 +37,9 @@ class FarmReportsTable extends Component
     public $checkedFields = [];
     public $checkedComputedFields = [];
     public Collection $computedFormFields ;
+    public string $templateName;
+    public string $resultMessage;
+    public Collection $templates;
 
     public function __construct()
     {
@@ -55,7 +59,7 @@ class FarmReportsTable extends Component
 
         $this->checkedFields = $this->form->fields->pluck('id')->toArray();
         $this->computedFormFields = $this->form->computedFields;
-
+        $this->templates = FieldTemplate::where('form_id', $this->formId)->get();
     }
 
     public function mount(Farm $farm)
@@ -64,7 +68,7 @@ class FarmReportsTable extends Component
         $this->reports = Report::where('farm_id', $farm->id)->where('form_id', Form::first()->id)->get();
         $this->formFields = FormField::where('form_id', $this->formId)
 //            ->orderBy('field_category_id','asc')
-//            ->orderBy('number','asc')
+            ->orderBy('number','asc')
             ->get()
             ->sortBy('field_category_id')
             ->sortBy(function($item){
@@ -72,6 +76,8 @@ class FarmReportsTable extends Component
         });
 
         $this->computedFormFields = $this->form->computedFields;
+        $this->templateName = '';
+        $this->resultMessage = '';
 
     }
 
@@ -194,8 +200,39 @@ class FarmReportsTable extends Component
         return $line;
     }
 
-    public function saveFieldsCollection()
+    public function getCheckedFieldsCollectionProperty()
     {
-        dump('Функционал в разработке. Нажмите Esc.');
+
+        return FormField::whereIn('id', $this->checkedFields)->get();
+    }
+
+    public function saveTemplate()
+    {
+        $res = FieldTemplate::where('name',$this->templateName)->first();
+        if($res){
+            $this->resultMessage = 'Шаблон с таким названием уже существует!';
+        } elseif($this->templateName && is_array($this->checkedFields) && count($this->checkedFields)){
+            $fieldTemplate = FieldTemplate::create([
+                'name' => $this->templateName,
+                'form_id' => $this->formId,
+                'fields' => $this->checkedFields,
+            ]);
+            $this->resultMessage = 'Успешно сохранено!';
+            return redirect()->route('specialist.farms.reports.index',['farm' => $this->farm])->with(['msg' => $this->resultMessage]);
+
+        } else {
+            $this->resultMessage = 'Произошла ошибка';
+        }
+
+    }
+
+    public function acceptFieldsCollection($id)
+    {
+        $fieldsTemplate = FieldTemplate::find($id);
+        $this->formFields = FormField::where('form_id', $this->formId)
+            ->whereIn('id',$fieldsTemplate->fields)
+//            ->orderBy('field_category_id','asc')
+            ->orderBy('number','asc')
+            ->get();
     }
 }

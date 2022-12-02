@@ -5,6 +5,7 @@
             <th>№</th>
             <th>Форма</th>
             <th>Ферма</th>
+            <th>Отчёты фермы</th>
             <th>Организация</th>
             <th>Податель</th>
             <th>Данные</th>
@@ -22,6 +23,9 @@
                 </td>
                 <td>
                     <a href="{{route('specialist.farms.show',['farm' => $report?->farm?->id])}}">{{$report?->farm?->name}}</a>
+                </td>
+                <td>
+                    <a href="{{route('specialist.farms.reports.index',['farm' => $report?->farm?->id])}}">Отчёты фермы</a>
                 </td>
                 <td>
                     <a href="{{route('specialist.organizations.show',['organization' => $report?->organization?->id])}}">{{$report?->organization?->name}}</a>

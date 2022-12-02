@@ -33,6 +33,11 @@
             </div>
         </div>
     </div>
+    <div class="dflex">
+        @foreach($templates as $template)
+            <button class="btn btn-outline-dark btn-sm my-1" wire:click="acceptFieldsCollection({{$template->id}})">{{$template->name}}</button>
+        @endforeach
+    </div>
 
     <div wire:loading.delay.long>
         Идёт загрузка контента. Пожалуйста, подождите ...
@@ -123,7 +128,7 @@
             @if($selectedReports?->count())
                 <button class="btn btn-outline-primary" wire:click="recoverSelectedReports">К полному списку</button>
             @endif
-                <button class="btn btn-outline-primary" wire:click="saveFieldsCollection">Сохранить коллекцию полей в шаблон</button>
+                @include('livewire.specialist.farm.reports.index.partials.create-modal')
 
         </div>
     @else

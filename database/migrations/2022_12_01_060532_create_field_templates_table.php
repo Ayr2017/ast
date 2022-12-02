@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('checked_fields', function (Blueprint $table) {
+        Schema::create('field_templates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('form_id');
             $table->json('fields');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('checked_fields');
+        Schema::dropIfExists('field_templates');
     }
 };
