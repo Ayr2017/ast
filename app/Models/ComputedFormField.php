@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+
+use App\Http\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -87,5 +90,11 @@ class ComputedFormField extends Model
     public function getJoinedSelectFieldsAttribute(): string
     {
         return collect(json_decode($this->attributes['select_fields']))->join(',');
+    }
+
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
+        $filter->apply($builder);
     }
 }

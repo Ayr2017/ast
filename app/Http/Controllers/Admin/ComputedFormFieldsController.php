@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Admin\ComputedFormFields\StoreFormField;
 use App\Actions\Admin\ComputedFormFields\UpdateComputedFormField;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\ComputedFormFieldsFilter;
 use App\Http\Requests\Admin\ComputedFormFields\StoreComputedFormFieldRequest;
 use App\Http\Requests\Admin\ComputedFormFields\UpdateComputedFormFieldRequest;
 use App\Models\ComputedFormField;
@@ -17,9 +18,9 @@ class ComputedFormFieldsController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(ComputedFormFieldsFilter $computedFormField)
     {
-        $fields = ComputedFormField::all();
+        $fields = ComputedFormField::filter($computedFormField)->get();
 
         return view('admin.computed-form-fields.index',[
             'fields' => $fields,
@@ -87,11 +88,10 @@ class ComputedFormFieldsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateComputedFormFieldRequest $updateComputedFormFieldRequest
+     * @param $id
+     * @param UpdateComputedFormField $updateComputedFormField
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(
         UpdateComputedFormFieldRequest $updateComputedFormFieldRequest,
@@ -105,13 +105,18 @@ class ComputedFormFieldsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        $formField = ComputedFormField::find($id);
+        if($formField){
+            $formField->delete();
+        } else {
+            ComputedFormField::withTrashed()->find($id)->restore();
+        }
+
+        return redirect()->back();
     }
 }
