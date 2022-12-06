@@ -86,7 +86,7 @@
                     <form href="{{route('specialist.farms.destroy',['farm' => $farm])}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-link text-danger">Удалить</button>
+                        <button type="submit" class="btn btn-link text-danger">{{$farm->deleted_at ? 'Восстановить' : 'Удалить'}}</button>
                     </form>
                 </div>
             </div>
