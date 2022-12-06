@@ -37,8 +37,6 @@
             <button class="btn btn-outline-dark btn-sm my-1" wire:click="acceptFieldsCollection({{$template->id}})">{{$template->name}}</button>
         @endforeach
     </div>
-    {{$formFields->count()}}
-    {{count($checkedFields)}}
     <div wire:loading.delay.long>
         Идёт загрузка контента. Пожалуйста, подождите ...
     </div>
