@@ -94,8 +94,9 @@ class FarmReportsTable extends Component
 
     public function updatedFormId($value)
     {
-//        $this->reports = Report::where('farm_id', $this->farm->id)->where('form_id', $this->formId)->get();
-//        $this->formFields = FormField::where('form_id', $this->formId)->get();
+        $this->reports = Report::where('farm_id', $this->farm->id)->where('form_id', $this->formId)->get();
+        $this->formFields = FormField::where('form_id', $this->formId)->get();
+        $this->templates = FieldTemplate::where('form_id', $this->formId)->get();
     }
 
     public function compareReports()
