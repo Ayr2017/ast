@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\Admin\FormFields\UpdateFormField;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\FormFieldsFilter;
 use App\Http\Requests\Admin\FormFields\StoreFormFieldRequest;
 use App\Http\Requests\Admin\FormFields\UpdateFormFieldRequest;
 use App\Models\FieldCategory;
@@ -16,9 +17,9 @@ class FormFieldsController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(FormFieldsFilter $formFieldsFilter)
     {
-        $formFields = FormField::withTrashed()->get();
+        $formFields = FormField::filter($formFieldsFilter)->get();
         return view('admin.form-fields.index', ['form_fields' => $formFields]);
     }
 

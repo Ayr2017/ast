@@ -18,10 +18,10 @@
             </div>
             <div class="col">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="{{route('admin.computed-form-fields.index',['select' => null])}}" type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == null ? 'active' : ''}}">Все</a>
-                    <a href="{{route('admin.computed-form-fields.index',['select' =>'withoutTrashed'])}}" type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == 'withoutTrashed' ? 'active' : ''}}">Активные</a>
+                    <a href="{{route('admin.computed-form-fields.index',['select' => 'withTrashed'])}}" type="button"
+                       class="btn btn-outline-secondary {{request()->get('select') == 'withTrashed' ? 'active' : ''}}">Все</a>
+                    <a href="{{route('admin.computed-form-fields.index',['select' =>null])}}" type="button"
+                       class="btn btn-outline-secondary {{request()->get('select') == null ? 'active' : ''}}">Активные</a>
                     <a href="{{route('admin.computed-form-fields.index',['select' => 'trashed']) }}" type="button"
                        class="btn btn-outline-secondary {{request()->get('select') == 'trashed' ? 'active' : ''}}">Деактивированные</a>
                 </div>

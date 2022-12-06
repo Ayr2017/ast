@@ -2,7 +2,7 @@
 
 namespace App\Http\Filters;
 
-class FormsFilter extends QueryFilter
+class FormFieldsFilter extends QueryFilter
 {
     public function select(string $select)
     {
