@@ -11,7 +11,6 @@
             </div>
         </div>
         <div class="col-3">
-
             <div class="">
                 <label for="dateFrom" class="form-label">Дата от</label>
                 <input type="date" class="form-control" id="dateFrom" wire:model="dateFrom"
@@ -38,7 +37,8 @@
             <button class="btn btn-outline-dark btn-sm my-1" wire:click="acceptFieldsCollection({{$template->id}})">{{$template->name}}</button>
         @endforeach
     </div>
-
+    {{$formFields->count()}}
+    {{count($checkedFields)}}
     <div wire:loading.delay.long>
         Идёт загрузка контента. Пожалуйста, подождите ...
     </div>
