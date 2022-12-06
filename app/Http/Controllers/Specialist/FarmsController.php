@@ -18,7 +18,7 @@ class FarmsController extends Controller
      */
     public function index(FarmsFilter $farmsFilter)
     {
-        $farms = Farm::filter($farmsFilter)->with(['organization', 'district', 'region'])->paginate(15);
+        $farms = Farm::filter($farmsFilter)->with(['organization', 'district', 'region'])->paginate(30);
         return view('specialist.farms.index', ['farms' => $farms]);
     }
 
