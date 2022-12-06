@@ -99,6 +99,7 @@ class FarmReportsTable extends Component
         $this->formFields = FormField::where('form_id', $this->formId)->get();
         $this->templates = FieldTemplate::where('form_id', $this->formId)->get();
         $this->checkedFields = $this->form->fields->pluck('id')->toArray();
+        $this->computedFormFields = $this->form->computedFields;
     }
 
     public function compareReports()
