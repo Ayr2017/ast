@@ -8,7 +8,9 @@
                     <h3 class="h3"><span
                             class="text-black-50 d-none d-sm-inline d-lg-inline d-md-inline">Ферма</span> {{$farm->name}}
                     </h3>
-                    <a class="btn btn-link" href="{{route('specialist.reports.create')}}">Подать отчёт</a>
+                    @if(!$farm->deleted_at)
+                        <a class="btn btn-link" href="{{route('specialist.reports.create')}}">Подать отчёт</a>
+                    @endif
                 </div>
 
             </div>
@@ -71,7 +73,7 @@
                                 <tr>
                                     <th>Всего отчётов</th>
                                     <td>
-                                        <a href="{{route('specialist.farms.reports.index',['farm' => $farm])}}">
+                                        <a href="{{$farm->deleted_at ? '' : route('specialist.farms.reports.index',['farm' => $farm])}}" class="{{$farm->deleted_at ? 'btn btn-link disabled' : ''}}">
                                             {{$farm?->reports?->count()}}
                                         </a>
                                     </td>
