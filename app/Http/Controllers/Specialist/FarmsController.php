@@ -29,7 +29,7 @@ class FarmsController extends Controller
      */
     public function create()
     {
-        return redirect()->route('specialist.organizations.index')->withErrors(['message' => 'Для создания фермы выберите организацию или страдайте ее']);
+        return redirect()->route('specialist.organizations.index')->withErrors(['message' => 'Для создания фермы выберите организацию или создайте организацию']);
     }
 
     /**
