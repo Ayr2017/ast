@@ -12,6 +12,7 @@
                     @endforeach
                 </datalist>
                 <input type="hidden" name="organization_id" value="{{$organizationId}}">
+                {{$organizationId}}
             </div>
 
             <div class="mb-3">
@@ -24,6 +25,7 @@
                     @endforeach
                 </datalist>
                 <input type="hidden" name="farm_id" value="{{$farmId}}">
+                {{$farmId}}
             </div>
 
             <div class="mb-3">

@@ -96,6 +96,13 @@ class SelectForm extends Component
 
     }
 
+    public function updatedFarmSearch($value)
+    {
+        $this->farmSearch = $value;
+        $this->farm = Farm::where('name', $value)->first();
+        $this->farmId = $this->farm?->id;
+    }
+
     public function updatedFormId( int $value)
     {
         $this->formFields = FormField::where('form_id',$value)->get()?->groupBy('field_category_id')->collect();
