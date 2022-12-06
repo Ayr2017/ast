@@ -24,7 +24,7 @@ class ReportsController extends Controller
      */
     public function index(ReportsFilter $reportsFilter)
     {
-        $reports = Report::with(['farm','form','organization','creator'])->filter($reportsFilter)->paginate(15);
+        $reports = Report::with(['farm','form','organization','creator'])->filter($reportsFilter)->paginate(30);
 
         return view('specialist.reports.index', ['reports' => $reports]);
     }
