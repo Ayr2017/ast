@@ -38,7 +38,7 @@
                                 <a class="btn btn-light" href="{{route('specialist.farms.index')}}">Все фермы</a>
                                 <a class="btn btn-light" href="{{route('specialist.reports.index')}}">Все отчёты</a>
                             @else
-                                <p class="p">Ваша учетная запись заблокирована, необходимо обратиться к администратору</p>
+                                <p class="p">Дождитесь, пока администратор одобрит вашу заявку</p>
 
                             @endif
                     </div>
