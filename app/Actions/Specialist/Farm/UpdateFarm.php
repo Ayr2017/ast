@@ -8,7 +8,7 @@ class UpdateFarm
 {
     public function execute($validatedRequest,$id)
     {
-        $farm = Farm::find($id);
+        $farm = Farm::withTrashed()->find($id);
         $farm->update($validatedRequest);
         return $farm;
     }
