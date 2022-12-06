@@ -19,7 +19,7 @@
                         {{$form->name}}
                     </a>
                 </td>
-                <td>{{$form->creator->name}}</td>
+                <td>{{$form->creator?->name ?? '-'}}</td>
                 <td>{{$form->category->name}}</td>
                 <td>{{$form->description}}</td>
                 <td>

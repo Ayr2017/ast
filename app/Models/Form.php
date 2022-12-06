@@ -41,4 +41,10 @@ class Form extends Model
     {
         $filter->apply($builder);
     }
+
+    public function sortedFieldsByNumber()
+    {
+        return  $this->hasMany(FormField::class)->orderByRaw('-number desc');
+
+    }
 }

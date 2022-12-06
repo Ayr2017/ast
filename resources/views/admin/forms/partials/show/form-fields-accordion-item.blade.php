@@ -22,7 +22,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($form->fields as $field)
+                @forelse($form->sortedFieldsByNumber as $field)
                     <tr class="">
                         <td>{{$field->id}}</td>
                         <td>{{$field->name}}</td>
