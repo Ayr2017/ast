@@ -17,7 +17,7 @@
                     <label for="name" class="form-label">Название</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Разгар - молоко" wire:model="templateName">
                 </div>
-                {{$this->checkedFieldsCollection->pluck('name')->join(', ')}}
+                {{$this->checkedFieldsCollection->pluck('name')->join(', ')}} {{$this->checkedFieldsCollection->count()}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
