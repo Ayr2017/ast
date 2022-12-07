@@ -32,7 +32,7 @@
                         <label for="field_category_id" class="form-label">Название формы</label>
                         <select class="form-select mb-3" aria-label=".form-select example" name="form_id" id="form_id">
                             @foreach($forms as $form)
-                                <option value="{{$form->id}}" {{old('form_id') == $form->id ? 'selected' : ''}}>{{$form->name}}</option>
+                                <option value="{{$form->id}}" {{(old('form_id') ?? $computed_form_field->form_id) == $form->id ? 'selected' : ''}}>{{$form->name}}</option>
                             @endforeach
                         </select>
                         <div id="field_category_idHelp" class="form-text">We'll never share your email with anyone else.</div>
