@@ -17,9 +17,9 @@
                     <label for="name" class="form-label">Название</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Разгар - молоко" wire:model="templateName">
                 </div>
-                {{$this->checkedFieldsCollection->count()}} <br>
+                Всего полей: {{$this->checkedFieldsCollection->count()}} <br>
                 {{--$this->checkedFieldsCollection->pluck('name')->join(', ')--}}
-                @foreach($this->checkedFieldsCollection->sortBy('category_id') as $item)
+                @foreach($this->checkedFieldsCollection->sortBy('category') as $item)
                     <span><b>{{$item->name}}</b>({{$item->category->name}})</span>
                 @endforeach
             </div>
