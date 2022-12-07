@@ -21,7 +21,7 @@
                 </td>
                 <td>{{$organization?->inn}}</td>
                 <td>{{$organization?->region?->name}}</td>
-                <td>{{$organization?->district->name}}</td>
+                <td>{{$organization?->district?->name}}</td>
                 <td>{{$organization?->address}}</td>
                 <td>{{$organization?->contacts?->first()?->phone ?? $organization?->contacts?->first()?->mobile ?? $organization?->contacts?->first()?->work_number}} <br> {{$organization?->contacts?->first()?->name}} {{$organization?->contacts?->first()?->surname}}</td>
                 <td>

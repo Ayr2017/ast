@@ -19,11 +19,11 @@
                         </tr>
                         <tr>
                             <th scope="row">Регион</th>
-                            <td>{{$farm->region->name}}</td>
+                            <td>{{$farm?->region?->name}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Район</th>
-                            <td>{{$farm->district->name}}</td>
+                            <td>{{$farm?->district?->name}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Адрес</th>

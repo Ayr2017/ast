@@ -26,7 +26,7 @@
                     </a>
                 </td>
                 <td>{{$farm?->region?->name}}</td>
-                <td>{{$farm?->district->name}}</td>
+                <td>{{$farm?->district?->name}}</td>
                 <td>{{$farm?->address}}</td>
                 <td>{{$farm?->contact_value}} {{$farm?->contact_name}}</td>
                 <td>{{$farm?->reports->count()}}</td>
