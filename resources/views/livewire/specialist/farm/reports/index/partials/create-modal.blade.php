@@ -19,7 +19,7 @@
                 </div>
                 {{$this->checkedFieldsCollection->count()}} <br>
                 {{--$this->checkedFieldsCollection->pluck('name')->join(', ')--}}
-                @foreach($this->checkedFieldsCollection as $item)
+                @foreach($this->checkedFieldsCollection->sortBy('category_id') as $item)
                     <span><b>{{$item->name}}</b>({{$item->category->name}})</span>
                 @endforeach
             </div>
