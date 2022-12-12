@@ -1,5 +1,6 @@
+<div>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#templateModal">
+<button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#templateModal">
     Сохранить коллекцию полей в шаблон
 </button>
 
@@ -17,9 +18,8 @@
                     <label for="name" class="form-label">Название</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Разгар - молоко" wire:model="templateName">
                 </div>
-                Всего полей: {{$this->checkedFieldsCollection->count()}} <br>
-                {{--$this->checkedFieldsCollection->pluck('name')->join(', ')--}}
-                @foreach($this->checkedFieldsCollection->sortBy('category') as $item)
+                Всего полей: {{$this->checkedFieldsCollection?->count()}} <br>
+                @foreach($this->checkedFieldsCollection?->sortBy('category') as $item)
                     <span><b>{{$item->name}}</b>({{$item->category->name}})</span>
                 @endforeach
             </div>
@@ -30,4 +30,4 @@
         </div>
     </div>
 </div>
-
+</div>

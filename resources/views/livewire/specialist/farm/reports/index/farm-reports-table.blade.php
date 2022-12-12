@@ -120,16 +120,16 @@
         </div>
         <div class="my-2">
             @if($checkedReports)
-                <button class="btn btn-outline-primary" wire:click="compareReports">Сравнить</button>
+                <button class="btn btn-outline-primary m-1" wire:click="compareReports">Сравнить</button>
             @endif
 
             @if($selectedReports?->count())
-                <button class="btn btn-outline-primary" wire:click="resetSelectedReports">Сбросить</button>
-                <button class="btn btn-outline-primary" wire:click="resetSelectedReportsWithoutFields">Сбросить только отчёты</button>
+                <button class="btn btn-outline-primary m-1" wire:click="resetSelectedReports">Сбросить</button>
+                <button class="btn btn-outline-primary m-1" wire:click="resetSelectedReportsWithoutFields">Сбросить только отчёты</button>
             @endif
 
             @if($selectedReports?->count())
-                <button class="btn btn-outline-primary" wire:click="recoverSelectedReports">К полному списку</button>
+                <button class="btn btn-outline-primary m-1" wire:click="recoverSelectedReports">К полному списку</button>
             @endif
                 @include('livewire.specialist.farm.reports.index.partials.create-modal')
 

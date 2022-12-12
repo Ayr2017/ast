@@ -66,7 +66,11 @@ class FarmReportsTable extends Component
     public function mount(Farm $farm)
     {
         $this->farm = $farm;
-        $this->reports = Report::where('farm_id', $farm->id)->where('form_id', Form::first()->id)->get();
+        $this->reports = Report::where('farm_id', $farm->id)
+            ->where('form_id', Form::first()->id)
+            ->where('created_at', '>=', $this->dateFrom)
+            ->where('created_at', '<=', $this->dateTo)
+            ->get();
         $this->formFields = FormField::where('form_id', $this->formId)
 //            ->orderBy('field_category_id','asc')
             ->orderBy('number','asc')
@@ -109,7 +113,6 @@ class FarmReportsTable extends Component
 //        $result = $this->reportService->compareSelectedReports($this->selectedReports, $this->formFields);
         $this->reports = $this->selectedReports;
         $this->formFields = $this->formFields->whereIn('id', $this->checkedFields);
-
         $this->columnChartModel = $this->getColumnChartModel();
         $this->lineChartModel = $this->getLineChartModel();
 
