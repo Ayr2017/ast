@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Specialist\Farm\Reports\Index;
 
+use App\Exports\ReportExport;
 use App\Models\Farm;
 use App\Models\FieldCategory;
 use App\Models\FieldTemplate;
@@ -16,7 +17,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FarmReportsTable extends Component
 {
@@ -30,13 +33,13 @@ class FarmReportsTable extends Component
     public $checkedReports = [];
     public Collection $selectedReports;
     private ReportService $reportService;
-    public  $dateFrom;
-    public  $dateTo;
+    public $dateFrom;
+    public $dateTo;
     private ColumnChartModel $columnChartModel;
     private LineChartModel $lineChartModel;
     public $checkedFields = [];
     public $checkedComputedFields = [];
-    public Collection $computedFormFields ;
+    public Collection $computedFormFields;
     public string $templateName;
     public string $resultMessage;
     public Collection $templates;
@@ -72,13 +75,13 @@ class FarmReportsTable extends Component
             ->where('created_at', '<=', $this->dateTo)
             ->get();
         $this->formFields = FormField::where('form_id', $this->formId)
-//            ->orderBy('field_category_id','asc')
-            ->orderBy('number','asc')
-            ->get()
-            ->sortBy('field_category_id')
-            ->sortBy(function($item){
-            return $item->number ?? PHP_INT_MAX;
-        });
+            ->orderBy('field_category_id', 'asc')
+//            ->orderBy('number','asc')
+            ->get();
+//            ->sortBy('field_category_id');
+//            ->sortBy(function($item){
+//            return $item->number ?? PHP_INT_MAX;
+//        });
 
         $this->computedFormFields = $this->form->computedFields;
         $this->templateName = '';
@@ -132,6 +135,7 @@ class FarmReportsTable extends Component
         $this->uncheckedAll = false;
 
     }
+
     public function resetSelectedReportsWithoutFields()
     {
         $this->selectedReports = new Collection([]);
@@ -143,6 +147,7 @@ class FarmReportsTable extends Component
             ->get();
 
     }
+
     public function recoverSelectedReports()
     {
         $this->reports = Report::where('farm_id', $this->farm->id)
@@ -155,7 +160,7 @@ class FarmReportsTable extends Component
 
     public function render()
     {
-        return view('livewire.specialist.farm.reports.index.farm-reports-table',[
+        return view('livewire.specialist.farm.reports.index.farm-reports-table', [
             'reports' => $this->reports,
             'formFields' => $this->formFields->sortBy('field_category_id'),
             'form' => $this->form,
@@ -163,7 +168,7 @@ class FarmReportsTable extends Component
             'formId' => $this->formId,
             'columnChartModel' => $this->columnChartModel,
             'lineChartModel' => $this->lineChartModel,
-            ]);
+        ]);
     }
 
     private function getColumnChartModel()
@@ -171,12 +176,12 @@ class FarmReportsTable extends Component
         $colors = FieldCategory::CATEGORY_COLORS;
         $col = new ColumnChartModel();
         $col->setTitle($this->form->name)->setColumnWidth(10);
-        $this->formFields->each(function($item, $key) use ($col, $colors){
-            if($item->type == 'number') {
-                foreach($this->reports as $key=>$report) {
-                    $title = $item->name." ".$report->date;
-                    if(isset(($report->data)['field_'.$item->id])) {
-                        $col->addColumn($title, ($report->data)['field_'.$item->id], $colors[$key]);
+        $this->formFields->each(function ($item, $key) use ($col, $colors) {
+            if ($item->type == 'number') {
+                foreach ($this->reports as $key => $report) {
+                    $title = $item->name . " " . $report->date;
+                    if (isset(($report->data)['field_' . $item->id])) {
+                        $col->addColumn($title, ($report->data)['field_' . $item->id], $colors[$key]);
                     } else {
                         $col->addColumn($title, 0, $colors[$key]);
                     }
@@ -193,11 +198,11 @@ class FarmReportsTable extends Component
         $line = new LineChartModel();
         $line->setTitle($this->form->name)->multiLine();
 
-        $this->formFields->each(function($item, $key) use ($line, $colors){
-            if($item->type == 'number') {
-                foreach($this->reports as $key=>$report) {
-                    $title = $item->name." ".$report->date;
-                    if(isset(($report->data)['field_'.$item->id])) {
+        $this->formFields->each(function ($item, $key) use ($line, $colors) {
+            if ($item->type == 'number') {
+                foreach ($this->reports as $key => $report) {
+                    $title = $item->name . " " . $report->date;
+                    if (isset(($report->data)['field_' . $item->id])) {
                         $line->addSeriesPoint($title, $item->name, ($report->data)['field_' . $item->id])->addColor($colors[$key]);
                     } else {
                         $line->addSeriesPoint($title, $item->name, 0)->addColor($colors[$key]);
@@ -217,17 +222,17 @@ class FarmReportsTable extends Component
 
     public function saveTemplate()
     {
-        $res = FieldTemplate::where('name',$this->templateName)->first();
-        if($res){
+        $res = FieldTemplate::where('name', $this->templateName)->first();
+        if ($res) {
             $this->resultMessage = 'Шаблон с таким названием уже существует!';
-        } elseif($this->templateName && is_array($this->checkedFields) && count($this->checkedFields)){
+        } elseif ($this->templateName && is_array($this->checkedFields) && count($this->checkedFields)) {
             $fieldTemplate = FieldTemplate::create([
                 'name' => $this->templateName,
                 'form_id' => $this->formId,
                 'fields' => $this->checkedFields,
             ]);
             $this->resultMessage = 'Успешно сохранено!';
-            return redirect()->route('specialist.farms.reports.index',['farm' => $this->farm])->with(['msg' => $this->resultMessage]);
+            return redirect()->route('specialist.farms.reports.index', ['farm' => $this->farm])->with(['msg' => $this->resultMessage]);
 
         } else {
             $this->resultMessage = 'Произошла ошибка';
@@ -240,9 +245,9 @@ class FarmReportsTable extends Component
         $fieldsTemplate = FieldTemplate::find($id);
         $this->checkedFields = $fieldsTemplate->fields;
         $this->formFields = FormField::where('form_id', $this->formId)
-            ->whereIn('id',$fieldsTemplate->fields)
+            ->whereIn('id', $fieldsTemplate->fields)
 //            ->orderBy('field_category_id','asc')
-            ->orderBy('number','asc')
+            ->orderBy('number', 'asc')
             ->get();
     }
 
@@ -251,9 +256,25 @@ class FarmReportsTable extends Component
         $this->checkedFields = [];
         $this->uncheckedAll = true;
     }
+
     public function checkAll()
     {
         $this->checkedFields = $this->formFields->pluck('id')->toArray();
         $this->uncheckedAll = false;
+    }
+
+    public function downloadExcel()
+    {
+        $data = ['reports' => $this->reports,
+            'formFields' => $this->formFields->sortBy('field_category_id'),
+            'form' => $this->form,
+            'forms' => $this->forms,
+            'formId' => $this->formId,
+            'columnChartModel' => $this->columnChartModel,
+            'lineChartModel' => $this->lineChartModel,
+            'computedFormFields' => $this->computedFormFields,
+        ];
+        $name = "report_".date("Y-m-d_H:i:s").".xlsx";
+        return Excel::download(new ReportExport($data), "$name");
     }
 }
