@@ -81,15 +81,15 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <a href="{{route('specialist.farms.edit',['farm' => $farm])}}" class="btn btn-primary m-1">Редактировать</a>
+                    <a href="{{route('specialist.farms.edit',['farm' => $farm])}}" class="btn btn-outline-primary m-1">Редактировать</a>
                     <form href="{{route('specialist.farms.destroy',['farm' => $farm])}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger m-1">{{$farm->deleted_at ? 'Восстановить' : 'Удалить'}}</button>
+                        <button type="submit" class="btn btn-outline-danger m-1">{{$farm->deleted_at ? 'Восстановить' : 'Удалить'}}</button>
                     </form>
 
                     @if(!$farm->deleted_at)
-                        <a class="btn btn-secondary m-1" href="{{route('specialist.reports.create')}}">Подать отчёт</a>
+                        <a class="btn btn-outline-secondary m-1" href="{{route('specialist.reports.create')}}">Подать отчёт</a>
                     @endif
                 </div>
             </div>
