@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             <p>
-                <a class="btn btn-link" href="{{route('specialist.reports.index')}}">Ко всем отчётам</a>
+                <a class="btn btn-secondary" href="{{route('specialist.reports.index')}}">Ко всем отчётам</a>
             </p>
         </div>
         <div class="row">
@@ -35,28 +35,28 @@
                                     <th>Огранизация</th>
                                     <td>
                                         <a href="{{route('specialist.organizations.show',['organization' => $report->organization])}}">
-                                            {{$report->organization->name}}
+                                            {{$report->organization?->name}}
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Регион и район организации</th>
                                     <td>
-                                        {{$report->organization->region->name}}, {{$report->organization->district->name}}
+                                        {{$report->organization?->region?->name}}, {{$report->organization?->district?->name}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Ферма</th>
                                     <td>
                                         <a href="{{route('specialist.farms.show',['farm' => $report->farm])}}">
-                                            {{$report->farm->name}}
+                                            {{$report->farm?->name}}
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Регион и район фермы</th>
                                     <td>
-                                        {{$report->farm->region->name}}, {{$report->farm->district->name}}
+                                        {{$report->farm?->region?->name}}, {{$report->farm?->district?->name}}
                                     </td>
                                 </tr>
                                 <tr>
@@ -74,7 +74,7 @@
                                 <tr>
                                     <th>Имя специалиста</th>
                                     <td>
-                                        {{$report->creator->fullName}}
+                                        {{$report->creator?->fullName}}
                                     </td>
                                 </tr>
                                 </tbody>

@@ -8,9 +8,6 @@
                     <h3 class="h3"><span
                             class="text-black-50 d-none d-sm-inline d-lg-inline d-md-inline">Ферма</span> {{$farm->name}}
                     </h3>
-                    @if(!$farm->deleted_at)
-                        <a class="btn btn-link" href="{{route('specialist.reports.create')}}">Подать отчёт</a>
-                    @endif
                 </div>
 
             </div>
@@ -84,12 +81,16 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <a href="{{route('specialist.farms.edit',['farm' => $farm])}}" class="btn btn-link">Редактировать</a>
+                    <a href="{{route('specialist.farms.edit',['farm' => $farm])}}" class="btn btn-primary m-1">Редактировать</a>
                     <form href="{{route('specialist.farms.destroy',['farm' => $farm])}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-link text-danger">{{$farm->deleted_at ? 'Восстановить' : 'Удалить'}}</button>
+                        <button type="submit" class="btn btn-danger m-1">{{$farm->deleted_at ? 'Восстановить' : 'Удалить'}}</button>
                     </form>
+
+                    @if(!$farm->deleted_at)
+                        <a class="btn btn-secondary m-1" href="{{route('specialist.reports.create')}}">Подать отчёт</a>
+                    @endif
                 </div>
             </div>
         </div>

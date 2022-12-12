@@ -32,6 +32,7 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
         <span class="navbar-toggler-icon"></span>
     </button>
+
 {{--    <input class="form-control form-control-dark w-100 bg-dark bg-opacity-20 border-secondary text-white-50"--}}
 {{--           type="text" placeholder="Поиск" aria-label="Search">--}}
 
