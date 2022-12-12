@@ -129,6 +129,7 @@ class FarmReportsTable extends Component
             ->where('created_at', '>=', $this->dateFrom)
             ->where('created_at', '<=', $this->dateTo)
             ->get();
+        $this->uncheckedAll = false;
 
     }
     public function resetSelectedReportsWithoutFields()
