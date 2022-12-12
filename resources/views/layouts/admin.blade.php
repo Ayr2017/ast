@@ -61,7 +61,7 @@
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            {{ __('auth.Logout') }}
                         </a>
                         <a class="dropdown-item" href="{{ route('general.profiles.show',['profile'=>auth()->user()]) }}">
                             {{ __('auth.Profile') }}

@@ -20,4 +20,5 @@ return [
     'Dashboard' => 'Панель',
     'Profiles' => 'Профили',
     'Profile' => 'Профиль',
+    'Logout' => 'Выход'
 ];
