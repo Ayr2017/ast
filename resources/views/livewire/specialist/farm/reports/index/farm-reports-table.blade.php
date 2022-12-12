@@ -33,7 +33,12 @@
         </div>
     </div>
     <div class="dflex">
-        @foreach($templates as $template)
+        @if(!$uncheckedAll)
+        <button class="btn btn-info btn-sm my-1" wire:click="uncheckAll">Убрать выделение</button>
+        @else
+            <button class="btn btn-info btn-sm my-1" wire:click="checkAll">Вернуть выделение</button>
+        @endif
+    @foreach($templates as $template)
             <button class="btn btn-outline-dark btn-sm my-1" wire:click="acceptFieldsCollection({{$template->id}})">{{$template->name}}</button>
         @endforeach
     </div>

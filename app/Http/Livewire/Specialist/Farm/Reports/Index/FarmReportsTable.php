@@ -40,6 +40,7 @@ class FarmReportsTable extends Component
     public string $templateName;
     public string $resultMessage;
     public Collection $templates;
+    public bool $uncheckedAll = false;
 
     public function __construct()
     {
@@ -239,5 +240,16 @@ class FarmReportsTable extends Component
 //            ->orderBy('field_category_id','asc')
             ->orderBy('number','asc')
             ->get();
+    }
+
+    public function uncheckAll()
+    {
+        $this->checkedFields = [];
+        $this->uncheckedAll = true;
+    }
+    public function checkAll()
+    {
+        $this->checkedFields = $this->formFields->pluck('id')->toArray();
+        $this->uncheckedAll = false;
     }
 }
