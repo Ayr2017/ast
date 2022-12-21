@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <p>
-                <a class="btn btn-link" href="{{route('admin.form-fields.index')}}">Все поля</a>
+                <a class="btn btn-outline-secondary btn-sm" href="{{route('admin.form-fields.index')}}">Все поля</a>
             </p>
         </div>
         <div class="row">
@@ -35,13 +35,13 @@
                                 <option value="{{$form->id}}" {{(old('form_id') ?? $computed_form_field->form_id) == $form->id ? 'selected' : ''}}>{{$form->name}}</option>
                             @endforeach
                         </select>
-                        <div id="field_category_idHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="field_category_idHelp" class="form-text"></div>
                     </div>
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Название</label>
                         <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" value="{{old('name') ?? $computed_form_field->name }}" required>
-                        <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="nameHelp" class="form-text"></div>
                     </div>
 
                     <div class="mb-3">
@@ -51,7 +51,7 @@
                                 <option value="{{$category->id}}" {{(old('field_category_id') ?? $computed_form_field->field_category_id)  == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
                             @endforeach
                         </select>
-                        <div id="field_category_idHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="field_category_idHelp" class="form-text"></div>
                     </div>
 
 
@@ -73,7 +73,7 @@
                                 <option value="{{$unit}}" {{(old('unit') ?? $computed_form_field->unit )== $unit ? 'selected' : ''}}>{{$unit}}</option>
                             @endforeach
                         </select>
-                        <div id="unitHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="unitHelp" class="form-text"></div>
                     </div>
 
 

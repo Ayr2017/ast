@@ -8,7 +8,7 @@
         </div>
         <div class="row">
             <p>
-                <a class="btn btn-secondary" href="{{route('specialist.organizations.index')}}">Ко всем организациям</a>
+                <a class="btn btn-outline-secondary btn-sm" href="{{route('specialist.organizations.index')}}">Все организации</a>
             </p>
         </div>
         <div class="row">

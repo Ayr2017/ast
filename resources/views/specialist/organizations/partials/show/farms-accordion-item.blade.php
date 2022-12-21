@@ -35,7 +35,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <a href="{{route('specialist.farms.edit', ['farm' => $farm])}}">Изменить</a>
+                    <a href="{{route('specialist.farms.edit', ['farm' => $farm])}}"> <i class="fa-solid fa-file-signature"></i> Изменить</a>
                     @include('specialist.farms.partials.destroy-modal')
                 </div>
             @endforeach

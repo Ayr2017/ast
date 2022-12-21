@@ -1,4 +1,4 @@
-<button class="btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#fieldCreateOffcanvas" aria-controls="fieldCreateOffcanvas">Добавить поле</button>
+<button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#fieldCreateOffcanvas" aria-controls="fieldCreateOffcanvas">Добавить поле</button>
 
 <div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="fieldCreateOffcanvas" aria-labelledby="fieldCreateOffcanvasLabel">
     <div class="container overflow-auto">
@@ -13,7 +13,7 @@
             <div class="mb-3">
                 <label for="name" class="form-label">Название</label>
                 <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" value="{{old('name')}}" required>
-                <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div id="nameHelp" class="form-text"></div>
             </div>
 
             <div class="mb-3">
@@ -29,7 +29,7 @@
                         <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
                 </select>
-                <div id="field_category_idHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div id="field_category_idHelp" class="form-text"></div>
             </div>
 
 
@@ -48,7 +48,7 @@
                     <option value="checkbox" {{old('type' == "checkbox" ? 'selected' : '')}}>Чекбокс</option>
                     <option value="radio" {{old('type' == "radio" ? 'selected' : '')}}>Радиокнопка</option>
                 </select>
-                <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div id="nameHelp" class="form-text"></div>
             </div>
 
 
@@ -78,7 +78,7 @@
                     <option value="{{$unit}}" {{old('unit' == $unit ? 'selected' : '')}}>{{$unit}}</option>
                     @endforeach
                 </select>
-                <div id="unitHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div id="unitHelp" class="form-text"></div>
             </div>
 
 
@@ -90,7 +90,7 @@
                     <option value="join" {{old('operator_a' == "join" ? 'selected' : '')}}>Склейка</option>
                     <option value="count" {{old('operator_a' == "count" ? 'selected' : '')}}>Количество</option>
                 </select>
-                <div id="operator_aHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div id="operator_aHelp" class="form-text">Оставить по умолчанию.</div>
             </div>
 
             <div class="mb-3">
@@ -101,7 +101,7 @@
                     <option value="join" {{old('operator_b' == "join" ? 'selected' : '')}}>Склейка</option>
                     <option value="count" {{old('operator_b' == "count" ? 'selected' : '')}}>Количество</option>
                 </select>
-                <div id="operator_bHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div id="operator_bHelp" class="form-text">Оставить по умолчанию.</div>
             </div>
 
             <div class="mb-3">
@@ -112,7 +112,7 @@
                     <option value="join" {{old('operator_c' == "join" ? 'selected' : '')}}>Склейка</option>
                     <option value="count" {{old('operator_c' == "count" ? 'selected' : '')}}>Количество</option>
                 </select>
-                <div id="operator_cHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div id="operator_cHelp" class="form-text">Оставить по умолчанию.</div>
             </div>
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>

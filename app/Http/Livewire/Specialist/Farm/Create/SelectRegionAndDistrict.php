@@ -28,9 +28,9 @@ class SelectRegionAndDistrict extends Component
     public function mount($farm = null)
     {
         $this->farm = $farm;
-        $this->regionSearch = $farm?->region->name;
+        $this->regionSearch = $farm?->region?->name;
         $this->regionId = $farm?->region_id;
-        $this->districtSearch = $farm?->district->name;
+        $this->districtSearch = $farm?->district?->name;
         $this->districtId = $farm?->district_id;
 
     }

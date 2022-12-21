@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <p>
-                <a class="btn btn-link" href="{{route('admin.forms.index')}}">Все формы</a>
+                <a class="btn btn-outline-secondary btn-sm" href="{{route('admin.forms.index')}}">Все формы</a>
             </p>
         </div>
         <div class="row">

@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal" data-bs-target="#contactDelete_{{$contact->id}}">
-    Удалить
+    <i class="fa fa-trash text-danger"></i> Удалить
 </button>
 
 <!-- Modal -->

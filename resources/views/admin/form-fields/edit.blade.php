@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <p>
-                <a class="btn btn-link" href="{{route('admin.form-fields.index')}}">Все поля</a>
+                <a class="btn btn-outline-secondary btn-sm" href="{{route('admin.form-fields.index')}}">Все поля</a>
             </p>
         </div>
         <div class="row">
@@ -53,7 +53,7 @@
                                 <option value="{{$category->id}}" {{(old('field_category_id') ?? $form_field->category->id) == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
                             @endforeach
                         </select>
-                        <div id="field_category_idHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="field_category_idHelp" class="form-text"></div>
                     </div>
 
                     <div class="mb-3">
@@ -65,7 +65,7 @@
                             <option value="checkbox" {{(old('type') ?? $form_field->type) == "checkbox" ? 'selected' : ''}}>Чекбокс</option>
                             <option value="radio" {{(old('type') ?? $form_field->type) == "radio" ? 'selected' : ''}}>Радиокнопка</option>
                         </select>
-                        <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="nameHelp" class="form-text"></div>
                     </div>
 
 
@@ -97,7 +97,7 @@
                                 <option value="{{$unit}}" {{(old('unit')  ?? $form_field->unit)== $unit ? 'selected' : ''}}>{{$unit}}</option>
                             @endforeach
                         </select>
-                        <div id="unitHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="unitHelp" class="form-text"></div>
                     </div>
 
 
@@ -109,7 +109,7 @@
                             <option value="join" {{(old('operator_a') ?? $form_field->operator_a) == "join" ? 'selected' : ''}}>Объединение</option>
                             <option value="count" {{(old('operator_a') ?? $form_field->operator_a) == "count" ? 'selected' : ''}}>Количество</option>
                         </select>
-                        <div id="operator_aHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="operator_aHelp" class="form-text">Оставить по умолчанию.</div>
                     </div>
 
                     <div class="mb-3">
@@ -120,7 +120,7 @@
                             <option value="join" {{(old('operator_b')?? $form_field->operator_b) == "join" ? 'selected' : ''}}>Объединение</option>
                             <option value="count" {{(old('operator_b')?? $form_field->operator_b) == "count" ? 'selected' : ''}}>Количество</option>
                         </select>
-                        <div id="operator_bHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="operator_bHelp" class="form-text">Оставить по умолчанию.</div>
                     </div>
 
                     <div class="mb-3">
@@ -131,7 +131,7 @@
                             <option value="join" {{(old('operator_c')?? $form_field->operator_c) == "join" ? 'selected' : ''}}>Объединение</option>
                             <option value="count" {{(old('operator_c')?? $form_field->operator_c) == "count" ? 'selected' : ''}}>Количество</option>
                         </select>
-                        <div id="operator_cHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <div id="operator_cHelp" class="form-text">Оставить по умолчанию.</div>
                     </div>
                     <button type="submit" class="btn btn-primary">Обновить</button>
                 </form>
