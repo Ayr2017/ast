@@ -6,7 +6,7 @@
         @foreach($formFields as $formField)
             <th class="text-dark align-top">
                 <div class="d-flex flex-column align-items-start">
-                    <input wire:model="checkedFields" type="checkbox" id="formfield_checkbox[{{$formField->id}}]" value="{{$formField->id}}">
+                    <input wire:model="checkedFields" wire:loading.attr="disabled" type="checkbox" id="formfield_checkbox[{{$formField->id}}]" value="{{$formField->id}}">
                     <span class="text-primary">{{$formField->category->name}}</span>
                     <p>{{$formField->name}}</p>
                 </div>
@@ -33,7 +33,7 @@
         <tr>
             <td>{{$loop->iteration}}</td>
             <td>
-                <input type="checkbox" wire:model="checkedReports" value="{{$report->id}}">
+                <input type="checkbox" wire:model="checkedReports" wire:loading.attr="disabled" value="{{$report->id}}">
             </td>
             @foreach($formFields as $formField)
                 <td style="background-color: {{$this->colors[$formField->field_category_id]}}">
