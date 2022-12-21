@@ -13,6 +13,7 @@ use App\Models\Report;
 use App\Services\Specialist\ReportService;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
@@ -44,6 +45,29 @@ class FarmReportsTable extends Component
     public string $resultMessage;
     public Collection $templates;
     public bool $uncheckedAll = false;
+
+    public $svg;
+
+    protected $listeners = ['postAdded' => 'incrementPostCount'];
+
+    public function incrementPostCount($url)
+    {
+        $this->url = $url;
+        $pdfContent = PDF::setOptions([
+            'isHtml5ParserEnabled' => false,
+            'isRemoteEnabled' => true,
+            'pdf' => true
+            ])
+            ->loadView('livewire.specialist.farm.reports.index.partials.download-pdf-document',
+                [
+                    'url' => $this->url,
+                ])->output();
+        return response()->streamDownload(
+            fn () => print($pdfContent),
+            "filename.pdf"
+        );
+    }
+
 
     public function __construct()
     {
@@ -197,7 +221,6 @@ class FarmReportsTable extends Component
         $colors = FieldCategory::CATEGORY_COLORS;
         $line = new LineChartModel();
         $line->setTitle($this->form->name)->multiLine();
-
         $this->formFields->each(function ($item, $key) use ($line, $colors) {
             if ($item->type == 'number') {
                 foreach ($this->reports as $key => $report) {
@@ -276,5 +299,19 @@ class FarmReportsTable extends Component
         ];
         $name = "report_".date("Y-m-d_H:i:s").".xlsx";
         return Excel::download(new ReportExport($data), "$name");
+    }
+
+    public function downloadPDF()
+    {
+        $pdfContent = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+            ->loadView('livewire.specialist.farm.reports.index.partials.download-pdf-document',
+            [
+                'lineChartModel' => $this->lineChartModel,
+                'svg' => $this->svg,
+            ])->output();
+        return response()->streamDownload(
+            fn () => print($pdfContent),
+            "filename.pdf"
+        );
     }
 }
