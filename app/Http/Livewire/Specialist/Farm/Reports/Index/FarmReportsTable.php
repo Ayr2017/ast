@@ -201,11 +201,11 @@ class FarmReportsTable extends Component
         $this->formFields->each(function ($item, $key) use ($line, $colors) {
             if ($item->type == 'number') {
                 foreach ($this->reports as $key => $report) {
-                    $title = $item->name . " " . $report->date;
+                    $title = $item->name;
                     if (isset(($report->data)['field_' . $item->id])) {
-                        $line->addSeriesPoint($title, $item->name, ($report->data)['field_' . $item->id])->addColor($colors[$key]);
+                        $line->addSeriesPoint($title, $report->date, ($report->data)['field_' . $item->id])->addColor($colors[$key]);
                     } else {
-                        $line->addSeriesPoint($title, $item->name, 0)->addColor($colors[$key]);
+                        $line->addSeriesPoint($title, $report->date, 0)->addColor($colors[$key]);
                     }
                 }
             }

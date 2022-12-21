@@ -63,4 +63,7 @@ Route::prefix('general')->name('general.')->middleware('role:admin|specialist|su
     Route::resource('profiles', ProfilesController::class);
 });
 
+Route::get('test', [\App\Http\Controllers\TestController::class, 'index'])->name('test');
+
+
 
