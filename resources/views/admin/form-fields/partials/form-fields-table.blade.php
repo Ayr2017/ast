@@ -7,6 +7,7 @@
             <th>Принадлежит форме</th>
             <th>Е.и.</th>
             <th>Тип</th>
+            <th>Вычисляемое</th>
             <th>Категория</th>
             <th>Порядковый номер</th>
             <th></th>
@@ -27,6 +28,7 @@
                 </td>
                 <td>{{$field?->unit}}</td>
                 <td>{{$field?->type}}</td>
+                <td>{{$field?->class === 'computed' ? 'Да' : 'Нет'}}</td>
                 <td>{{$field?->category?->name}}</td>
                 <td>{{$field?->number ?? 'не задан'}}</td>
                 <td>

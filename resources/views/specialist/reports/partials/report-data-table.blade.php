@@ -12,12 +12,16 @@
             <tr>
                 <td>{{$field->name}}</td>
                 <td>
+                    @if($field->class !== 'computed')
                     @if($field->type == 'checkbox')
                         {{implode(',',($report->data)["field_".$field->id] ?? []) }}
 
                     @else
-                        {{($report->data)["field_".$field->id] ?? ''}}</td>
-                @endif
+                        {{($report->data)["field_".$field->id] ?? ''}}
+                    @endif
+                    @else
+                        {{ App\Services\Specialist\FormFieldService::compute($field, $report) }}
+                    @endif
                 </td>
                 <td>{{$field->unit}}</td>
             </tr>

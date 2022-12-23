@@ -25,6 +25,7 @@ class ReportExport implements FromView
     */
     public function view(): View
     {
+
         return view('livewire.specialist.farm.reports.index.partials.excel-table', [
             'reports' => $this->reports,
             'formFields' => $this->formFields->sortBy('field_category_id'),

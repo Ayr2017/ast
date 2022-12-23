@@ -33,9 +33,11 @@ class UpdateFormFieldRequest extends FormRequest
             'step' => ['required_if:type,number','numeric'],
             'required' => ['boolean'],
             'field_category_id' => ['required','numeric'],
-            'operator_a' => ['required','string'],
-            'operator_b' => ['required','string'],
-            'operator_c' => ['required','string'],
+            'operator_a' => ['string', 'nullable'],
+            'operator_b' => ['string', 'nullable'],
+            'operator_c' => ['string', 'nullable'],
+            'class' => ['string', 'nullable'],
+            'formula' => ['string', 'nullable'],
             'select_fields' => [new RequiredIf(in_array($this->type,['select', 'checkbox','radio'] )), 'string', 'nullable'],
         ];
     }

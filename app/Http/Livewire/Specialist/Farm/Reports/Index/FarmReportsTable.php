@@ -10,6 +10,7 @@ use App\Models\Form;
 use App\Models\FormCategory;
 use App\Models\FormField;
 use App\Models\Report;
+use App\Services\Specialist\FormFieldService;
 use App\Services\Specialist\ReportService;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
@@ -221,14 +222,28 @@ class FarmReportsTable extends Component
         $colors = FieldCategory::CATEGORY_COLORS;
         $line = new LineChartModel();
         $line->setTitle($this->form->name)->multiLine();
+
         $this->formFields->each(function ($item, $key) use ($line, $colors) {
             if ($item->type == 'number') {
-                foreach ($this->reports as $key => $report) {
-                    $title = $item->name;
-                    if (isset(($report->data)['field_' . $item->id])) {
-                        $line->addSeriesPoint($title, $report->date, ($report->data)['field_' . $item->id])->addColor($colors[$key]);
-                    } else {
-                        $line->addSeriesPoint($title, $report->date, 0)->addColor($colors[$key]);
+                if ($item->class == 'computed')
+                {
+                    foreach ($this->reports as $key => $report) {
+                        $title = $item->name;
+                        if (isset($item->formula)) {
+                            $line->addSeriesPoint($title, $report->date, FormFieldService::compute( $item, $report))
+                                ->addColor($colors[$key]);
+                        } else {
+                            $line->addSeriesPoint($title, $report->date, 0)->addColor($colors[$key]);
+                        }
+                    }
+                } else {
+                    foreach ($this->reports as $key => $report) {
+                        $title = $item->name;
+                        if (isset(($report->data)['field_' . $item->id])) {
+                            $line->addSeriesPoint($title, $report->date, ($report->data)['field_' . $item->id])->addColor($colors[$key]);
+                        } else {
+                            $line->addSeriesPoint($title, $report->date, 0)->addColor($colors[$key]);
+                        }
                     }
                 }
             }
@@ -288,7 +303,8 @@ class FarmReportsTable extends Component
 
     public function downloadExcel()
     {
-        $data = ['reports' => $this->reports,
+        $data = [
+            'reports' => $this->reports,
             'formFields' => $this->formFields->sortBy('field_category_id'),
             'form' => $this->form,
             'forms' => $this->forms,

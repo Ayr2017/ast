@@ -11,15 +11,16 @@
                 </div>
             </th>
         @endforeach
-        @foreach($computedFormFields as $computedFormField)
-            <th class="text-dark align-top">
-                <div class="d-flex flex-column align-items-start">
-                    <input wire:model="checkedComputedFields" type="checkbox" id="computed_formfield_checkbox[{{$computedFormField->id}}]" value="{{$computedFormField->id}}">
-                    <span class="text-primary">{{$computedFormField->category->name}}</span>
-                    <p>{{$computedFormField->name}}</p>
-                </div>
-            </th>
-        @endforeach
+{{--        TODO::удалить шапку вычисляемого поля--}}
+{{--        @foreach($computedFormFields as $computedFormField)--}}
+{{--            <th class="text-dark align-top">--}}
+{{--                <div class="d-flex flex-column align-items-start">--}}
+{{--                    <input wire:model="checkedComputedFields" type="checkbox" id="computed_formfield_checkbox[{{$computedFormField->id}}]" value="{{$computedFormField->id}}">--}}
+{{--                    <span class="text-primary">{{$computedFormField->category->name}}</span>--}}
+{{--                    <p>{{$computedFormField->name}}</p>--}}
+{{--                </div>--}}
+{{--            </th>--}}
+{{--        @endforeach--}}
         <th>Дата</th>
         <th>Податель</th>
 
@@ -34,6 +35,11 @@
 
             @foreach($formFields as $formField)
                 <td >
+                    @if($formField->class === 'computed')
+                        @if(isset($report->data))
+                        {{\App\Services\Specialist\FormFieldService::compute($formField,$report) ?? '-'}}
+                        @endif
+                    @else
                     @isset($report?->data["field_$formField?->id"])
                         @if($formField->type != 'checkbox' && !is_array($report->data["field_$formField->id"]))
                             {{$report->data["field_$formField->id"] ?? '-'}}
@@ -43,13 +49,15 @@
                             __exp
                         @endif
                     @endisset
+                    @endif
                 </td>
             @endforeach
-            @foreach($computedFormFields as $computedFormField)
-                <td >
-                    {{\App\Services\ComputedFieldsService::execute($computedFormField, $formFields, $report)}}
-                </td>
-            @endforeach
+{{--            TODO::удалить вычисляемое поле--}}
+{{--            @foreach($computedFormFields as $computedFormField)--}}
+{{--                <td >--}}
+{{--                    {{\App\Services\ComputedFieldsService::execute($computedFormField, $formFields, $report)}}--}}
+{{--                </td>--}}
+{{--            @endforeach--}}
             <td>{{$report?->date}}</td>
             <td>{{$report?->creator->fullName}}</td>
 

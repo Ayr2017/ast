@@ -48,6 +48,7 @@
                 <h6 class="h6 fw-bold bg-secondary bg-opacity-10 p-2">{{$formFieldsCategory->name}}</h6>
                 <div class="alert" style="background-color: {{$colors[$loop->iteration]}}">
                     @foreach($formFieldsCategory->fields as $formField)
+                        @if($formField->class !== 'computed')
                         @switch($formField->type)
                             @case('number')
                                 @include('livewire.specialist.report.create.partials.number-form-item')
@@ -65,6 +66,19 @@
                                 @include('livewire.specialist.report.create.partials.radio-form-item')
                                 @break
                         @endswitch
+                        @else
+                            <div>
+                                <div class="mb-3">
+                                    <label for="field_{{$formField->id}}" class="form-label">{{$formField->name}} ({{$formField->unit}})</label>
+                                    <input type="text"
+                                           class="form-control "
+                                           disabled
+                                           id="field_{{$formField->id}}"
+                                           placeholder="{{$formField->placeholder}}">
+                                </div>
+                                    <div id="field_{{$formField->id}}Help" class="form-text">{{$formField->formula}}</div>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
                 @endif
