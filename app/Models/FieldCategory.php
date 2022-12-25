@@ -84,6 +84,11 @@ class FieldCategory extends Model
 
     public function fields()
     {
-        return $this->hasMany(FormField::class);
+        return $this->hasMany(FormField::class)->orderBy('number');
+    }
+
+    public function fieldsOrderedByNumber()
+    {
+        return $this->hasMany(FormField::class)->orderBy('number');
     }
 }

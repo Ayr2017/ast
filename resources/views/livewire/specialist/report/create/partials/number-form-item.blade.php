@@ -11,7 +11,7 @@
                step="{{$formField->step}}"
                placeholder="{{$formField->placeholder}}">
     </div>
-    @if($formField->hint)
         <div id="field_{{$formField->id}}Help" class="form-text">{{$formField->hint}}</div>
-    @endif
+{{--    @if($formField->hint)--}}
+{{--    @endif--}}
 </div>
