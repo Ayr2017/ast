@@ -15,6 +15,7 @@ class SelectForm extends Component
 {
     public mixed $formId;
     public mixed $farmId;
+    public mixed $farmUuid;
     public mixed $organizationId = null;
     public mixed $form;
     public mixed $organization = null;
@@ -40,6 +41,7 @@ class SelectForm extends Component
     {
         $this->formId = session()->get('form_id') ?? Form::first()?->id;
         $this->farmId = session()->get('farm_id') ?? null;
+        $this->farmUuid = session()->get('farm_uuid') ?? null;
 
         $this->organizations = Organization::all();
         $this->forms = Form::all();
@@ -53,6 +55,13 @@ class SelectForm extends Component
             $this->farmId = $this->farm->id;
         } else {
             $this->farm = Farm::with('organization')->find($this->farmId);
+        }
+
+        if(!$this->farmUuid){
+//            $this->farm = Farm::with('organization')->first();
+            $this->farmUuid = $this->farm->uuid;
+        } else {
+            $this->farm = Farm::with('organization')->find($this->farmUuid);
         }
 
         $this->organization = $this->farm->organization;
@@ -93,6 +102,7 @@ class SelectForm extends Component
         $this->farms = Farm::where('organization_id', $this->organizationId)->get();
         $this->farmSearch = '';
         $this->farmId = null;
+        $this->farmUuid = null;
 
     }
 
@@ -101,6 +111,7 @@ class SelectForm extends Component
         $this->farmSearch = $value;
         $this->farm = Farm::where('name', $value)->first();
         $this->farmId = $this->farm?->id;
+        $this->farmUuid = $this->farm?->uuid;
     }
 
     public function updatedFormId( int $value)

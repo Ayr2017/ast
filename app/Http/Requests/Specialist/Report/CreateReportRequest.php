@@ -26,6 +26,7 @@ class CreateReportRequest extends FormRequest
         return [
             'form_id' =>['required'],
             'farm_id' => ['required'],
+            'farm_uuid' => ['required'],
             'organization_id' => ['required'],
             'data' => ['required','array'],
             'date' => ['required','date'],

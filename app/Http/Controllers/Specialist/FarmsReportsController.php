@@ -18,7 +18,7 @@ class FarmsReportsController extends Controller
      */
     public function index(Farm $farm)
     {
-        $reports = Report::where('farm_id', $farm->id)->with(['form','farm','organization','creator'])->paginate(15);
+        $reports = Report::where('farm_uuid', $farm->uuid)->with(['form','farm','organization','creator'])->paginate(15);
         $formIds = $reports->pluck('form_id')->unique();
 //        $formFields = FormField::whereIn('form_id', $formIds)->orderBy('field_category_id')->get()->groupBy('form_id');
 //

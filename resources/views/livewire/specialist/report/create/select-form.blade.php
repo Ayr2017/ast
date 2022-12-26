@@ -24,6 +24,7 @@
                     @endforeach
                 </datalist>
                 <input type="hidden" name="farm_id" value="{{$farmId}}">
+                <input type="hidden" name="farm_uuid" value="{{$farmUuid}}">
             </div>
 
             <div class="mb-3">

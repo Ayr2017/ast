@@ -77,7 +77,7 @@ class FarmReportsTable extends Component
         $this->form = $this->forms->first();
         $this->reportService = new ReportService();
         $this->dateFrom = Carbon::now()->subMonth()->format('Y-m-d');
-        $this->dateTo = Carbon::now()->format('Y-m-d');
+        $this->dateTo = Carbon::now()->format('Y-m-d H:i:s');
         $this->columnChartModel =
             (new ColumnChartModel())
                 ->setTitle('График таблицы');
@@ -94,19 +94,15 @@ class FarmReportsTable extends Component
     public function mount(Farm $farm)
     {
         $this->farm = $farm;
-        $this->reports = Report::where('farm_id', $farm->id)
+        $this->reports = Report::where('farm_uuid', $farm->uuid)
             ->where('form_id', Form::first()->id)
             ->where('created_at', '>=', $this->dateFrom)
             ->where('created_at', '<=', $this->dateTo)
             ->get();
+
         $this->formFields = FormField::where('form_id', $this->formId)
             ->orderBy('field_category_id', 'asc')
-//            ->orderBy('number','asc')
             ->get();
-//            ->sortBy('field_category_id');
-//            ->sortBy(function($item){
-//            return $item->number ?? PHP_INT_MAX;
-//        });
 
         $this->computedFormFields = $this->form->computedFields;
         $this->templateName = '';
@@ -116,7 +112,7 @@ class FarmReportsTable extends Component
 
     public function showReports()
     {
-        $this->reports = Report::where('farm_id', $this->farm->id)
+        $this->reports = Report::where('farm_uuid', $this->farm->uuid)
             ->where('form_id', $this->formId)
             ->where('created_at', '>=', $this->dateFrom)
             ->where('created_at', '<=', $this->dateTo)
@@ -127,7 +123,7 @@ class FarmReportsTable extends Component
 
     public function updatedFormId($value)
     {
-        $this->reports = Report::where('farm_id', $this->farm->id)->where('form_id', $this->formId)->get();
+        $this->reports = Report::where('farm_uuid', $this->farm->uuid)->where('form_id', $this->formId)->get();
         $this->form = Form::find($value);
         $this->formFields = FormField::where('form_id', $this->formId)->get();
         $this->templates = FieldTemplate::where('form_id', $this->formId)->get();
@@ -152,7 +148,7 @@ class FarmReportsTable extends Component
         $this->checkedReports = [];
         $this->checkedFields = $this->form->fields->pluck('id')->toArray();
         $this->formFields = $this->form->fields->whereIn('id', $this->checkedFields);
-        $this->reports = Report::where('farm_id', $this->farm->id)
+        $this->reports = Report::where('farm_uuid', $this->farm->uuid)
             ->where('form_id', $this->formId)
             ->where('created_at', '>=', $this->dateFrom)
             ->where('created_at', '<=', $this->dateTo)
@@ -165,7 +161,7 @@ class FarmReportsTable extends Component
     {
         $this->selectedReports = new Collection([]);
         $this->checkedReports = [];
-        $this->reports = Report::where('farm_id', $this->farm->id)
+        $this->reports = Report::where('farm_uuid', $this->farm->uuid)
             ->where('form_id', $this->formId)
             ->where('created_at', '>=', $this->dateFrom)
             ->where('created_at', '<=', $this->dateTo)
@@ -175,7 +171,7 @@ class FarmReportsTable extends Component
 
     public function recoverSelectedReports()
     {
-        $this->reports = Report::where('farm_id', $this->farm->id)
+        $this->reports = Report::where('farm_uuid', $this?->farm?->uuid)
             ->where('form_id', $this->formId)
             ->where('created_at', '>=', $this->dateFrom)
             ->where('created_at', '<=', $this->dateTo)

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Farm extends Model
 {
@@ -31,11 +32,17 @@ class Farm extends Model
 
     public function reports()
     {
-        return $this->hasMany(Report::class);
+        return $this->hasMany(Report::class, 'farm_uuid', 'uuid');
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filter)
     {
         $filter->apply($builder);
+    }
+
+    public static function boot(): void
+    {
+        parent::boot();
+        static::creating(fn(Model $model) => $model->uuid = Str::uuid());
     }
 }

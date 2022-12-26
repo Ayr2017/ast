@@ -25,7 +25,7 @@ class Report extends Model implements HasMedia
 
     public function farm()
     {
-        return $this->belongsTo(Farm::class)->withTrashed();
+        return $this->belongsTo(Farm::class, 'farm_uuid', 'uuid')->withTrashed();
     }
 
     public function form()
