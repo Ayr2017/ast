@@ -49,11 +49,14 @@ class FarmReportsTable extends Component
 
     public $svg;
 
-    protected $listeners = ['postAdded' => 'incrementPostCount'];
+    protected $listeners = ['postAdded' => 'createAndDownloadPDF'];
+    private Farm $farmPDF;
+    private string $url;
 
-    public function incrementPostCount($url)
+    public function createAndDownloadPDF($url, $farm)
     {
         $this->url = $url;
+        $this->farmPDF = new Farm($farm);
         $pdfContent = PDF::setOptions([
             'isHtml5ParserEnabled' => false,
             'isRemoteEnabled' => true,
@@ -62,6 +65,9 @@ class FarmReportsTable extends Component
             ->loadView('livewire.specialist.farm.reports.index.partials.download-pdf-document',
                 [
                     'url' => $this->url,
+                    'farm' => $this->farmPDF,
+                    'reports' => $this->reports,
+                    'formFields' => $this->formFields,
                 ])->output();
         return response()->streamDownload(
             fn () => print($pdfContent),

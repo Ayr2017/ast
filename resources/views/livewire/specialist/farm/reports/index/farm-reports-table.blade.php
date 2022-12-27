@@ -86,10 +86,9 @@
         </div>
     </div>
 
-    <button class="btn btn-outline-primary" onclick="start()">Скачать диаграмму </button>
+    <button class="btn btn-outline-primary" onclick='start({{json_encode($farm)}})'>Скачать диаграмму </button>
     <script>
-        function start(){
-
+        function start(farm){
 
             function downloadSVGAsText() {
                 const svg = document.querySelector('svg');
@@ -100,7 +99,6 @@
                 // a.href = 'data:image/svg+xml;base64,' + base64doc;
                 // a.dispatchEvent(e);
 
-
                 Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc)
             }
 
@@ -108,16 +106,17 @@
                 const canvas = document.createElement("canvas");
                 const svg = document.querySelector('svg');
                 titles = svg.querySelectorAll('title')
+
                 for(let title of titles){
                     title.remove()
                 }
-                console.log(svg)
+
                 const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
                 const w = parseInt(svg.getAttribute('width'));
                 const h = parseInt(svg.getAttribute('height'));
                 const img_to_download = document.createElement('img');
                 img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
-                console.log(w, h);
+                // console.log(w, h);
                 img_to_download.onload = function () {
                     console.log('img loaded');
                     canvas.setAttribute('width', w);
@@ -135,7 +134,7 @@
                         // a.download = 'download.png';
                         // a.href = dataURL;
                         // a.dispatchEvent(my_evt);
-                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc)
+                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm)
 
                     }
                     //canvas.parentNode.removeChild(canvas);
