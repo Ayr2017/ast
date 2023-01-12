@@ -72,7 +72,7 @@
         </div>
         @endif
 
-        @if($selectedType === 'radio' || $selectedType === 'checkbox' )
+        @if($selectedType === 'radio' || $selectedType === 'checkbox'|| $selectedType === 'select' )
         <div class="mb-3">
             <label for="select_fields" class="form-label">Элементы для выбора</label>
             <input type="text" class="form-control" id="select_fields" name="select_fields" aria-describedby="select_fieldsHelp" value="{{old('select_fields')}}">
