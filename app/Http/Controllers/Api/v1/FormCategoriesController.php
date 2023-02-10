@@ -16,7 +16,7 @@ class FormCategoriesController extends Controller
     public function index()
     {
         $forms = Form::paginate(15);
-        return response($form, 200);
+        return response($forms, 200);
     }
 
     /**
