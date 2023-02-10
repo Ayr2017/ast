@@ -15,7 +15,8 @@ class DistrictsController extends Controller
      */
     public function index()
     {
-        return response(District::all(),200);
+        $districts = District::paginate(20);
+        return response($districts,200);
     }
 
     /**
