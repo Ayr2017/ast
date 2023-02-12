@@ -44,3 +44,7 @@ Route::prefix('v1')->middleware('auth:api')->name('v1')->group(function(){
     Route::resource('roles', RolesController::class);
     Route::resource('users', UsersController::class)->middleware('role:super-admin|admin');
 });
+
+   Route::post('/test', function(){
+       return response([1=>1],200);
+   });
