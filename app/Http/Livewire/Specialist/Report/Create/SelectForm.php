@@ -52,23 +52,23 @@ class SelectForm extends Component
 
         if(!$this->farmId){
             $this->farm = Farm::with('organization')->first();
-            $this->farmId = $this->farm->id;
+            $this->farmId = $this?->farm?->id;
         } else {
             $this->farm = Farm::with('organization')->find($this->farmId);
         }
 
         if(!$this->farmUuid){
 //            $this->farm = Farm::with('organization')->first();
-            $this->farmUuid = $this->farm->uuid;
+            $this->farmUuid = $this?->farm?->uuid;
         } else {
             $this->farm = Farm::with('organization')->find($this->farmUuid);
         }
 
-        $this->organization = $this->farm->organization;
-        $this->organizationId = $this->organization->id;
+        $this->organization = $this->farm?->organization;
+        $this->organizationId = $this->organization?->id;
 
-        $this->organizationSearch = $this->organization->name;
-        $this->farmSearch = $this->farm->name;
+        $this->organizationSearch = $this->organization?->name ?? '';
+        $this->farmSearch = $this->farm?->name ?? '';
 
         if($this->formId){
             $this->form = Form::with('fields.category')->find($this->formId) ?? collect([]);
