@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('v1')->middleware('auth:api')->name('v1')->group(function(){
+Route::prefix('v1')->middleware(['auth:api','cors'])->name('v1')->group(function(){
     Route::resource('contacts', ContactsController::class);
     Route::resource('districts', DistrictsController::class);
     Route::resource('farms', FarmsController::class);
