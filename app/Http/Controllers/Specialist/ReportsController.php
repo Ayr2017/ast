@@ -85,7 +85,7 @@ class ReportsController extends Controller
      */
     public function edit($id)
     {
-        $report = Report::find($id);
+        $report = Report::withTrashed()->find($id);
         $formFields = FormField::where('form_id', $report->form_id)->get()->groupBy('field_category_id');
         $fieldCategories = FieldCategory::all();
         $colors = FieldCategory::CATEGORY_COLORS;
