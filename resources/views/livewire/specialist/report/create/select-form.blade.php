@@ -5,7 +5,7 @@
             <div class="mb-3">
                 <label for="organizationsDataList" class="form-label">Организация</label>
                 <input class="form-control" list="organizations" id="organizationsDataList"
-                       placeholder="Type to search..." wire:model="organizationSearch">
+                       placeholder="Type to search..." wire:model="organizationSearch" autocomplete="off" >
                 <datalist id="organizations">
                     @foreach($organizations as $organization)
                         <option value="{{$organization?->name}}" wire:key="{{$organization->id}}" id="{{$organization->id}}">
@@ -17,7 +17,7 @@
             <div class="mb-3">
                 <label for="farmsDataList" class="form-label">Ферма</label>
                 <input class="form-control" {{($organizationId && !$noFarms) ? '' : 'disabled'}} list="farms"
-                       id="farmsDataList" name="farmsDataList" placeholder="Type to search..." wire:model="farmSearch">
+                       id="farmsDataList" name="farmsDataList" placeholder="Type to search..." wire:model="farmSearch" autocomplete="off" >
                 <datalist id="farms">
                     @foreach($farms as $farm)
                         <option value="{{$farm?->name}}" wire:key="{{$farm->id}}">
