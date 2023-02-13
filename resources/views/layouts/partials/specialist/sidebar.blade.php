@@ -16,16 +16,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{request()->routeIs('specialist.field-templates.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('specialist.field-templates.index')}}">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                    Шаблоны полей
+                <a class="nav-link {{request()->routeIs('specialist.reports.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('specialist.reports.index')}}">
+                    <i class="fa-regular fa-file-excel"></i>
+                    Отчеты
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{request()->routeIs('specialist.reports.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('specialist.reports.index')}}">
-                    <i class="fa-regular fa-file-excel"></i>
-                    Отчеты
+                <a class="nav-link {{request()->routeIs('specialist.field-templates.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('specialist.field-templates.index')}}">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    Шаблоны полей
                 </a>
             </li>
 
