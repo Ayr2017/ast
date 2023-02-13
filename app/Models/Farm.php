@@ -51,10 +51,8 @@ class Farm extends Model
             };
         });
 
-//        self::restored(function (Organization $organization) {
-//            foreach ($organization->reports()->withTrashed()->get() as $report) {
-//                $report->restore();
-//            };
-//        });
+        self::restored(function (Farm $farm) {
+            $farm->organization()->restore();
+        });
     }
 }
