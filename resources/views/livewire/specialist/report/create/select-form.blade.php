@@ -2,7 +2,6 @@
     <form action="{{route('specialist.reports.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="col-lg-6" >
-            <div wire:loading.delay.shortest>Идёт загрузка</div>
             <div class="mb-3">
                 <label for="organizationsDataList" class="form-label">Организация</label>
                 <input class="form-control" list="organizations" id="organizationsDataList"
@@ -18,7 +17,7 @@
             <div class="mb-3">
                 <label for="farmsDataList" class="form-label">Ферма</label>
                 <input class="form-control" {{($organizationId && !$noFarms) ? '' : 'disabled'}} list="farms"
-                       id="farmsDataList" name="farmsDataList" placeholder="Type to search..." wire:model="farmSearch" autocomplete="off" >
+                       id="farmsDataList" name="farmsDataList" placeholder="Type to search..." wire:model="farmSearch" autocomplete="off" wire:loading.attr="disabled">
                 <datalist id="farms">
                     @foreach($farms as $farm)
                         <option value="{{$farm?->name}}" wire:key="{{$farm->id}}">
