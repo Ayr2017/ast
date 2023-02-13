@@ -283,13 +283,14 @@ class FarmReportsTable extends Component
     public function acceptFieldsCollection($id)
     {
         if($id == 0) {
-            $this->formFields = FormField::all();
+            $this->formFields = FormField::where('form_id', $this->formId)
+                ->orderBy('number', 'asc')
+                ->get();
         } else {
             $fieldsTemplate = FieldTemplate::find($id);
             $this->checkedFields = $fieldsTemplate->fields;
             $this->formFields = FormField::where('form_id', $this->formId)
                 ->whereIn('id', $fieldsTemplate->fields)
-    //            ->orderBy('field_category_id','asc')
                 ->orderBy('number', 'asc')
                 ->get();
         }
