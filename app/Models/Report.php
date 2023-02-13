@@ -35,7 +35,7 @@ class Report extends Model implements HasMedia
 
     public function organization()
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsTo(Organization::class)->withTrashed();
     }
 
     public function creator()
@@ -52,6 +52,12 @@ class Report extends Model implements HasMedia
     {
         parent::boot();
         static::creating(fn(Model $model) => $model->uuid = Str::uuid());
+
+        self::restored(function (Report $report) {
+            $report->farm()->restore();
+            $report->organization()->restore();
+        });
+
     }
 
 

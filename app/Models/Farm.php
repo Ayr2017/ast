@@ -44,5 +44,17 @@ class Farm extends Model
     {
         parent::boot();
         static::creating(fn(Model $model) => $model->uuid = Str::uuid());
+
+        self::deleted(function (Farm $farm) {
+            foreach ($farm->reports as $report) {
+                $report->delete();
+            };
+        });
+
+//        self::restored(function (Organization $organization) {
+//            foreach ($organization->reports()->withTrashed()->get() as $report) {
+//                $report->restore();
+//            };
+//        });
     }
 }

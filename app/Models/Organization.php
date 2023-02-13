@@ -74,6 +74,12 @@ class Organization extends Model implements Contactable
 
         });
 
+//        self::deleted(function (Organization $organization) {
+//            foreach ($organization->reports as $report) {
+//                $report->delete();
+//            };
+//        });
+
         self::restored(function (Organization $organization) {
             foreach ($organization->farms()->withTrashed()->get() as $farm) {
                 $farm->restore();
