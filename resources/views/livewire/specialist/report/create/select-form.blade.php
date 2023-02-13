@@ -23,8 +23,6 @@
                         <option value="{{$farm?->name}}" wire:key="{{$farm->id}}">
                     @endforeach
                 </datalist>
-                <p>{{$farmId}}</p>
-                <p>{{$farmUuid}}</p>
                 <input type="hidden" name="farm_id" value="{{$farmId}}">
                 <input type="hidden" name="farm_uuid" value="{{$farmUuid}}">
             </div>
