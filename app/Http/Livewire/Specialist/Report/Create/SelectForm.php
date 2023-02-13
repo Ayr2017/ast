@@ -96,7 +96,7 @@ class SelectForm extends Component
     {
         $this->organizationSearch = $value;
         $this->organizations = Organization::where('name', 'like', '%'.$value.'%')->get();
-        $this->organizationId = $this->organizations->first()->id;
+        $this->organizationId = $this->organizations?->first()?->id;
         $this->farms = Farm::where('organization_id', $this->organizationId)->get();
         $this->farmSearch = '';
         $this->farmId = null;
