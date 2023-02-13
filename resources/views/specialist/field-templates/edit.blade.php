@@ -53,6 +53,7 @@
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary">Обновить</button>
+                        <a href="{{route('specialist.field-templates.index')}}" class="btn btn-secondary">Отменить</a>
                     </div>
                 </form>
             </div>
