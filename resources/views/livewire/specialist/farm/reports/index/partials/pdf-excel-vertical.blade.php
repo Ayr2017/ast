@@ -1,6 +1,13 @@
 <table class="vertical-table">
     <thead>
-        @foreach($formFields as $formField)
+    <tr>
+        <td>ID</td>
+        @foreach($reports->sortBy('id') as $report)
+            <td>{{$report->id}}</td>
+        @endforeach
+
+    </tr>
+    @foreach($formFields as $formField)
         <tr>
             <th class="text-dark align-top">
                 <div class="d-flex flex-column align-items-start">
@@ -8,8 +15,8 @@
                     <p>{{$formField->name}}</p>
                 </div>
             </th>
-            @foreach($reports as $report)
-                <td >
+            @foreach($reports->sortBy('id') as $report)
+                <td>
                     @if($formField->class === 'computed')
                         @if(isset($report->data))
                             {{\App\Services\Specialist\FormFieldService::compute($formField,$report) ?? '-'}}
@@ -28,7 +35,14 @@
                 </td>
             @endforeach
         </tr>
+    @endforeach
+    <tr>
+        <td>Дата</td>
+        @foreach($reports->sortBy('id') as $report)
+            <td>{{$report->date}}</td>
         @endforeach
+
+    </tr>
     </thead>
 
 </table>
