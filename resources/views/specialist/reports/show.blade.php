@@ -77,6 +77,12 @@
                                         {{$report->creator?->fullName}}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>Форма</th>
+                                    <td>
+                                        {{$report->form?->name}}
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
