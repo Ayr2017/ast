@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(auth()->user()->hasRole('admin') ? 'layouts.admin' : 'layouts.specialist')
 @section('content')
     <div class="container py-4">
         @if ($errors->any())
