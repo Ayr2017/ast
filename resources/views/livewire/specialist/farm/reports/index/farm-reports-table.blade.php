@@ -75,10 +75,6 @@
     @endif
     <div class="row">
         <div class="col" style="height: 32rem;" id="svgWrapper">
-{{--            <livewire:livewire-column-chart--}}
-{{--                key="{{ $columnChartModel->reactiveKey() }}"--}}
-{{--                :column-chart-model="$columnChartModel"--}}
-{{--            />--}}
             <livewire:livewire-line-chart
                 key="{{ $lineChartModel->reactiveKey() }}"
                 id="1234567"
@@ -97,20 +93,13 @@
                 const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
                 const a = document.createElement('a');
                 const e = new MouseEvent('click');
-                // a.download = 'download.svg';
-                // a.href = 'data:image/svg+xml;base64,' + base64doc;
-                // a.dispatchEvent(e);
-
                 Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc)
             }
 
             function downloadSVGAsPNG(e){
                 const canvas = document.createElement("canvas");
                 const svg = document.querySelector('svg');
-
-
                 titles = svg.querySelectorAll('title')
-
                 for(let title of titles){
                     title.remove()
                 }
@@ -120,13 +109,11 @@
                 const h = parseInt(svg.getAttribute('height'));
                 const img_to_download = document.createElement('img');
                 img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
-                // console.log(w, h);
                 img_to_download.onload = function () {
                     console.log('img loaded');
                     canvas.setAttribute('width', w);
                     canvas.setAttribute('height', h);
                     const context = canvas.getContext("2d");
-                    //context.clearRect(0, 0, w, h);
                     context.drawImage(img_to_download,0,0,w,h);
                     const dataURL = canvas.toDataURL('image/png');
                     if (window.navigator.msSaveBlob) {
@@ -135,15 +122,8 @@
                     } else {
                         const a = document.createElement('a');
                         const my_evt = new MouseEvent('click');
-                        // a.download = 'download.png';
-                        // a.href = dataURL;
-                        // a.dispatchEvent(my_evt);
-                        // console.log(svg.querySelector('style'))
-                        // return 1;
-                        // Livewire.emit('postAdded', base64doc, farm, svg.outerHTML )
                         Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend').outerHTML )
                     }
-                    //canvas.parentNode.removeChild(canvas);
                 }
             }
 
@@ -154,7 +134,6 @@
             // downloadPNG.addEventListener('click', downloadSVGAsPNG);
             // downloadSVGAsText()
             downloadSVGAsPNG();
-            // createImage()
 
 
         }
