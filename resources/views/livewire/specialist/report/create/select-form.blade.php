@@ -30,7 +30,7 @@
             <div class="mb-3">
                 <label for="date" class="form-label fw-bolder">Дата</label>
                 <input type="date" class="form-control" name="date" id="date" value="{{date("Y-m-d")}}">
-                <div id="dateHelp" class="form-text">We'll never share your email with anyone else.</div>
+{{--                <div id="dateHelp" class="form-text">We'll never share your email with anyone else.</div>--}}
             </div>
 
             <div class="mb-3">
@@ -41,7 +41,7 @@
                             value="{{$form->id}}" {{old('form_id') == $form->id ? 'selected' : ''}}>{{$form->name}}</option>
                     @endforeach
                 </select>
-                <div id="innHelp" class="form-text">We'll never share your email with anyone else.</div>
+{{--                <div id="innHelp" class="form-text">We'll never share your email with anyone else.</div>--}}
             </div>
 
             @foreach($formFieldsGroupedByCategory as $key =>$formFieldsCategory)
