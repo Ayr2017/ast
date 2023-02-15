@@ -1,7 +1,7 @@
 <div>
     <div class="mb-3">
         <label for="field_{{$formField->id}}" class="form-label">{{$formField->name}} ({{$formField->unit}})</label>
-        <select class="form-select" aria-label="data[field_{{$formField->id}}]">
+        <select class="form-select" aria-label="data[field_{{$formField->id}}]" name="data[field_{{$formField->id}}]">
             @foreach($formField->select_fields as $item)
                 <option value="{{$item}}">{{$item}}</option>
             @endforeach
