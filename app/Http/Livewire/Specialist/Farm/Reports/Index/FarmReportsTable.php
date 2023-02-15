@@ -18,6 +18,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -55,6 +56,7 @@ class FarmReportsTable extends Component
 
     public function createAndDownloadPDF($url, $farm)
     {
+
         $this->url = $url;
         $this->farmPDF = new Farm($farm);
         $pdfContent = PDF::setOptions([
@@ -67,7 +69,7 @@ class FarmReportsTable extends Component
                     'url' => $this->url,
                     'farm' => $this->farmPDF,
                     'reports' => $this->reports,
-                    'formFields' => $this->formFields,
+                    'formFields' => $this->formFields->where('type', '=','number'),
                 ])->output();
         return response()->streamDownload(
             fn () => print($pdfContent),
@@ -201,6 +203,7 @@ class FarmReportsTable extends Component
     private function getColumnChartModel()
     {
         $colors = FieldCategory::CATEGORY_COLORS;
+
         $col = new ColumnChartModel();
         $col->setTitle($this->form->name)->setColumnWidth(10);
         $this->formFields->each(function ($item, $key) use ($col, $colors) {
@@ -208,9 +211,9 @@ class FarmReportsTable extends Component
                 foreach ($this->reports as $key => $report) {
                     $title = $item->name . " " . $report->date;
                     if (isset(($report->data)['field_' . $item->id])) {
-                        $col->addColumn($title, ($report->data)['field_' . $item->id], $colors[$key]);
+                        $col->addColumn($title, ($report->data)['field_' . $item->id], $colors[$item->field_category_id]);
                     } else {
-                        $col->addColumn($title, 0, $colors[$key]);
+                        $col->addColumn($title, 0, $colors[$item->field_category_id]);
                     }
                 }
             }
@@ -223,7 +226,11 @@ class FarmReportsTable extends Component
     {
         $colors = FieldCategory::CATEGORY_COLORS;
         $line = new LineChartModel();
-        $line->setTitle($this->form->name)->multiLine();
+        $line->setTitle($this->form->name)->multiLine()->setColors(FieldCategory::CATEGORY_COLORS);
+//        foreach($this->formFields as $key=>$val) {
+//            dump($colors[$val->field_category_id]. " ".$val->name);
+//        }
+
 
         $this->formFields->each(function ($item, $key) use ($line, $colors) {
             if ($item->type == 'number') {
@@ -233,25 +240,26 @@ class FarmReportsTable extends Component
                         $title = $item->name;
                         if (isset($item->formula)) {
                             $line->addSeriesPoint($title, $report->date, FormFieldService::compute( $item, $report))
-                                ->addColor($colors[$key]);
+                                ->addColor($colors[$item->field_category_id]);
                         } else {
-                            $line->addSeriesPoint($title, $report->date, 0)->addColor($colors[$key]);
+                            $line->addSeriesPoint($title, $report->date, 0)->addColor($colors[$item->field_category_id]);
                         }
                     }
                 } else {
                     foreach ($this->reports as $key => $report) {
                         $title = $item->name;
-                        if (isset(($report->data)['field_' . $item->id])) {
-                            $line->addSeriesPoint($title, $report->date, ($report->data)['field_' . $item->id])->addColor($colors[$key]);
+                        if(isset(($report->data)['field_' . $item->id])) {
+                            $line->addColor($colors[$item->field_category_id])->addSeriesPoint($title, $report->date, ($report->data)['field_' . $item->id]);
                         } else {
-                            $line->addSeriesPoint($title, $report->date, 0)->addColor($colors[$key]);
+                            $line->addColor($colors[$item->field_category_id])->addSeriesPoint($title, $report->date, ($report->data)['field_' . $item->id]);
                         }
                     }
                 }
             }
         });
 
-        return $line;
+
+        return $line->addMarker('asd',11,'red', 'asdasd','blue', 'white');
     }
 
     public function getCheckedFieldsCollectionProperty()

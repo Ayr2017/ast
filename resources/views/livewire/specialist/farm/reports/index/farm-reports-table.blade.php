@@ -88,6 +88,7 @@
     </div>
 
     <button class="btn btn-outline-primary" onclick='start({{json_encode($farm)}})'>Скачать диаграмму </button>
+
     <script>
         function start(farm){
 
@@ -106,6 +107,8 @@
             function downloadSVGAsPNG(e){
                 const canvas = document.createElement("canvas");
                 const svg = document.querySelector('svg');
+
+
                 titles = svg.querySelectorAll('title')
 
                 for(let title of titles){
@@ -135,8 +138,7 @@
                         // a.download = 'download.png';
                         // a.href = dataURL;
                         // a.dispatchEvent(my_evt);
-                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm)
-
+                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm )
                     }
                     //canvas.parentNode.removeChild(canvas);
                 }

@@ -5,6 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.cdnfonts.com/css/dejavu-sans" rel="stylesheet">
+
     <title>Document</title>
     <style>
         body{
@@ -24,6 +26,16 @@
         .vertical-table td {
             width:100px
         }
+
+      * {
+          /*font-family: Helvetica, sans-serif;*/
+          font-family: 'DejaVu Sans', sans-serif;
+      }
+      .apexcharts-legend-marker {
+          border:1px solid red;
+          height:10px;
+          width:10px;
+      }
     </style>
 </head>
 <body>
@@ -59,8 +71,10 @@
     <img src="{{$url}}"  style="width:100%; object-fit: contain" />
     @foreach($formFields as $field)
         <p>{{$field->name}}</p>
+{{--        <p style="color:{{\App\Models\FieldCategory::CATEGORY_COLORS[$field->field_category_id]}}">{{$field->name}}</p>--}}
     @endforeach
 </div>
+
 
 </body>
 </html>
