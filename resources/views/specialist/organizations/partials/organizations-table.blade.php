@@ -32,15 +32,18 @@
                                 <i class="fa fa-pen"></i>
                             </a>
                         </div>
-                        <div class="py-1">
+                        <div class="py-1 ps-1">
                             <form action="{{route('specialist.organizations.destroy',['organization' => $organization?->id])}}"
                                   method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="deleted_at"
                                        value="{{$organization?->deleted_at ? 0 : 1}}">
-                                <button type="submit" class="btn btn-outline-danger">
-                                    <i class="fa {{$organization?->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
+                                <button type="submit" class="btn btn-warning">
+                                    <nobr>
+                                    <i class="fa {{$organization?->deleted_at ? 'fa-eye' : 'fa-eye-slash'}}"></i>
+                                    {{$organization?->deleted_at ? 'Активировать' : 'Деактивировать'}}
+                                    </nobr>
                                 </button>
                             </form>
                         </div>

@@ -55,11 +55,25 @@
                             </table>
                         </div>
 
+                        <div class="d-flex">
                         <a href="{{route('specialist.organizations.edit',['organization' => $organization])}}" class="btn btn-outline-secondary">
                             <i class="fa-solid fa-pen"></i>
                             Редактировать
                         </a>
-                        @include('specialist.organizations.partials.show.destroy-organization-modal')
+                        <form action="{{route('specialist.organizations.destroy',['organization' => $organization])}}"
+                              method="POST" class="mx-1">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-warning">
+                                @if(!$organization->deleted_at)
+                                    <i class="fa fa-eye-slash"></i> Деактивировать
+                                @else
+                                    <i class="fa fa-eye"></i> Активировать
+                                @endif
+                            </button>
+                        </form>
+                        </div>
+{{--                        @include('specialist.organizations.partials.show.destroy-organization-modal')--}}
                     </div>
                 </div>
 

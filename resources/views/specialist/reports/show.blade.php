@@ -105,11 +105,11 @@
                                   method="POST" class="mx-1">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger">
+                                <button type="submit" class="btn btn-warning">
                                     @if(!$report->deleted_at)
-                                        <i class="fa fa-trash"></i> Удалить
+                                        <i class="fa fa-eye-slash"></i> Деактивировать
                                     @else
-                                        <i class="fa fa-trash-restore"></i> Восстановить
+                                        <i class="fa fa-eye"></i> Активировать
                                     @endif
                                 </button>
                             </form>

@@ -49,8 +49,10 @@
                                 @method('DELETE')
                                 <input type="hidden" name="deleted_at"
                                        value="{{$report?->deleted_at ? 0 : 1}}">
-                                <button type="submit" class="btn btn-outline-danger">
-                                    <i class="fa {{$report?->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
+                                <button type="submit" class="btn btn-warning">
+                                    <nobr>
+                                        <i class="fa {{$report?->deleted_at ? 'fa-eye' : 'fa-eye-slash'}}"></i>
+                                        {{$report?->deleted_at ? 'Активировать' : 'Деактивировать'}}</nobr>
                                 </button>
                             </form>
                         </div>
