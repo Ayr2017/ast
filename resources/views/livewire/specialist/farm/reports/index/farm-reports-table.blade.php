@@ -74,7 +74,7 @@
         <h5 class="h5">Нет данных для этой формы</h5>
     @endif
     <div class="row">
-        <div class="col" style="height: 32rem;">
+        <div class="col" style="height: 32rem;" id="svgWrapper">
 {{--            <livewire:livewire-column-chart--}}
 {{--                key="{{ $columnChartModel->reactiveKey() }}"--}}
 {{--                :column-chart-model="$columnChartModel"--}}
@@ -88,6 +88,7 @@
     </div>
 
     <button class="btn btn-outline-primary" onclick='start({{json_encode($farm)}})'>Скачать диаграмму </button>
+    <a href="/pdf" class="btn btn-outline-secondary" >PDF</a>
 
     <script>
         function start(farm){
@@ -138,20 +139,52 @@
                         // a.download = 'download.png';
                         // a.href = dataURL;
                         // a.dispatchEvent(my_evt);
-                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm )
+                        // console.log(svg.querySelector('style'))
+                        // return 1;
+                        // Livewire.emit('postAdded', base64doc, farm, svg.outerHTML )
+                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend').outerHTML )
                     }
                     //canvas.parentNode.removeChild(canvas);
                 }
             }
 
             const downloadSVG = document.querySelector('#downloadSVG');
+            const svgElement = document.querySelector('#downloadSVG');
             // downloadSVG.addEventListener('click', downloadSVGAsText);
             const downloadPNG = document.querySelector('#downloadPNG');
             // downloadPNG.addEventListener('click', downloadSVGAsPNG);
             // downloadSVGAsText()
-            downloadSVGAsPNG()
+            downloadSVGAsPNG();
+            // createImage()
 
 
+        }
+
+        function createImage(){
+            let svgObject = document.querySelector('#svgWrapper').querySelector('svg');
+            svg = svgObject.outerHTML;
+            console.log(svg);
+
+            const { body } = document;
+
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = svgObject.getAttribute('width');
+            canvas.height = svgObject.getAttribute('height');
+
+            const newImg = document.createElement("img");
+            newImg.addEventListener("load", onNewImageLoad);
+            newImg.src =
+                "data:image/svg+xml," +
+                encodeURIComponent(svg);
+
+            const targetImg = document.createElement("img");
+            body.appendChild(targetImg);
+
+            function onNewImageLoad(e) {
+                ctx.drawImage(e.target, 0, 0);
+                targetImg.src = canvas.toDataURL();
+            }
         }
     </script>
 

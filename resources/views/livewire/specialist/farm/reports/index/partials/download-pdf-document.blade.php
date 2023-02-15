@@ -9,33 +9,88 @@
 
     <title>Document</title>
     <style>
-        body{
+        body {
             font-size: 10px;
         }
-        .table{
-            width:100%;
+
+        .table {
+            width: 100%;
             border-collapse: collapse;
         }
 
         .vertical-table {
             border-collapse: collapse;
         }
-        .vertical-table td, .vertical-table  th {
+
+        .vertical-table td, .vertical-table th {
             border: 1px solid black;
         }
+
         .vertical-table td {
-            width:100px
+            width: 100px
         }
 
-      * {
-          /*font-family: Helvetica, sans-serif;*/
-          font-family: 'DejaVu Sans', sans-serif;
-      }
-      .apexcharts-legend-marker {
-          border:1px solid red;
-          height:10px;
-          width:10px;
-      }
+        * {
+            /*font-family: Helvetica, sans-serif;*/
+            font-family: 'DejaVu Sans', sans-serif;
+        }
+
+        .apexcharts-legend {
+            display: flex;
+            overflow: auto;
+            padding: 0 10px;
+        }
+        .apexcharts-legend.apx-legend-position-bottom, .apexcharts-legend.apx-legend-position-top {
+            flex-wrap: wrap
+        }
+        .apexcharts-legend.apx-legend-position-right, .apexcharts-legend.apx-legend-position-left {
+            flex-direction: column;
+            /*bottom: 0;*/
+        }
+        .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-left, .apexcharts-legend.apx-legend-position-top.apexcharts-align-left, .apexcharts-legend.apx-legend-position-right, .apexcharts-legend.apx-legend-position-left {
+            justify-content: flex-start;
+        }
+        .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center, .apexcharts-legend.apx-legend-position-top.apexcharts-align-center {
+            justify-content: center;
+        }
+        .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-right, .apexcharts-legend.apx-legend-position-top.apexcharts-align-right {
+            /*justify-content: flex-end;*/
+        }
+        .apexcharts-legend-series {
+            cursor: pointer;
+            line-height: normal;
+        }
+        .apexcharts-legend.apx-legend-position-bottom .apexcharts-legend-series, .apexcharts-legend.apx-legend-position-top .apexcharts-legend-series{
+            display: flex;
+            align-items: center;
+        }
+        .apexcharts-legend-text {
+            position: relative;
+            font-size: 14px;
+        }
+        .apexcharts-legend-text *, .apexcharts-legend-marker * {
+            pointer-events: none;
+        }
+        .apexcharts-legend-marker {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 3px;
+            border-style: solid;
+        }
+
+        .apexcharts-legend.apexcharts-align-right .apexcharts-legend-series, .apexcharts-legend.apexcharts-align-left .apexcharts-legend-series{
+            display: inline-block;
+        }
+        .apexcharts-legend-series.apexcharts-no-click {
+            cursor: auto;
+        }
+        .apexcharts-legend .apexcharts-hidden-zero-series, .apexcharts-legend .apexcharts-hidden-null-series {
+            /*display: none !important;*/
+        }
+        .apexcharts-inactive-legend {
+            opacity: 0.45;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +108,8 @@
     </tr>
     <tr class="">
         <td style="padding-bottom: 10px;">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/img/ast-pdf.png'))) }}" width="100px" height="100px"/>
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/img/ast-pdf.png'))) }}"
+                 width="100px" height="100px"/>
         </td>
         <td></td>
         <td></td>
@@ -61,18 +117,17 @@
     </tbody>
 </table>
 <p style="width:100%">
-    {{$farm?->region?->name}} - {{$farm?->organization?->name}} -{{$farm?->name}} <span style="position: absolute; right:0">{{date("Y-m-d")}}</span>
+    {{$farm?->region?->name}} - {{$farm?->organization?->name}} -{{$farm?->name}} <span
+        style="position: absolute; right:0">{{date("Y-m-d")}}</span>
 </p>
 <hr>
 <div style="position: relative;page-break-after: always;">
     @include('livewire.specialist.farm.reports.index.partials.pdf-excel-vertical')
 </div>
 <div style="position: relative;">
-    <img src="{{$url}}"  style="width:100%; object-fit: contain" />
-    @foreach($formFields as $field)
-        <p>{{$field->name}}</p>
-{{--        <p style="color:{{\App\Models\FieldCategory::CATEGORY_COLORS[$field->field_category_id]}}">{{$field->name}}</p>--}}
-    @endforeach
+
+    <img src="{{$url}}" style="width:100%; object-fit: contain"/>
+    {!! $legend !!}
 </div>
 
 

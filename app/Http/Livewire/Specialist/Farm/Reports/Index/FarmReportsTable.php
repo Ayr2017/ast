@@ -54,25 +54,27 @@ class FarmReportsTable extends Component
     private Farm $farmPDF;
     private string $url;
 
-    public function createAndDownloadPDF($url, $farm)
+    public function createAndDownloadPDF($url, $farm, $legend)
     {
-
         $this->url = $url;
+        $legend = str_replace('Helvetica','"DejaVu Sans"',$legend);
+        $this->legend = str_replace('absolute','relative',$legend);
         $this->farmPDF = new Farm($farm);
         $pdfContent = PDF::setOptions([
             'isHtml5ParserEnabled' => false,
             'isRemoteEnabled' => true,
             'pdf' => true
-            ])
+        ])
             ->loadView('livewire.specialist.farm.reports.index.partials.download-pdf-document',
                 [
+                    'legend' => $this->legend,
                     'url' => $this->url,
                     'farm' => $this->farmPDF,
                     'reports' => $this->reports,
-                    'formFields' => $this->formFields->where('type', '=','number'),
+                    'formFields' => $this->formFields->where('type', '=', 'number'),
                 ])->output();
         return response()->streamDownload(
-            fn () => print($pdfContent),
+            fn() => print($pdfContent),
             "filename.pdf"
         );
     }
@@ -234,12 +236,11 @@ class FarmReportsTable extends Component
 
         $this->formFields->each(function ($item, $key) use ($line, $colors) {
             if ($item->type == 'number') {
-                if ($item->class == 'computed')
-                {
+                if ($item->class == 'computed') {
                     foreach ($this->reports as $key => $report) {
                         $title = $item->name;
                         if (isset($item->formula)) {
-                            $line->addSeriesPoint($title, $report->date, FormFieldService::compute( $item, $report))
+                            $line->addSeriesPoint($title, $report->date, FormFieldService::compute($item, $report))
                                 ->addColor($colors[$item->field_category_id]);
                         } else {
                             $line->addSeriesPoint($title, $report->date, 0)->addColor($colors[$item->field_category_id]);
@@ -248,7 +249,7 @@ class FarmReportsTable extends Component
                 } else {
                     foreach ($this->reports as $key => $report) {
                         $title = $item->name;
-                        if(isset(($report->data)['field_' . $item->id])) {
+                        if (isset(($report->data)['field_' . $item->id])) {
                             $line->addColor($colors[$item->field_category_id])->addSeriesPoint($title, $report->date, ($report->data)['field_' . $item->id]);
                         } else {
                             $line->addColor($colors[$item->field_category_id])->addSeriesPoint($title, $report->date, ($report->data)['field_' . $item->id]);
@@ -259,7 +260,7 @@ class FarmReportsTable extends Component
         });
 
 
-        return $line->addMarker('asd',11,'red', 'asdasd','blue', 'white');
+        return $line->addMarker('asd', 11, 'red', 'asdasd', 'blue', 'white');
     }
 
     public function getCheckedFieldsCollectionProperty()
@@ -290,7 +291,7 @@ class FarmReportsTable extends Component
 
     public function acceptFieldsCollection($id)
     {
-        if($id == 0) {
+        if ($id == 0) {
             $this->formFields = FormField::where('form_id', $this->formId)
                 ->orderBy('number', 'asc')
                 ->get();
@@ -328,7 +329,7 @@ class FarmReportsTable extends Component
             'lineChartModel' => $this->lineChartModel,
             'computedFormFields' => $this->computedFormFields,
         ];
-        $name = "report_".date("Y-m-d_H:i:s").".xlsx";
+        $name = "report_" . date("Y-m-d_H:i:s") . ".xlsx";
         return Excel::download(new ReportExport($data), "$name");
     }
 
@@ -336,12 +337,12 @@ class FarmReportsTable extends Component
     {
         $pdfContent = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
             ->loadView('livewire.specialist.farm.reports.index.partials.download-pdf-document',
-            [
-                'lineChartModel' => $this->lineChartModel,
-                'svg' => $this->svg,
-            ])->output();
+                [
+                    'lineChartModel' => $this->lineChartModel,
+                    'svg' => $this->svg,
+                ])->output();
         return response()->streamDownload(
-            fn () => print($pdfContent),
+            fn() => print($pdfContent),
             "filename.pdf"
         );
     }
