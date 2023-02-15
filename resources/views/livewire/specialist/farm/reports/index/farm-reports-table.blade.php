@@ -88,7 +88,6 @@
     </div>
 
     <button class="btn btn-outline-primary" onclick='start({{json_encode($farm)}})'>Скачать диаграмму </button>
-    <a href="/pdf" class="btn btn-outline-secondary" >PDF</a>
 
     <script>
         function start(farm){
