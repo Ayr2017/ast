@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Specialist;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\FieldTemplatesFilter;
 use App\Models\FieldTemplate;
 use App\Models\FormField;
 use Illuminate\Http\Request;
@@ -12,9 +13,9 @@ class FieldTemplatesController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(FieldTemplatesFilter $fieldTemplatesFilter)
     {
-        $fieldTemplates = FieldTemplate::all();
+        $fieldTemplates = FieldTemplate::filter($fieldTemplatesFilter)->get();
         return view('specialist.field-templates.index',[
             'field_templates' => $fieldTemplates,
         ]);
@@ -94,7 +95,12 @@ class FieldTemplatesController extends Controller
     public function destroy($id)
     {
         $fieldsTemplate = FieldTemplate::find($id);
-        $fieldsTemplate->delete();
+        if($fieldsTemplate) {
+            $fieldsTemplate->delete();
+        } else {
+            $fieldsTemplate = FieldTemplate::withTrashed()->find($id);
+            $fieldsTemplate->restore();
+        }
         return redirect()->back()->with(['msg' => 'Успешно удалено']);
     }
 }

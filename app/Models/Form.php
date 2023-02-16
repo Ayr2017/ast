@@ -36,6 +36,10 @@ class Form extends Model
     {
         return $this->hasMany(Report::class);
     }
+    public function fieldTemplates()
+    {
+        return $this->hasMany(FieldTemplate::class, 'form_id', 'id');
+    }
 
     public function scopeFilter(Builder $builder, QueryFilter $filter)
     {
@@ -45,6 +49,16 @@ class Form extends Model
     public function sortedFieldsByNumber()
     {
         return  $this->hasMany(FormField::class)->orderByRaw('-number desc');
+    }
 
+    public static function boot(): void
+    {
+        parent::boot();
+
+        self::deleted(function (Form $form) {
+            foreach ($form->fieldTemplates as $fieldTemplate) {
+                $fieldTemplate->delete();
+            };
+        });
     }
 }
