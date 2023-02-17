@@ -77,6 +77,7 @@ class FarmReportsTable extends Component
             fn() => print($pdfContent),
             "filename.pdf"
         );
+
     }
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\v1\FormCategoriesController;
 use App\Http\Controllers\Api\v1\FormFieldsController;
 use App\Http\Controllers\Api\v1\FormsController;
 use App\Http\Controllers\Api\v1\OrganisationsController;
+use App\Http\Controllers\Api\v1\ProfilesController;
 use App\Http\Controllers\Api\v1\RegionsController;
 use App\Http\Controllers\Api\v1\ReportsController;
 use App\Http\Controllers\Api\v1\RolesController;
@@ -31,6 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->middleware(['auth:api','cors'])->name('v1')->group(function(){
+    Route::get('profile', [ProfilesController::class, 'profile']);
     Route::resource('contacts', ContactsController::class);
     Route::resource('districts', DistrictsController::class);
     Route::resource('farms', FarmsController::class);
