@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{request()->routeIs('admin.reports.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('admin.reports.index')}}" >
-                    <i class="fa-solid fa-user-group"></i>
+                    <i class="fa-solid fa-file-excel"></i>
                     Отчёты
                 </a>
             </li>
