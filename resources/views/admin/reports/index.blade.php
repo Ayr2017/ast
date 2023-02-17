@@ -25,11 +25,16 @@
                 </div>
             </div>
         </div>
-    @endif
+        @endif
 
         <div class="row">
             <div class="col">
                 @include('admin.reports.partials.reports-table')
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                {{$reports->withQueryString()->links()}}
             </div>
         </div>
 
