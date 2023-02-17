@@ -15,7 +15,7 @@ class ReportsController extends Controller
      */
     public function index(ReportsFilter $reportsFilter)
     {
-        $reports = Report::filter($reportsFilter)->paginate(5);
+        $reports = Report::filter($reportsFilter)->paginate(15);
         return view('admin.reports.index', ['reports' => $reports]);
     }
 
