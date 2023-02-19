@@ -5,7 +5,7 @@
             <div class="mb-3">
                 <label for="organizationsDataList" class="form-label">Организация</label>
                 <input class="form-control" list="organizations" id="organizationsDataList"
-                       placeholder="Type to search..." wire:model="organizationSearch" autocomplete="off" >
+                       placeholder="Начните вводить" wire:model="o" autocomplete="off" >
                 <datalist id="organizations">
                     @foreach($organizations as $organization)
                         <option value="{{$organization?->name}}" wire:key="{{$organization->id}}" id="{{$organization->id}}">

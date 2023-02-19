@@ -1,0 +1,185 @@
+<?php
+
+namespace App\Http\Livewire\Specialist\Analytics;
+
+use App\Actions\Specialist\Analytic\DownloadExcel;
+use App\Models\Farm;
+use App\Models\FieldCategory;
+use App\Models\FieldTemplate;
+use App\Models\Form;
+use App\Models\FormField;
+use App\Models\Organization;
+use App\Models\Report;
+use App\Services\Specialist\FormFieldService;
+use Asantibanez\LivewireCharts\Models\LineChartModel;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
+use Livewire\Component;
+use App\Services\Specialist\LineChartModelService;
+
+class Index extends Component
+{
+    public $forms;
+    public $formId = 0;
+    public $organisations;
+    public $farms = [];
+    public $selectedOrganisation = '';
+    public $selectedFarm = '';
+    public $organisationId = 0;
+    public $farmId = 0;
+    public $buttonDisabled = true;
+    public $reports = [];
+    public $formFields = [];
+    public $selectedReports = [];
+    public $selectedFormFields = [];
+
+    public string $dateFrom = '2023-01-01';
+    public string $dateTo = '';
+    public $formFieldTemplates = [];
+    private LineChartModel $lineChartModel;
+    public $form;
+
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+        $this->organisations = Organization::all();
+        $this->forms = Form::all();
+        $this->dateTo = now()->format('Y-m-d');
+        $this->lineChartModel = new LineChartModel();
+    }
+
+    public function mount()
+    {
+
+    }
+
+    public function render()
+    {
+        return view('livewire.specialist.analytics.index');
+    }
+
+    public function updatingSelectedOrganisation($value, $key)
+    {
+        $organisation = $this->organisations->firstWhere('name', $value);
+        if ($organisation) {
+            $this->organisationId = $organisation->id;
+        } else {
+            $this->organisationId = 0;
+        }
+    }
+
+    public function updatedSelectedOrganisation($value, $key)
+    {
+        $organisation = $this->organisations->firstWhere('name', $value);
+        if ($organisation) {
+            $this->organisationId = $organisation->id;
+            $this->farms = Farm::where('organization_id', $this->organisationId)->get();
+        } else {
+            $this->dropOrganisation();
+        }
+    }
+
+    public function updatingSelectedFarm($value, $key)
+    {
+        $farm = $this->farms->firstWhere('name', $value);
+        if ($farm) {
+            $this->farmId = $farm->id;
+            $this->farms = Farm::where('organization_id', $this->organisationId)->get();
+        } else {
+            $this->farmId = 0;
+        }
+    }
+
+    private function dropOrganisation()
+    {
+        $this->organisationId = 0;
+        $this->farmId = 0;
+        $this->selectedFarm = '';
+    }
+
+    public function updated()
+    {
+        if ($this->organisationId && $this->farmId && $this->formId) {
+            $this->form = Form::find($this->formId);
+            $this->buttonDisabled = false;
+            $this->formFieldTemplates = FieldTemplate::where('form_id', $this->formId)->get();
+            $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
+        } else {
+            $this->buttonDisabled = true;
+        }
+    }
+
+    public function findReports()
+    {
+        $this->reports = Report::when($this->formId, function ($query) {
+            return $query->where('form_id', $this->formId);
+        })->when($this->farmId, function ($query) {
+            $farmUUID = Farm::find($this->farmId)->uuid;
+            return $query->where('farm_uuid', $farmUUID);
+        })->when($this->dateFrom, function ($query) {
+            return $query->where('date', '>=', $this->dateFrom);
+        })->when($this->dateTo, function ($query) {
+            return $query->where('date', '<=', $this->dateTo);
+        })
+            ->get();
+
+        $this->formFields = FormField::where('form_id', $this->formId)->orderBy('id')->get();
+    }
+
+    public function updatingSelectedReports($value)
+    {
+        Log::info($value);
+    }
+
+    public function updatingSelectedFormFields($value)
+    {
+        Log::info($value);
+    }
+
+    public function selectAllFields()
+    {
+        if ($this->formId) {
+            $this->selectedFormFields = FormField::where('form_id', $this->formId)->pluck('id');
+        }
+    }
+
+    public function unselectAllFields()
+    {
+        $this->selectedFormFields = [];
+    }
+
+    public function useAllFields()
+    {
+        $this->formFields = FormField::where('form_id', $this->formId)->get();;
+    }
+
+    public function compareReports()
+    {
+        $this->reports = $this->reports->whereIn('id', $this->selectedReports);
+        $this->formFields = $this->formFields->whereIn('id', $this->selectedFormFields);
+        $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
+
+    }
+
+    public function clearSelectedReports()
+    {
+        $this->reports = Report::where('form_id', $this->formId)->get();
+    }
+
+    public function downloadExcel(DownloadExcel $downloadExcel)
+    {
+        $form = Form::find($this->formId);
+        return $downloadExcel->execute($this->reports, $this->formFields, $form);
+    }
+
+    public function downloadPdf()
+    {
+        $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
+    }
+
+    public function getLCM()
+    {
+        return $this->lineChartModel ?? null;
+    }
+}
