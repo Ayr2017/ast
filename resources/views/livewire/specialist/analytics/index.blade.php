@@ -102,7 +102,8 @@
                                 </button>
                                 @foreach($formFieldTemplates as $template)
                                     <button type="button"
-                                            class="btn btn-sm btn-outline-dark">{{$template->name}}</button>
+                                            class="btn btn-sm btn-outline-dark"
+                                            wire:click="useFormFieldTemplate({{$template->id}})">{{$template->name}}</button>
                                 @endforeach
                             </div>
                         </div>
@@ -150,13 +151,13 @@
                                 @foreach($this->formFields as $formField)
                                     @if($formField->class === 'computed')
                                         <td>
-                                        {{App\Services\Specialist\FormFieldService::compute($formField, $report)}}
+                                            {{App\Services\Specialist\FormFieldService::compute($formField, $report)}}
                                         </td>
 
                                     @else
-                                    <td>
-                                        {{$data['field_'.$formField->id] ?? '-'}}
-                                    </td>
+                                        <td>
+                                            {{$data['field_'.$formField->id] ?? '-'}}
+                                        </td>
                                     @endif
                                 @endforeach
                                 <td>{{$report->date}}</td>
@@ -173,10 +174,24 @@
                                 <div class="row g-3 align-items-center">
                                     <div style="overflow-x: auto; white-space: nowrap;">
                                         <div class="btn-group my-1" role="group" aria-label="templates">
-                                            <button type="button" class="btn btn-sm btn-outline-primary" wire:click="compareReports">Сравнить</button>
-                                            <button type="button" class="btn btn-sm btn-outline-primary" wire:click="clearSelectedReports">Сбросить</button>
-                                            <button type="button" class="btn btn-sm btn-outline-primary" wire:click="downloadExcel">Скачать Excell</button>
-                                            <button type="button" class="btn btn-sm btn-outline-primary" wire:click="downloadPdf">Скачать PDF</button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    wire:click="compareReports">Сравнить
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    wire:click="clearSelectedReports">Сбросить
+                                            </button>
+
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    data-bs-toggle="modal" data-bs-target="#saveTemplateModal">Сохранить
+                                                шаблон полей
+                                            </button>
+
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    wire:click="downloadExcel">Скачать Excell
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    wire:click="downloadPdf">Скачать PDF
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -190,14 +205,47 @@
 
                         @if($this->getLCM())
                             <livewire:livewire-line-chart
-                            key="{{$this->lineChartModel->reactiveKey() ?? 123}}"
-                            :line-chart-model="$this->lineChartModel"
-                        />
-                            @endif
+                                key="{{$this->lineChartModel->reactiveKey() ?? 123}}"
+                                :line-chart-model="$this->lineChartModel"
+                            />
+                        @endif
                     </div>
                 </div>
 
+
             </div>
         </fieldset>
+        <!-- Modal -->
+        <div class="modal fade" id="saveTemplateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Сохранение шаблона</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="templateName" class="form-label">Название</label>
+                            <input type="text" class="form-control" id="templateName" wire:model="templateName">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" wire:click="saveFieldsTemplate">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+<script>
+    document.addEventListener('close', e=>{
+        el = document.getElementById('saveTemplateModal')
+        var modal = bootstrap.Modal.getInstance(el)
+        modal.hide()
+    })
+
+</script>
 </div>
+
+

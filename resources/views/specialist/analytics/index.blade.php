@@ -18,9 +18,11 @@
         </div>
         <div class="row">
             <div class="col">
-                <livewire:specialist.analytics.index />
+                <livewire:specialist.analytics.index/>
             </div>
         </div>
+
+
 
     </div>
 @endsection

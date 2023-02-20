@@ -39,6 +39,7 @@ class Index extends Component
     public $formFieldTemplates = [];
     private LineChartModel $lineChartModel;
     public $form;
+    public $templateName = '';
 
     public function __construct($id = null)
     {
@@ -142,6 +143,29 @@ class Index extends Component
         if ($this->formId) {
             $this->selectedFormFields = FormField::where('form_id', $this->formId)->pluck('id');
         }
+    }
+
+    public function useFormFieldTemplate($id)
+    {
+        $template = FieldTemplate::find($id);
+        if ($template) {
+            $this->formFields = FormField::whereIn('id', $template->fields)->get();
+        }
+    }
+
+    public function saveFieldsTemplate()
+    {
+        $fieldsIds = $this->selectedFormFields;
+        if (count($fieldsIds) > 0 && $this->formId && $this->templateName) {
+            $template = FieldTemplate::create([
+                'name' => $this->templateName,
+                'fields' => $fieldsIds,
+                'form_id' => $this->formId,
+            ]);
+
+            $this->templateName = '';
+        }
+        $this->dispatchBrowserEvent('close');
     }
 
     public function unselectAllFields()
