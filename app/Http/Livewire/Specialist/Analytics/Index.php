@@ -12,6 +12,7 @@ use App\Models\Organization;
 use App\Models\Report;
 use App\Services\Specialist\FormFieldService;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -40,6 +41,36 @@ class Index extends Component
     private LineChartModel $lineChartModel;
     public $form;
     public $templateName = '';
+    public $farm;
+
+    protected $listeners = ['postAdded' => 'createAndDownloadPDF'];
+
+    public function createAndDownloadPDF($url, $farm, $legend)
+    {
+        $this->url = $url;
+        $legend = str_replace('Helvetica','"DejaVu Sans"',$legend);
+        $this->legend = str_replace('absolute','relative',$legend);
+        $this->farmPDF = new Farm($farm);
+        $pdfContent = PDF::setOptions([
+            'isHtml5ParserEnabled' => false,
+            'isRemoteEnabled' => true,
+            'pdf' => true
+        ])
+            ->loadView('livewire.specialist.farm.reports.index.partials.download-pdf-document',
+                [
+                    'legend' => $this->legend,
+                    'url' => $this->url,
+                    'farm' => $this->farmPDF,
+                    'reports' => $this->reports,
+                    'formFields' => $this->formFields->where('type', '=', 'number'),
+                ])->output();
+        return response()->streamDownload(
+            fn() => print($pdfContent),
+            "filename.pdf"
+        );
+
+    }
+
 
     public function __construct($id = null)
     {
@@ -87,6 +118,7 @@ class Index extends Component
         if ($farm) {
             $this->farmId = $farm->id;
             $this->farms = Farm::where('organization_id', $this->organisationId)->get();
+            $this->farm = $farm;
         } else {
             $this->farmId = 0;
         }

@@ -230,10 +230,6 @@ class FarmReportsTable extends Component
         $colors = FieldCategory::CATEGORY_COLORS;
         $line = new LineChartModel();
         $line->setTitle($this->form->name)->multiLine()->setColors(FieldCategory::CATEGORY_COLORS);
-//        foreach($this->formFields as $key=>$val) {
-//            dump($colors[$val->field_category_id]. " ".$val->name);
-//        }
-
 
         $this->formFields->each(function ($item, $key) use ($line, $colors) {
             if ($item->type == 'number') {
