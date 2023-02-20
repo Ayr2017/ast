@@ -82,13 +82,16 @@
                 <div class="col-4">
                     <div class="row g-3 align-items-center">
                         <div>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-outline-dark"
-                                        wire:click="unselectAllFields">Убрать выделение
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-dark" wire:click="selectAllFields">
-                                    Выделить всё
-                                </button>
+                            <div class="my-1">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-sm btn-outline-dark"
+                                            wire:click="unselectAllFields">Убрать выделение
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark"
+                                            wire:click="selectAllFields">
+                                        Выделить всё
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -175,7 +178,7 @@
                                     <div style="overflow-x: auto; white-space: nowrap;">
                                         <div class="btn-group my-1" role="group" aria-label="templates">
                                             <button type="button" class="btn btn-sm btn-outline-primary"
-                                                    wire:click="compareReports">Сравнить
+                                                    wire:click="compareReports" {{count($reports) > 0 ? '' : 'disabled'}}>Сравнить
                                             </button>
                                             <button type="button" class="btn btn-sm btn-outline-primary"
                                                     wire:click="clearSelectedReports">Сбросить
@@ -238,14 +241,14 @@
             </div>
         </div>
     </div>
-<script>
-    document.addEventListener('close', e=>{
-        el = document.getElementById('saveTemplateModal')
-        var modal = bootstrap.Modal.getInstance(el)
-        modal.hide()
-    })
+    <script>
+        document.addEventListener('close', e => {
+            el = document.getElementById('saveTemplateModal')
+            var modal = bootstrap.Modal.getInstance(el)
+            modal.hide()
+        })
 
-</script>
+    </script>
 </div>
 
 
