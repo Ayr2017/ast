@@ -164,8 +164,8 @@ class Index extends Component
             ]);
 
             $this->templateName = '';
+            $this->dispatchBrowserEvent('close');
         }
-        $this->dispatchBrowserEvent('close');
     }
 
     public function unselectAllFields()
