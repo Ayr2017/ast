@@ -146,7 +146,10 @@
                             <tbody>
                             @foreach($reports as $report)
                                 <tr>
-                                    <td>{{$report->id}}</td>
+                                    <td><a href="{{route('specialist.reports.show', ['report' => $report])}}">
+                                        {{$report->id}}
+                                        </a>
+                                    </td>
                                     <td>
                                         <input type="checkbox" wire:model="selectedReports" id="{{$report->id}}"
                                                value="{{$report->id}}">
