@@ -88,7 +88,6 @@
                     @endforeach
                     </div>
                 @else
-                    <p>Не найдено</p>
                 @endif
             @empty
                 <p>Не найдено</p>
