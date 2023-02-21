@@ -171,9 +171,6 @@
                                                         __exp
                                                     @endif
                                                 @endisset
-                                                {{--                                        <td>--}}
-                                                {{--                                            {{$data['field_'.$formField->id] ?? '-'}}--}}
-                                                {{--                                        </td>--}}
                                             </td>
                                         @endif
                                     @endforeach
