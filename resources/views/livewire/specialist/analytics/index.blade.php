@@ -76,6 +76,7 @@
         </fieldset>
     </div>
 
+    @if($reports)
     <div class="row my-2">
         <fieldset wire:loading.attr="disabled">
             <div class="row">
@@ -243,7 +244,8 @@
                 </div>
             </div>
         </div>
-    </div>
+
+        @endif
     <script>
 
         document.addEventListener('close', e => {

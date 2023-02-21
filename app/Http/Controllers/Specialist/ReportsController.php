@@ -53,6 +53,8 @@ class ReportsController extends Controller
     {
         $validatedRequest = $request->validated();
         $validatedRequest['user_id'] = auth()->id();
+
+
         $report = Report::create($validatedRequest);
 
 

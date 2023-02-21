@@ -15,7 +15,8 @@
                     @endforeach
                 @endif
 
-                <livewire:specialist.report.create.select-form />
+{{--                <livewire:specialist.report.create.select-form />--}}
+                <livewire:specialist.report.create-report />
 
             </div>
         </div>
