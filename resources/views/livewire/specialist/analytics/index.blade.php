@@ -159,6 +159,7 @@
                                         </td>
 
                                     @else
+                                        <td>
 
                                             @if($formField->type != 'checkbox' && !is_array($report?->data["field_$formField->id"]))
                                                 {{$report->data["field_$formField->id"] ?? '-'}}
@@ -170,6 +171,7 @@
 {{--                                        <td>--}}
 {{--                                            {{$data['field_'.$formField->id] ?? '-'}}--}}
 {{--                                        </td>--}}
+                                        </td>
                                     @endif
                                 @endforeach
                                 <td>{{$report->date}}</td>
