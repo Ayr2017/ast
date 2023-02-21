@@ -146,7 +146,7 @@
                             <tbody>
                             @foreach($reports as $report)
                                 <tr>
-                                    <td><a href="{{route('specialist.reports.show', ['report' => $report])}}">
+                                    <td><a href="{{route('specialist.reports.show', ['report' => $report])}}" target="_blank">
                                         {{$report->id}}
                                         </a>
                                     </td>
