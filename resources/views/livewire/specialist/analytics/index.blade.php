@@ -77,273 +77,280 @@
     </div>
 
     @if($reports)
-    <div class="row my-2">
-        <fieldset wire:loading.attr="disabled">
-            <div class="row">
-                <div class="col-4">
-                    <div class="row g-3 align-items-center">
-                        <div>
-                            <div class="my-1">
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"
-                                            wire:click="unselectAllFields">Убрать выделение
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-dark"
-                                            wire:click="selectAllFields">
-                                        Выделить всё
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <div class="row g-3 align-items-center">
-                        <div style="overflow-x: auto; white-space: nowrap;">
-                            <div class="btn-group my-1" role="group" aria-label="templates">
-                                <button type="button" class="btn btn-sm btn-outline-dark" wire:click="useAllFields">Все
-                                    поля
-                                </button>
-                                @foreach($formFieldTemplates as $template)
-                                    <button type="button"
-                                            class="btn btn-sm btn-outline-dark"
-                                            wire:click="useFormFieldTemplate({{$template->id}})">{{$template->name}}</button>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    </div>
-
-    <div class="row">
-        <fieldset wire:loading.attr="disabled">
-            <div class="col">
-                <div class="table-responsive">
-                    <table class="table table-stripped">
-                        <thead class="thead">
-                        <tr>
-                            <th>№</th>
-                            <th>Выбор</th>
-                            @foreach($this->formFields as $formField)
-                                <th>
-                                    <p class="mb-1">
-                                        <input type="checkbox" wire:model="selectedFormFields" id="{{$formField->id}}"
-                                               value="{{$formField->id}}">
-                                        {{$formField->name}}
-                                    </p>
-                                    <span class="text-muted" style="font-weight: lighter">
-                                        {{$formField->category->name}}
-                                    </span>
-                                </th>
-                            @endforeach
-                            <th>Дата</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($reports as $report)
-                            <tr>
-                                <td>{{$report->id}}</td>
-                                <td>
-                                    <input type="checkbox" wire:model="selectedReports" id="{{$report->id}}"
-                                           value="{{$report->id}}">
-                                </td>
-                                @php
-                                    $data = $report->data;
-                                @endphp
-                                @foreach($this->formFields as $formField)
-                                    @if($formField->class === 'computed')
-                                        <td>
-                                            {{App\Services\Specialist\FormFieldService::compute($formField, $report)}}
-                                        </td>
-
-                                    @else
-                                        <td>
-
-                                            @if($formField->type != 'checkbox' && !is_array($report?->data["field_$formField->id"]))
-                                                {{$report->data["field_$formField->id"] ?? '-'}}
-                                            @elseif($formField->type == 'checkbox' && is_array($report?->data["field_$formField->id"]))
-                                                {{implode(',', $report?->data["field_$formField->id"] ?? '-')}}
-                                            @else
-                                                __exp
-                                            @endif
-{{--                                        <td>--}}
-{{--                                            {{$data['field_'.$formField->id] ?? '-'}}--}}
-{{--                                        </td>--}}
-                                        </td>
-                                    @endif
-                                @endforeach
-                                <td>{{$report->date}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="row my-2">
-                    <fieldset wire:loading.attr="disabled">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row g-3 align-items-center">
-                                    <div style="overflow-x: auto; white-space: nowrap;">
-                                        <div class="btn-group my-1" role="group" aria-label="templates">
-                                            <button type="button" class="btn btn-sm btn-outline-primary"
-                                                    wire:click="compareReports" {{count($selectedReports) > 0 ? '' : 'disabled'}}>Сравнить
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-primary"
-                                                    wire:click="clearSelectedReports">Сбросить
-                                            </button>
-
-                                            <button type="button" class="btn btn-sm btn-outline-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#saveTemplateModal">Сохранить
-                                                шаблон полей
-                                            </button>
-
-                                            <button type="button" class="btn btn-sm btn-outline-primary"
-                                                    wire:click="downloadExcel">Скачать Excell
-                                            </button>
-{{--                                            <button type="button" class="btn btn-sm btn-outline-primary"--}}
-{{--                                                    wire:click="downloadPdf">Скачать PDF--}}
-{{--                                            </button>--}}
-                                            <button type="button" class="btn btn-sm btn-outline-primary"
-                                                    onclick="start({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>Скачать отчёт
-                                            </button>
-                                        </div>
+        <div class="row my-2">
+            <fieldset wire:loading.attr="disabled">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="row g-3 align-items-center">
+                            <div>
+                                <div class="my-1">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-sm btn-outline-dark"
+                                                wire:click="unselectAllFields">Убрать выделение
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-dark"
+                                                wire:click="selectAllFields">
+                                            Выделить всё
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </fieldset>
-                </div>
-
-                <div class="row">
-                    <div class="col" style="height: 32rem;" id="svgWrapper">
-
-                        @if($this->getLCM())
-                            <livewire:livewire-line-chart
-                                key="{{$this->lineChartModel->reactiveKey() ?? 123}}"
-                                :line-chart-model="$this->lineChartModel"
-                            />
-                        @endif
                     </div>
-                </div>
-
-
-            </div>
-        </fieldset>
-        <!-- Modal -->
-        <div class="modal fade" id="saveTemplateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true" wire:ignore.self>
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Сохранение шаблона</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="templateName" class="form-label">Название</label>
-                            <input type="text" class="form-control" id="templateName" wire:model="templateName">
+                    <div class="col-8">
+                        <div class="row g-3 align-items-center">
+                            <div style="overflow-x: auto; white-space: nowrap;">
+                                <div class="btn-group my-1" role="group" aria-label="templates">
+                                    <button type="button" class="btn btn-sm btn-outline-dark" wire:click="useAllFields">
+                                        Все
+                                        поля
+                                    </button>
+                                    @foreach($formFieldTemplates as $template)
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-dark"
+                                                wire:click="useFormFieldTemplate({{$template->id}})">{{$template->name}}</button>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn btn-primary" wire:click="saveFieldsTemplate">Сохранить</button>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="row">
+            <fieldset wire:loading.attr="disabled">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-stripped">
+                            <thead class="thead">
+                            <tr>
+                                <th>№</th>
+                                <th>Выбор</th>
+                                @foreach($this->formFields as $formField)
+                                    <th>
+                                        <p class="mb-1">
+                                            <input type="checkbox" wire:model="selectedFormFields"
+                                                   id="{{$formField->id}}"
+                                                   value="{{$formField->id}}">
+                                            {{$formField->name}}
+                                        </p>
+                                        <span class="text-muted" style="font-weight: lighter">
+                                        {{$formField->category->name}}
+                                    </span>
+                                    </th>
+                                @endforeach
+                                <th>Дата</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($reports as $report)
+                                <tr>
+                                    <td>{{$report->id}}</td>
+                                    <td>
+                                        <input type="checkbox" wire:model="selectedReports" id="{{$report->id}}"
+                                               value="{{$report->id}}">
+                                    </td>
+                                    @php
+                                        $data = $report->data;
+                                    @endphp
+                                    @foreach($this->formFields as $formField)
+                                        @if($formField->class === 'computed')
+                                            <td>
+                                                {{App\Services\Specialist\FormFieldService::compute($formField, $report)}}
+                                            </td>
+
+                                        @else
+                                            <td>
+                                                @isset($report?->data["field_$formField?->id"])
+                                                    @if($formField->type != 'checkbox' && !is_array($report?->data["field_$formField->id"]))
+                                                        {{$report->data["field_$formField->id"] ?? '-'}}
+                                                    @elseif($formField->type == 'checkbox' && is_array($report?->data["field_$formField->id"]))
+                                                        {{implode(',', $report?->data["field_$formField->id"] ?? '-')}}
+                                                    @else
+                                                        __exp
+                                                    @endif
+                                                @endisset
+                                                {{--                                        <td>--}}
+                                                {{--                                            {{$data['field_'.$formField->id] ?? '-'}}--}}
+                                                {{--                                        </td>--}}
+                                            </td>
+                                        @endif
+                                    @endforeach
+                                    <td>{{$report->date}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row my-2">
+                        <fieldset wire:loading.attr="disabled">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row g-3 align-items-center">
+                                        <div style="overflow-x: auto; white-space: nowrap;">
+                                            <div class="btn-group my-1" role="group" aria-label="templates">
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        wire:click="compareReports" {{count($selectedReports) > 0 ? '' : 'disabled'}}>
+                                                    Сравнить
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        wire:click="clearSelectedReports">Сбросить
+                                                </button>
+
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        data-bs-toggle="modal" data-bs-target="#saveTemplateModal">
+                                                    Сохранить
+                                                    шаблон полей
+                                                </button>
+
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        wire:click="downloadExcel">Скачать Excell
+                                                </button>
+                                                {{--                                            <button type="button" class="btn btn-sm btn-outline-primary"--}}
+                                                {{--                                                    wire:click="downloadPdf">Скачать PDF--}}
+                                                {{--                                            </button>--}}
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        onclick="start({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>
+                                                    Скачать отчёт
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="row">
+                        <div class="col" style="height: 32rem;" id="svgWrapper">
+
+                            @if($this->getLCM())
+                                <livewire:livewire-line-chart
+                                    key="{{$this->lineChartModel->reactiveKey() ?? 123}}"
+                                    :line-chart-model="$this->lineChartModel"
+                                />
+                            @endif
+                        </div>
+                    </div>
+
+
+                </div>
+            </fieldset>
+            <!-- Modal -->
+            <div class="modal fade" id="saveTemplateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true" wire:ignore.self>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Сохранение шаблона</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="templateName" class="form-label">Название</label>
+                                <input type="text" class="form-control" id="templateName" wire:model="templateName">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <button type="button" class="btn btn-primary" wire:click="saveFieldsTemplate">Сохранить
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        @endif
-    <script>
+            @endif
+            <script>
 
-        document.addEventListener('close', e => {
-            el = document.getElementById('saveTemplateModal')
-            var modal = bootstrap.Modal.getInstance(el)
-            modal.hide()
-        })
+                document.addEventListener('close', e => {
+                    el = document.getElementById('saveTemplateModal')
+                    var modal = bootstrap.Modal.getInstance(el)
+                    modal.hide()
+                })
 
-        function start(farm){
+                function start(farm) {
 
-            // function downloadSVGAsText() {
-            //     const svg = document.querySelector('svg');
-            //     const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
-            //     const a = document.createElement('a');
-            //     const e = new MouseEvent('click');
-            //     Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc)
-            // }
+                    // function downloadSVGAsText() {
+                    //     const svg = document.querySelector('svg');
+                    //     const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
+                    //     const a = document.createElement('a');
+                    //     const e = new MouseEvent('click');
+                    //     Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc)
+                    // }
 
-            function downloadSVGAsPNG(e){
-                const canvas = document.createElement("canvas");
-                const svg = document.querySelector('svg');
-                titles = svg.querySelectorAll('title')
-                for(let title of titles){
-                    title.remove()
+                    function downloadSVGAsPNG(e) {
+                        const canvas = document.createElement("canvas");
+                        const svg = document.querySelector('svg');
+                        titles = svg.querySelectorAll('title')
+                        for (let title of titles) {
+                            title.remove()
+                        }
+
+                        const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
+                        const w = parseInt(svg.getAttribute('width'));
+                        const h = parseInt(svg.getAttribute('height'));
+                        const img_to_download = document.createElement('img');
+                        img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
+                        img_to_download.onload = function () {
+                            console.log('img loaded');
+                            canvas.setAttribute('width', w);
+                            canvas.setAttribute('height', h);
+                            const context = canvas.getContext("2d");
+                            context.drawImage(img_to_download, 0, 0, w, h);
+                            const dataURL = canvas.toDataURL('image/png');
+                            if (window.navigator.msSaveBlob) {
+                                window.navigator.msSaveBlob(canvas.msToBlob(), "download.png");
+                                e.preventDefault();
+                            } else {
+                                const a = document.createElement('a');
+                                const my_evt = new MouseEvent('click');
+                                Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend').outerHTML)
+                            }
+                        }
+                    }
+
+                    // const downloadSVG = document.querySelector('#downloadSVG');
+                    // const svgElement = document.querySelector('#downloadSVG');
+                    // const downloadPNG = document.querySelector('#downloadPNG');
+                    // downloadSVG.addEventListener('click', downloadSVGAsText);
+                    // downloadPNG.addEventListener('click', downloadSVGAsPNG);
+                    // downloadSVGAsText()
+                    downloadSVGAsPNG();
+
+
                 }
 
-                const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
-                const w = parseInt(svg.getAttribute('width'));
-                const h = parseInt(svg.getAttribute('height'));
-                const img_to_download = document.createElement('img');
-                img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
-                img_to_download.onload = function () {
-                    console.log('img loaded');
-                    canvas.setAttribute('width', w);
-                    canvas.setAttribute('height', h);
-                    const context = canvas.getContext("2d");
-                    context.drawImage(img_to_download,0,0,w,h);
-                    const dataURL = canvas.toDataURL('image/png');
-                    if (window.navigator.msSaveBlob) {
-                        window.navigator.msSaveBlob(canvas.msToBlob(), "download.png");
-                        e.preventDefault();
-                    } else {
-                        const a = document.createElement('a');
-                        const my_evt = new MouseEvent('click');
-                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend').outerHTML )
+                function createImage() {
+                    let svgObject = document.querySelector('#svgWrapper').querySelector('svg');
+                    svg = svgObject.outerHTML;
+                    console.log(svg);
+
+                    const {body} = document;
+
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+                    canvas.width = svgObject.getAttribute('width');
+                    canvas.height = svgObject.getAttribute('height');
+
+                    const newImg = document.createElement("img");
+                    newImg.addEventListener("load", onNewImageLoad);
+                    newImg.src =
+                        "data:image/svg+xml," +
+                        encodeURIComponent(svg);
+
+                    const targetImg = document.createElement("img");
+                    body.appendChild(targetImg);
+
+                    function onNewImageLoad(e) {
+                        ctx.drawImage(e.target, 0, 0);
+                        targetImg.src = canvas.toDataURL();
                     }
                 }
-            }
 
-            // const downloadSVG = document.querySelector('#downloadSVG');
-            // const svgElement = document.querySelector('#downloadSVG');
-            // const downloadPNG = document.querySelector('#downloadPNG');
-            // downloadSVG.addEventListener('click', downloadSVGAsText);
-            // downloadPNG.addEventListener('click', downloadSVGAsPNG);
-            // downloadSVGAsText()
-            downloadSVGAsPNG();
-
-
-        }
-
-        function createImage(){
-            let svgObject = document.querySelector('#svgWrapper').querySelector('svg');
-            svg = svgObject.outerHTML;
-            console.log(svg);
-
-            const { body } = document;
-
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            canvas.width = svgObject.getAttribute('width');
-            canvas.height = svgObject.getAttribute('height');
-
-            const newImg = document.createElement("img");
-            newImg.addEventListener("load", onNewImageLoad);
-            newImg.src =
-                "data:image/svg+xml," +
-                encodeURIComponent(svg);
-
-            const targetImg = document.createElement("img");
-            body.appendChild(targetImg);
-
-            function onNewImageLoad(e) {
-                ctx.drawImage(e.target, 0, 0);
-                targetImg.src = canvas.toDataURL();
-            }
-        }
-
-    </script>
-</div>
+            </script>
+        </div>
 
 
