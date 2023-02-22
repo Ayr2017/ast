@@ -54,5 +54,11 @@ class Farm extends Model
         self::restored(function (Farm $farm) {
             $farm->organization()->restore();
         });
+
+//        self::forceDeleted(function(Farm $farm){
+//            foreach ($farm->reports()->withTrashed()->get() as $report) {
+//                $report->forceDelete();
+//            };
+//        });
     }
 }

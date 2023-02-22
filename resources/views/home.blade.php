@@ -33,6 +33,8 @@
                                 <a class="btn btn-light" href="{{route('admin.forms.index')}}">Все фoрмы</a>
                                 <a class="btn btn-light" href="{{route('admin.form-fields.index')}}">Все поля</a>
                                 <a class="btn btn-light" href="{{route('admin.reports.index')}}">Отчёты</a>
+                                <a class="btn btn-light" href="{{route('admin.organisations.index')}}">Организации</a>
+                                <a class="btn btn-light" href="{{route('admin.farms.index')}}">Фермы</a>
 {{--                                <a class="btn btn-light" href="{{route('admin.computed-form-fields.index')}}">Вычисляемые поля</a>--}}
                         @elseif(auth()->user()->hasRole('specialist'))
                                 <a class="btn btn-light" href="{{route('specialist.organizations.index')}}">Все организации</a>

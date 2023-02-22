@@ -62,6 +62,7 @@ class Organization extends Model implements Contactable
         $filter->apply($builder);
     }
 
+
     // Удаление-восстановление фермы при удалении-восстановлении организации
     public static function boot()
     {
@@ -71,14 +72,7 @@ class Organization extends Model implements Contactable
             foreach ($organization->farms as $farm) {
                 $farm->delete();
             };
-
         });
-
-//        self::deleted(function (Organization $organization) {
-//            foreach ($organization->reports as $report) {
-//                $report->delete();
-//            };
-//        });
 
         self::restored(function (Organization $organization) {
             foreach ($organization->farms()->withTrashed()->get() as $farm) {

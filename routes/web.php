@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\FormFieldsController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\Admin\FormsController as AdminFormsController;
 use App\Http\Controllers\Admin\ReportsController as AdminReportsController;
+use App\Http\Controllers\Admin\FarmsController as AdminFarmsController;
+use App\Http\Controllers\Admin\OrganisationsController as AdminOrganisationsController;
 use App\Http\Controllers\General\ContactsController;
 use App\Http\Controllers\General\ProfilesController;
 use App\Http\Controllers\Specialist\AnalyticsController;
@@ -50,6 +52,8 @@ Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(functi
     Route::resource('computed-form-fields', ComputedFormFieldsController::class);
     Route::resource('field-categories', FieldCategoriesController::class);
     Route::resource('reports', AdminReportsController::class);
+    Route::resource('organisations', AdminOrganisationsController::class);
+    Route::resource('farms', AdminFarmsController::class);
 });
 
 Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist')->group(function(){
