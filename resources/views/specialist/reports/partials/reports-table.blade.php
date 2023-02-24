@@ -3,9 +3,8 @@
         <thead>
         <tr>
             <th>№</th>
-            <th>Форма</th>
+{{--            <th>Форма</th>--}}
             <th>Ферма</th>
-            <th>Отчёты фермы</th>
             <th>Организация</th>
             <th>Податель</th>
             <th>Данные</th>
@@ -18,14 +17,11 @@
         @foreach($reports as $report)
             <tr>
                 <td>{{$loop->iteration}}</td>
-                <td>
-                    <a href="{{route('specialist.forms.show',['form' => $report?->form?->id])}}">{{$report?->form?->name}}</a>
-                </td>
+{{--                <td>--}}
+{{--                    <a href="{{route('specialist.forms.show',['form' => $report?->form?->id])}}">{{$report?->form?->name}}</a>--}}
+{{--                </td>--}}
                 <td>
                     <a href="{{route('specialist.farms.show',['farm' => $report?->farm?->id])}}">{{$report?->farm?->name}}</a>
-                </td>
-                <td>
-                    <a href="{{route('specialist.farms.reports.index',['farm' => $report?->farm?->id])}}">Отчёты фермы</a>
                 </td>
                 <td>
                     <a href="{{route('specialist.organizations.show',['organization' => $report?->organization?->id])}}">{{$report?->organization?->name}}</a>

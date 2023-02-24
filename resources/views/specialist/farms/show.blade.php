@@ -70,8 +70,9 @@
                                 <tr>
                                     <th>Всего отчётов</th>
                                     <td>
-                                        <a href="{{$farm->deleted_at ? '' : route('specialist.farms.reports.index',['farm' => $farm])}}" class="{{$farm->deleted_at ? 'btn btn-link disabled' : ''}}">
-                                            {{$farm?->reports?->count()}}
+                                        {{$farm?->reports?->count()}}
+                                        <a href="{{$farm->deleted_at ? '' : route('specialist.farms.reports.index',['farm' => $farm])}}" class="{{$farm->deleted_at ? 'btn btn-link disabled' : 'btn btn-link disabled'}}">
+
                                         </a>
                                     </td>
                                 </tr>
