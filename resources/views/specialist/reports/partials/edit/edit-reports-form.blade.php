@@ -5,16 +5,19 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="organization_id" class="form-label">Организация</label>
-                <select class="form-select" name="organization_id" id="organization_id">
+                <select class="form-select" name="organization_id" id="organization_id" disabled>
                     <option value="{{$report?->organization?->id}}">{{$report?->organization?->name}}</option>
                 </select>
+            <input type="hidden" name="organization_id" value="{{$report?->organization?->id}}">
             </div>
 
             <div class="mb-3">
                 <label for="organization_id" class="form-label">Ферма</label>
-                <select class="form-select" name="organization_id" id="organization_id" readonly>
+                <select class="form-select" name="organization_id" id="organization_id" disabled>
                     <option selected value="{{$report?->farm?->id}}">{{$report?->farm?->name}}</option>
                 </select>
+                <input type="hidden" name="farm_id" value="{{$report?->farm?->id}}">
+
             </div>
 
             <div class="mb-3">
@@ -24,11 +27,12 @@
 
             <div class="mb-3">
                 <label for="form_id" class="form-label fw-bolder">Форма</label>
-                <select  class="form-select" id="form_id" name="form_id" >
+                <select  class="form-select" id="form_id" name="form_id" disabled>
                         <option selected
                             value="{{$report?->form->id}}" >{{$report->form->name}}</option>
                 </select>
                 <div id="innHelp" class="form-text"></div>
+                <input type="hidden" name="farm_id" value="{{$report?->form?->id}}">
             </div>
 
 

@@ -110,7 +110,7 @@ class ReportsController extends Controller
      */
     public function update(UpdateReportRequest $request, $id, UpdateReport $updateReport)
     {
-        $report = Report::find($id);
+        $report = Report::withTrashed()->find($id);
         $validatedRequest = $request->validated();
 
         $result = $updateReport->execute($validatedRequest, $report);
