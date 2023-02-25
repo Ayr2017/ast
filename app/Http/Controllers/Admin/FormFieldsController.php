@@ -19,7 +19,7 @@ class FormFieldsController extends Controller
      */
     public function index(FormFieldsFilter $formFieldsFilter)
     {
-        $formFields = FormField::filter($formFieldsFilter)->get();
+        $formFields = FormField::filter($formFieldsFilter)->paginate(15);
         return view('admin.form-fields.index', ['form_fields' => $formFields]);
     }
 
@@ -28,7 +28,6 @@ class FormFieldsController extends Controller
      */
     public function create(Request $request)
     {
-//        $form = Form::first();
         $forms = Form::all();
         if($request->get('from') == 'form_fields'){
             return redirect()->route('admin.forms.index')->withErrors(['message' => 'Выберите нужную форму и создайте там поле']);

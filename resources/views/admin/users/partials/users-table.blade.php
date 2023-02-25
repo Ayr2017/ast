@@ -23,23 +23,27 @@
                 <td>{{$user->job_title}}</td>
                 <td>{{$user->getRoleNames()->join(',')}}</td>
                 <td>
-                    <div class="d-flex justify-content-evenly">
+                    <div class="d-flex justify-content-start">
                         <div class="py-1">
                             <a href="{{route('admin.users.edit',['user' => $user->id])}}"
                                class="btn btn-outline-info">
                                 <i class="fa fa-pen"></i>
                             </a>
                         </div>
-                        <div class="py-1">
+                        <div class="p-1">
                             <form action="{{route('admin.users.update',['user' => $user->id])}}"
                                   method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="deleted_at"
                                        value="{{$user->deleted_at ? 0 : 1}}">
-                                <button type="submit" class="btn btn-outline-danger">
-                                    <i class="fa {{$user->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
+                                <button type="submit" class="btn btn-warning">
+                                <nobr>
+                                    <i class="fa {{$user->deleted_at ? 'fa-eye    ' : 'fa-eye-slash'}}"></i>
+                                    {{$user->deleted_at ? 'Активировать    ' : 'Декактивировать'}}
+                                </nobr>
                                 </button>
+
                             </form>
                         </div>
                     </div>

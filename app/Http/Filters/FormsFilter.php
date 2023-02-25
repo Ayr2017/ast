@@ -10,8 +10,10 @@ class FormsFilter extends QueryFilter
             $this->builder->withTrashed();
         } elseif($select == 'trashed'){
             $this->builder->onlyTrashed();
-        } else {
-            $this->builder->withTrashed();
+        } elseif($select == 'withoutTrashed') {
+            $this->builder->withoutTrashed();
+        }else {
+            $this->builder->withoutTrashed();
         }
     }
 }

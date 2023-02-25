@@ -23,22 +23,26 @@
                 <td>{{$form->category->name}}</td>
                 <td>{{$form->description}}</td>
                 <td>
-                    <div class="d-flex justify-content-evenly">
+                    <div class="d-flex justify-content-start">
                         <div class="py-1">
                             <a href="{{route('admin.forms.edit',['form' => $form->id])}}"
                                class="btn btn-outline-info">
                                 <i class="fa fa-pen"></i>
                             </a>
                         </div>
-                        <div class="py-1">
+                        <div class="p-1">
                             <form action="{{route('admin.forms.destroy',['form' => $form->id])}}"
                                   method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger">
-                                        <i class="fa {{$form->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
-                                </button>
+                                    <button type="submit" class="btn btn-warning">
+                                        <nobr>
+                                        <i class="fa {{$form->deleted_at ? 'fa-eye' : 'fa-eye-slash'}}"></i>
+                                        {{$form->deleted_at ? 'Активировать' : 'Деактивировать'}}
+                                            </nobr>
+                                    </button>
                             </form>
+
                         </div>
                     </div>
                 </td>

@@ -59,8 +59,8 @@ class FieldTemplatesController extends Controller
      */
     public function edit($id)
     {
-        $fieldsTemplate = FieldTemplate::find($id);
-        $fields = FormField::where('form_id', $fieldsTemplate->form_id)->get();
+        $fieldsTemplate = FieldTemplate::withTrashed()->find($id);
+        $fields = FormField::withTrashed()->where('form_id', $fieldsTemplate->form_id)->get();
 
         return view('specialist.field-templates.edit',[
             'fields_template' => $fieldsTemplate,

@@ -34,6 +34,12 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col">
+                {{$form_fields->withQueryString()->links()}}
+            </div>
+        </div>
+
 
     </div>
 @endsection

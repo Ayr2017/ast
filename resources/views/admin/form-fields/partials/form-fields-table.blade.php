@@ -44,8 +44,11 @@
                               method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger mx-1">
-                                <i class="fa {{$field->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
+                            <button type="submit" class="btn btn-warning mx-1">
+                                <nobr>
+                                <i class="fa {{$field->deleted_at ? 'fa-eye    ' : 'fa-eye-slash'}}"></i>
+                                {{$field->deleted_at ? 'Активировать': 'Деактивировать'}}
+                                </nobr>
                             </button>
                         </form>
                     </div>
