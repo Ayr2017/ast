@@ -47,8 +47,11 @@
                                 @method('DELETE')
                                 <input type="hidden" name="deleted_at"
                                        value="{{$fieldTemplate?->deleted_at ? 0 : 1}}">
-                                <button type="submit" class="btn btn-outline-danger">
-                                    <i class="fa {{$fieldTemplate?->deleted_at ? 'fa-trash-restore    ' : 'fa-trash'}}"></i>
+                                <button type="submit" class="btn btn-warning">
+                                    <nobr>
+                                    <i class="fa {{$fieldTemplate?->deleted_at ? 'fa-eye' : 'fa-eye-slash'}}"></i>
+                                        {{$fieldTemplate?->deleted_at ? 'Активировать    ' : 'Деактивировать'}}
+                                    </nobr>
                                 </button>
                             </form>
                         </div>
