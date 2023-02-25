@@ -142,12 +142,12 @@ class ReportsController extends Controller
         $report = Report::find($id);
         if ($report) {
             $report->delete();
-            return redirect()->route('specialist.reports.index');
+            return redirect()->back()->with(['msg' => 'Отчёт удалён']);
         }
         $report = Report::withTrashed()->find($id);
         $report->restore();
 
-        return redirect()->route('specialist.reports.show', ['report' => $report]);
+        return redirect()->back()->with(['msg' => 'Отчёт восстановлен']);
 
     }
 

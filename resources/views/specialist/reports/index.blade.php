@@ -14,6 +14,9 @@
                 @if (Session::has('success'))
                     <div class="alert alert-success">{{ Session::get('success') }}</div>
                 @endif
+                    @if (Session::has('msg'))
+                        <div class="alert alert-success">{{ Session::get('msg') }}</div>
+                    @endif
             </div>
         </div>
         <div class="row">
