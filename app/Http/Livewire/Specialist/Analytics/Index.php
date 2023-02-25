@@ -196,6 +196,7 @@ class Index extends Component
             ]);
 
             $this->templateName = '';
+            $this->formFieldTemplates = FieldTemplate::where('form_id', $this->formId)->get();
             $this->dispatchBrowserEvent('close');
         }
     }
