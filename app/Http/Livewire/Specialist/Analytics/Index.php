@@ -134,10 +134,10 @@ class Index extends Component
     public function updated()
     {
         if ($this->organisationId && $this->farmId && $this->formId) {
-            $this->findReports();
             $this->form = Form::find($this->formId);
             $this->buttonDisabled = false;
             $this->formFieldTemplates = FieldTemplate::where('form_id', $this->formId)->get();
+            $this->findReports();
             $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
         } else {
             $this->buttonDisabled = true;
@@ -211,7 +211,7 @@ class Index extends Component
     public function useAllFields()
     {
         $this->formFields = collect([]);
-        $this->formFields = FormField::where('form_id', $this->formId)->get();;
+        $this->formFields = FormField::where('form_id', $this->formId)->get();
     }
 
     public function compareReports()
