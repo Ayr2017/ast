@@ -134,6 +134,7 @@ class Index extends Component
     public function updated()
     {
         if ($this->organisationId && $this->farmId && $this->formId) {
+            $this->findReports();
             $this->form = Form::find($this->formId);
             $this->buttonDisabled = false;
             $this->formFieldTemplates = FieldTemplate::where('form_id', $this->formId)->get();
