@@ -28,7 +28,7 @@ class LineChartModelService
                             if (isset(($report->data)['field_' . $field->id])) {
                                 $line->addColor($colors[$field->field_category_id])->addSeriesPoint($title, $report->date, ($report->data)['field_' . $field->id]);
                             } else {
-                                $line->addColor($colors[$field->field_category_id])->addSeriesPoint($title, $report->date, ($report->data)['field_' . $field->id]);
+                                $line->addColor($colors[$field->field_category_id])->addSeriesPoint($title, $report->date, 0);
                             }
                     }
                 }
