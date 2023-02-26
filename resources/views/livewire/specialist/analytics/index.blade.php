@@ -132,10 +132,10 @@
                                         <div>
                                             <p class="mb-1 ">
                                                 <input type="checkbox" wire:model="selectedFormFields"
-                                                       id="{{$formField->id}}"
-                                                       value="{{$formField->id}}">
+                                                   id="{{$formField->id}}"
+                                                   value="{{$formField->id}}">
                                                 <br>
-                                                <span>{{$formField->name}}</span>
+                                                <label for="{{$formField->id}}"> {{$formField->name}}</label>
                                             </p>
                                             <span class="text-muted" style="font-weight: lighter">
                                         {{$formField->category->name}}

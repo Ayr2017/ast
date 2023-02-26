@@ -181,6 +181,7 @@ class Index extends Component
     {
         $template = FieldTemplate::find($id);
         if ($template) {
+            $this->formFields = collect([]);
             $this->formFields = FormField::whereIn('id', $template->fields)->get();
         }
     }
@@ -208,6 +209,7 @@ class Index extends Component
 
     public function useAllFields()
     {
+        $this->formFields = collect([]);
         $this->formFields = FormField::where('form_id', $this->formId)->get();;
     }
 
