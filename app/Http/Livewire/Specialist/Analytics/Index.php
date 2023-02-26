@@ -143,6 +143,7 @@ class Index extends Component
         } else {
             $this->buttonDisabled = true;
         }
+
     }
 
     public function findReports()
@@ -159,7 +160,7 @@ class Index extends Component
         })
             ->get();
 
-        $this->formFields = FormField::where('form_id', $this->formId)->orderBy('id')->get();
+//        $this->formFields = FormField::where('form_id', $this->formId)->orderBy('id')->get();
     }
 
     public function updatingSelectedReports($value)
