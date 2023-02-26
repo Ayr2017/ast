@@ -224,7 +224,8 @@ class Index extends Component
 
     public function clearSelectedReports()
     {
-        $this->reports = Report::where('form_id', $this->formId)->get();
+//        $this->reports = Report::where('form_id', $this->formId)->get();
+        $this->findReports();
     }
 
     public function downloadExcel(DownloadExcel $downloadExcel)
