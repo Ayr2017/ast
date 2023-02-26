@@ -165,12 +165,12 @@ class Index extends Component
 
     public function updatingSelectedReports($value)
     {
-        Log::info($value);
+//        Log::info($value);
     }
 
     public function updatingSelectedFormFields($value)
     {
-        Log::info($value);
+//        Log::info($value);
     }
 
     public function selectAllFields()
