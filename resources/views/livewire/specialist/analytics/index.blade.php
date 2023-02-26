@@ -150,8 +150,9 @@
                             <tbody>
                             @foreach($reports as $report)
                                 <tr>
-                                    <td><a href="{{route('specialist.reports.show', ['report' => $report])}}" target="_blank">
-                                        {{$report->id}}
+                                    <td><a href="{{route('specialist.reports.show', ['report' => $report])}}"
+                                           target="_blank">
+                                            {{$report->id}}
                                         </a>
                                     </td>
                                     <td>
@@ -306,6 +307,7 @@
                             }
                         }
                     }
+
                     downloadSVGAsPNG();
                 }
 
@@ -338,6 +340,5 @@
 
             </script>
         </div>
-
-
+    @endif
 </div>
