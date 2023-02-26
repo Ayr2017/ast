@@ -5,7 +5,7 @@
                 <div class="row g-3 align-items-center">
                     {{-- Оргранизация--}}
                     <div class="col">
-                        <label for="exampleDataList" class="form-label">Организация</label>
+                        <label for="organisation" class="form-label">Организация</label>
                         <input
                             class="form-control {{$organisationId ? 'border border-success' : 'border border-danger'}}"
                             list="organisationsDatalistOptions" id="organisation" name="organisation"
@@ -21,11 +21,11 @@
 
                     {{-- Ферма--}}
                     <div class="col">
-                        <label for="exampleDataList" class="form-label">Ферма</label>
+                        <label for="farm" class="form-label">Ферма</label>
                         <input class="form-control {{$farmId ? 'border border-success' : 'border border-danger'}}"
-                               list="datalistOptions" id="farm" name="farm" wire:model="selectedFarm"
+                               list="farmDatalistOptions" id="farm" name="farm" wire:model="selectedFarm"
                                placeholder="Начните вводить название фермы" autocomplete="off">
-                        <datalist id="datalistOptions">
+                        <datalist id="farmDatalistOptions">
                             @foreach($farms as $farm)
                                 <option value="{{$farm->name}}" wire:key="{{$farm->id}}" id="{{$farm->id}}">
                             @endforeach
