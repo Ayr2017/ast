@@ -340,5 +340,4 @@
 
             </script>
         </div>
-    @endif
 </div>
