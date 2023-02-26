@@ -184,7 +184,6 @@ class Index extends Component
         if ($template) {
             $this->formFields = collect([]);
             $this->formFields = FormField::whereIn('id', $template->fields)->get();
-            $this->findReports();
         }
     }
 
