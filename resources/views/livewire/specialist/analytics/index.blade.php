@@ -125,43 +125,44 @@
                         <table class="table table-stripped">
                             <thead class="thead">
                             <tr>
-                                <th>№</th>
-                                <th>Выбор</th>
+                                <th scope="col">№</th>
+                                <th scope="col">Выбор</th>
                                 @foreach($this->formFields as $formField)
-                                    <th class="align-top">
+                                    <th scope="col" class="align-top">
                                         <div>
                                             <p class="mb-1 ">
                                                 <input type="checkbox" wire:model="selectedFormFields"
                                                    id="{{$formField->id}}"
-                                                   value="{{$formField->id}}">
+                                                   value="{{$formField->id}}" />
                                                 <br>
                                                 <label for="{{$formField->id}}"> {{$formField->name}}</label>
                                             </p>
                                             <span class="text-muted" style="font-weight: lighter">
                                         {{$formField->category->name}}
                                         </span>
-
                                         </div>
                                     </th>
                                 @endforeach
-                                <th>Дата</th>
+                                <th scope="col">Дата</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($reports as $report)
                                 <tr>
-                                    <td><a href="{{route('specialist.reports.show', ['report' => $report])}}"
+                                    <td>
+                                        <a href="{{route('specialist.reports.show', ['report' => $report])}}"
                                            target="_blank">
                                             {{$report->id}}
                                         </a>
                                     </td>
                                     <td>
-                                        <input type="checkbox" wire:model="selectedReports" id="{{$report->id}}"
-                                               value="{{$report->id}}">
+                                        <input type="checkbox" wire:model="selectedReports"
+                                               id="{{$report->id}}"
+                                               value="{{$report->id}}" />
                                     </td>
-                                    @php
-                                        $data = $report->data;
-                                    @endphp
+{{--                                    @php--}}
+{{--                                        $data = $report->data;--}}
+{{--                                    @endphp--}}
                                     @foreach($this->formFields as $formField)
                                         @if($formField->class === 'computed')
                                             <td>
