@@ -121,6 +121,7 @@
         <div class="row">
             <fieldset wire:loading.attr="disabled">
                 <div class="col">
+                    {{$formFields}}
                     <div class="table-responsive mb-4">
                         <table class="table table-stripped">
                             <thead class="thead">
