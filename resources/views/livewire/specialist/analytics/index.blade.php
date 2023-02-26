@@ -128,16 +128,20 @@
                                 <th>№</th>
                                 <th>Выбор</th>
                                 @foreach($this->formFields as $formField)
-                                    <th>
-                                        <p class="mb-1">
-                                            <input type="checkbox" wire:model="selectedFormFields"
-                                                   id="{{$formField->id}}"
-                                                   value="{{$formField->id}}">
-                                            {{$formField->name}}
-                                        </p>
-                                        <span class="text-muted" style="font-weight: lighter">
+                                    <th class="align-top">
+                                        <div>
+                                            <p class="mb-1 ">
+                                                <input type="checkbox" wire:model="selectedFormFields"
+                                                       id="{{$formField->id}}"
+                                                       value="{{$formField->id}}">
+                                                <br>
+                                                <span>{{$formField->name}}</span>
+                                            </p>
+                                            <span class="text-muted" style="font-weight: lighter">
                                         {{$formField->category->name}}
-                                    </span>
+                                        </span>
+
+                                        </div>
                                     </th>
                                 @endforeach
                                 <th>Дата</th>
