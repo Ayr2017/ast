@@ -121,7 +121,6 @@
         <div class="row">
             <fieldset wire:loading.attr="disabled">
                 <div class="col">
-                    {{$formFields}}
                     <div class="table-responsive mb-4">
                         <table class="table table-stripped">
                             <thead class="thead">
@@ -277,15 +276,6 @@
                 })
 
                 function start(farm) {
-
-                    // function downloadSVGAsText() {
-                    //     const svg = document.querySelector('svg');
-                    //     const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
-                    //     const a = document.createElement('a');
-                    //     const e = new MouseEvent('click');
-                    //     Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc)
-                    // }
-
                     function downloadSVGAsPNG(e) {
                         const canvas = document.createElement("canvas");
                         const svg = document.querySelector('svg');
@@ -316,16 +306,7 @@
                             }
                         }
                     }
-
-                    // const downloadSVG = document.querySelector('#downloadSVG');
-                    // const svgElement = document.querySelector('#downloadSVG');
-                    // const downloadPNG = document.querySelector('#downloadPNG');
-                    // downloadSVG.addEventListener('click', downloadSVGAsText);
-                    // downloadPNG.addEventListener('click', downloadSVGAsPNG);
-                    // downloadSVGAsText()
                     downloadSVGAsPNG();
-
-
                 }
 
                 function createImage() {
@@ -359,3 +340,4 @@
         </div>
 
 
+</div>
