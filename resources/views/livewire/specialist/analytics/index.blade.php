@@ -152,7 +152,7 @@
                                     <td>
                                         <a href="{{route('specialist.reports.show', ['report' => $report])}}"
                                            target="_blank">
-                                            {{$report->id}}
+                                            {{$loop->iteration}}
                                         </a>
                                     </td>
                                     <td>

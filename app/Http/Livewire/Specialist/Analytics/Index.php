@@ -120,14 +120,14 @@ class Index extends Component
             $this->farms = Farm::where('organization_id', $this->organisationId)->get();
             $this->farm = $farm;
         } else {
-            $this->farmId = 0;
+            $this->farmId = '';
         }
     }
 
     private function dropOrganisation()
     {
-        $this->organisationId = 0;
-        $this->farmId = 0;
+        $this->organisationId = '';
+        $this->farmId = '';
         $this->selectedFarm = '';
     }
 
@@ -148,11 +148,11 @@ class Index extends Component
 
     public function findReports()
     {
+
         $this->reports = Report::when($this->formId, function ($query) {
             return $query->where('form_id', $this->formId);
         })->when($this->farmId, function ($query) {
-            $farmUUID = Farm::find($this->farmId)->uuid;
-            return $query->where('farm_uuid', $farmUUID);
+            return $query->where('farm_id', $this->farmId);
         })->when($this->dateFrom, function ($query) {
             return $query->where('date', '>=', $this->dateFrom);
         })->when($this->dateTo, function ($query) {

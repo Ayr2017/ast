@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('model_id');
-            $table->uuid('uuid')->nullable()->unique();
+            $table->string('model_type');
+            $table->string('model_id')->unique();
             $table->string('collection_name');
             $table->string('name');
             $table->string('file_name');
