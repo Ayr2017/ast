@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->morphs('contactable');
+            $table->uuidMorphs('contactable');
             $table->string('name');
             $table->string('surname')->nullable();
             $table->string('patronymic')->nullable();

@@ -24,7 +24,7 @@ class CreateFarmRequest extends FormRequest
     public function rules()
     {
         return [
-            'organization_id' => ['integer', 'required'],
+            'organization_id' => ['uuid', 'required'],
             'region_id' => ['integer', 'required'],
             'district_id' => ['integer', 'required'],
             'address' => ['string', 'required'],

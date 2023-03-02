@@ -16,14 +16,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('organizations', function (Blueprint $table) {
-            $table->id('id');
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->foreignId('region_id');
             $table->foreignId('district_id');
             $table->string('inn');
-            $table->string('kpp');
-            $table->string('ogrn');
-            $table->foreignId('creator_id')->constrained('users');
+            $table->unsignedBigInteger('creator_id');
             $table->text('address');
             $table->json('data');
             $table->timestamps();

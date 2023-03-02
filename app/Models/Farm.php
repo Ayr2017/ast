@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Filters\QueryFilter;
 use App\Models\Traits\HasContacts;
+use App\Models\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Support\Str;
 
 class Farm extends Model
 {
-    use HasFactory, HasContacts, SoftDeletes;
+    use HasFactory, HasContacts, SoftDeletes, UsesUuid;
     protected $guarded =['id'];
 
     public function region()
@@ -32,7 +33,7 @@ class Farm extends Model
 
     public function reports()
     {
-        return $this->hasMany(Report::class, 'farm_uuid', 'uuid');
+        return $this->hasMany(Report::class, 'farm_id', 'id');
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filter)
@@ -43,7 +44,6 @@ class Farm extends Model
     public static function boot(): void
     {
         parent::boot();
-        static::creating(fn(Model $model) => $model->uuid = Str::uuid());
 
         self::deleted(function (Farm $farm) {
             foreach ($farm->reports as $report) {

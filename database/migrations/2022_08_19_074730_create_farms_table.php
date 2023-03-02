@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('farms', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
-            $table->foreignId('organization_id');
+            $table->uuid('organization_id');
             $table->foreignId('region_id');
             $table->foreignId('district_id');
             $table->string('address');
