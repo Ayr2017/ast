@@ -139,7 +139,7 @@ class Index extends Component
             $this->buttonDisabled = false;
             $this->formFieldTemplates = FieldTemplate::where('form_id', $this->formId)->get();
             $this->reports = collect([]);
-            $this->findReports();
+            $this->findReports(false);
             $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
         } else {
             $this->buttonDisabled = true;
@@ -147,7 +147,7 @@ class Index extends Component
 
     }
 
-    public function findReports()
+    public function findReports($flag=true)
     {
         $this->reports = Report::when($this->formId, function ($query) {
             return $query->where('form_id', $this->formId);
@@ -161,7 +161,9 @@ class Index extends Component
         })
             ->get();
 
-        $this->formFields = FormField::where('form_id', $this->formId)->orderBy('id')->get();
+        if($flag) {
+            $this->formFields = FormField::where('form_id', $this->formId)->orderBy('id')->get();
+        }
     }
 
     public function updatingSelectedReports($value)
