@@ -10,10 +10,11 @@ class UpdateFormField
     {
         $formField = FormField::withTrashed()->find($id);
         $type = $validatedRequest['type'];
-        if($type != 'select' || $type != 'checkbox'|| $type != 'radio') {
-            $validatedRequest['select_fields'] = null;
-        }
         $formField->update($validatedRequest);
+        if($type != 'select' || $type != 'checkbox'|| $type != 'radio') {
+            $formField->select_fields = null;
+            $formField->save();
+        }
         return $formField;
     }
 }
