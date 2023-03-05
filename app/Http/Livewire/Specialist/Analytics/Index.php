@@ -84,7 +84,7 @@ class Index extends Component
 
     public function mount()
     {
-
+        $this->formFields = new Collection();
     }
 
     public function render()
