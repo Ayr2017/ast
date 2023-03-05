@@ -278,6 +278,8 @@
             function downloadSVGAsPNG(e) {
                 const canvas = document.createElement("canvas");
                 const svg = document.querySelector('svg');
+                const legend = document.querySelector('.apexcharts-legend').outerHTML ?? ''
+                console.log(legend)
                 titles = svg.querySelectorAll('title')
                 for (let title of titles) {
                     title.remove()
@@ -301,7 +303,7 @@
                     } else {
                         const a = document.createElement('a');
                         const my_evt = new MouseEvent('click');
-                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend').outerHTML)
+                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, legend)
                     }
                 }
             }
