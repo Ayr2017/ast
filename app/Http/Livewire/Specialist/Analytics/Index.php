@@ -79,6 +79,7 @@ class Index extends Component
         $this->forms = Form::all();
         $this->dateTo = now()->format('Y-m-d');
         $this->lineChartModel = new LineChartModel();
+        $this->formFields = new Collection();
     }
 
     public function mount()
