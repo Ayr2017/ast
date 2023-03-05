@@ -72,7 +72,7 @@
             <div id="stepHelp" class="form-text">Если тип число.</div>
         </div>
         @endif
-        @if($selectedType === 'checkbox' || $selectedType === 'radio')
+        @if($selectedType === 'checkbox' || $selectedType === 'radio' || $selectedType === 'select')
         <div class="mb-3">
             <label for="select_fields" class="form-label">Элементы для выбора</label>
             <input type="text" class="form-control" id="select_fields" name="select_fields" aria-describedby="select_fieldsHelp" value="{{old('select_fields') ?? $form_field->joinedSelectFields}}">

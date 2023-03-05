@@ -3,6 +3,7 @@
 namespace App\Actions\Admin\FormFields;
 
 use App\Models\FormField;
+use Illuminate\Support\Facades\DB;
 
 class UpdateFormField
 {
@@ -11,10 +12,10 @@ class UpdateFormField
         $formField = FormField::withTrashed()->find($id);
         $type = $validatedRequest['type'];
         $formField->update($validatedRequest);
-        if($type != 'select' || $type != 'checkbox'|| $type != 'radio') {
-            $formField->select_fields = null;
-            $formField->save();
+        if(!in_array($type, ['select', 'radio', 'checkbox'])) {
+            DB::table('form_fields')->where(['id' => $id])->update(['select_fields' => null]);
         }
+
         return $formField;
     }
 }
