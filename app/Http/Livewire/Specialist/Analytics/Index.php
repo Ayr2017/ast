@@ -31,7 +31,7 @@ class Index extends Component
     public $farmId = 0;
     public $buttonDisabled = true;
     public $reports = [];
-    public $formFields = [];
+    public Collection $formFields;
     public $selectedReports = [];
     public $selectedFormFields = [];
 
@@ -184,7 +184,7 @@ class Index extends Component
     {
         $template = FieldTemplate::find($id);
         if ($template) {
-            $this->formFields = collect([]);
+            $this->formFields = new Collection;
             $this->formFields = FormField::whereIn('id', $template->fields)->get();
         }
     }
@@ -212,7 +212,7 @@ class Index extends Component
 
     public function useAllFields()
     {
-        $this->formFields = collect([]);
+        $this->formFields = new Collection();
         $this->formFields = FormField::where('form_id', $this->formId)->get();
     }
 
