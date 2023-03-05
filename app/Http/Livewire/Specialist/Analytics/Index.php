@@ -185,7 +185,7 @@ class Index extends Component
     {
         $template = FieldTemplate::find($id);
         if ($template) {
-            $this->formFields = new Collection;
+            $this->formFields = new Collection();
             $this->formFields = FormField::whereIn('id', $template->fields)->get();
         }
     }
