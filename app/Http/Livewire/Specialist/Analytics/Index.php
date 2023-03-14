@@ -63,7 +63,7 @@ class Index extends Component
                     'farm' => $this->farmPDF,
                     'reports' => $this->reports,
                     'formFields' => $this->formFields->where('type', '=', 'number'),
-                ])->output();
+                ])->setPaper('a4', 'landscape')->output();
         return response()->streamDownload(
             fn() => print($pdfContent),
             "filename.pdf"

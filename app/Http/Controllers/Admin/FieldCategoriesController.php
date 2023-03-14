@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FieldCategory;
 use Illuminate\Http\Request;
 
 class FieldCategoriesController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        //
+        $fieldCategories = FieldCategory::all();
+        return view('admin.field-categories.index',[
+            'field_categories' => $fieldCategories,
+        ]);
     }
 
     /**
@@ -24,7 +26,7 @@ class FieldCategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.field-categories.create');
     }
 
     /**
@@ -35,7 +37,12 @@ class FieldCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'unique:field_categories']
+        ]);
+
+        FieldCategory::firstOrCreate(['name' => $validated['name']]);
+        return redirect()->route('admin.field-categories.index')->with(['successMsg'=>'Категория успешно создана']);
     }
 
     /**
@@ -50,14 +57,15 @@ class FieldCategoriesController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $fieldCategory = FieldCategory::find($id);
+        return view('admin.field-categories.edit',[
+            'field_category' => $fieldCategory,
+        ]);
     }
 
     /**
@@ -69,7 +77,13 @@ class FieldCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'unique:field_categories']
+        ]);
+
+        $fieldCategory = FieldCategory::find($id);
+        $fieldCategory->update(['name' => $validated['name']]);
+        return redirect()->route('admin.field-categories.index')->with(['successMsg'=>'Категория успешно обновлена']);
     }
 
     /**

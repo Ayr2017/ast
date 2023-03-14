@@ -3,7 +3,7 @@
     <tr>
         <td>ID</td>
         @foreach($reports->sortBy('id') as $report)
-            <td>{{$report->id}}</td>
+            <td>{{$loop->iteration}}</td>
         @endforeach
 
     </tr>
@@ -28,7 +28,7 @@
                             @elseif($formField->type == 'checkbox' && is_array($report->data["field_$formField->id"]))
                                 {{implode(',', $report->data["field_$formField->id"] ?? '-')}}
                             @else
-                                __exp
+                                err
                             @endif
                         @endisset
                     @endif
@@ -39,7 +39,8 @@
     <tr>
         <td>Дата</td>
         @foreach($reports->sortBy('id') as $report)
-            <td>{{$report->date}}</td>
+            <td>
+                {{$report->date}}</td>
         @endforeach
 
     </tr>

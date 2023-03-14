@@ -12,6 +12,7 @@ use App\Models\FieldCategory;
 use App\Models\Form;
 use App\Models\FormCategory;
 use App\Models\FormField;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class FormsController extends Controller
@@ -54,7 +55,7 @@ class FormsController extends Controller
     {
         $fieldCategories = FieldCategory::all();
         $form = Form::withTrashed()->with('fields')->find($id);
-        $fieldUnits = FormField::UNITS;
+        $fieldUnits = Unit::all();
         return view('admin.forms.show', ['form' => $form, 'field_categories' => $fieldCategories, 'field_units' => $fieldUnits]);
     }
 

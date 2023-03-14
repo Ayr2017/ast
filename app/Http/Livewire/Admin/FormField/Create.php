@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\FormField;
 
+use App\Models\Unit;
 use Livewire\Component;
 
 
@@ -18,7 +19,7 @@ class Create extends Component
     {
         $this->form = $form;
         $this->field_categories = $field_categories;
-        $this->field_units = $field_units;
+        $this->field_units = Unit::all();
     }
 
     public function updatedSelectedType($value, $key)

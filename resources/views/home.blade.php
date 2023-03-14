@@ -36,6 +36,7 @@
                                 <a class="btn btn-light" href="{{route('admin.organisations.index')}}">Организации</a>
                                 <a class="btn btn-light" href="{{route('admin.farms.index')}}">Фермы</a>
                                 <a class="btn btn-light" href="{{route('admin.units.index')}}">Единицы измерения</a>
+                                <a class="btn btn-light" href="{{route('admin.field-categories.index')}}">Категории полей</a>
 {{--                                <a class="btn btn-light" href="{{route('admin.computed-form-fields.index')}}">Вычисляемые поля</a>--}}
                         @elseif(auth()->user()->hasRole('specialist'))
                                 <a class="btn btn-light" href="{{route('specialist.organizations.index')}}">Все организации</a>

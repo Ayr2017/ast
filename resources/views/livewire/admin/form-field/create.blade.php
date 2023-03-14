@@ -84,7 +84,7 @@
             <label for="unit" class="form-label">Единица измерения</label>
             <select class="form-select mb-3" aria-label=".form-select example" name="unit" id="unit">
                 @foreach($field_units as $unit)
-                    <option value="{{$unit}}" {{old('unit' == $unit ? 'selected' : '')}}>{{$unit}}</option>
+                    <option value="{{$unit->name}}" {{old('unit' == $unit ? 'selected' : '')}}>{{$unit->name}}</option>
                 @endforeach
             </select>
             <div id="unitHelp" class="form-text"></div>

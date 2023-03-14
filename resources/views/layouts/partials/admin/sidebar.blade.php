@@ -45,8 +45,14 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{request()->routeIs('admin.units.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('admin.units.index')}}" >
-                    <i class="fa-solid fa-tent"></i>
+                    <i class="fa-solid fa-list"></i>
                     Единицы измерения
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{request()->routeIs('admin.field-categories.*') ? ' border-start border-5 border-primary active' : ''}} " href="{{route('admin.field-categories.index')}}" >
+                    <i class="fa-solid fa-clone"></i>
+                    Категории полей
                 </a>
             </li>
         </ul>

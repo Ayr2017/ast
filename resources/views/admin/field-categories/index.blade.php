@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('content')
     <div class="container py-4">
+        @if(Session::has('successMsg'))
+            <div class="alert alert-success" role="alert">
+                {{ Session::get('successMsg') }}
+            </div>
+        @endif
         <div class="row">
             <h3 class="h3">Категория поля</h3>
         </div>
@@ -16,21 +21,11 @@
                     </a>
                 </div>
             </div>
-            <div class="col">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="{{route('admin.forms.index',['select' => null])}}" type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == null ? 'active' : ''}}">Все</a>
-                    <a href="{{route('admin.forms.index',['select' =>'withoutTrashed'])}}" type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == 'withoutTrashed' ? 'active' : ''}}">Активные</a>
-                    <a href="{{route('admin.forms.index',['select' => 'trashed']) }}" type="button"
-                       class="btn btn-outline-secondary {{request()->get('select') == 'trashed' ? 'active' : ''}}">Деактивированные</a>
-                </div>
-            </div>
         </div>
 
         <div class="row">
             <div class="col">
-{{--                @include('admin.forms.partials.forms-table')--}}
+                @include('admin.field-categories.partials.fc-table')
             </div>
         </div>
 

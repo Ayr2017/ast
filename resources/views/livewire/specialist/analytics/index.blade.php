@@ -301,7 +301,7 @@
                     } else {
                         const a = document.createElement('a');
                         const my_evt = new MouseEvent('click');
-                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend').outerHTML)
+                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend')?.outerHTML ?? '')
                     }
                 }
             }
