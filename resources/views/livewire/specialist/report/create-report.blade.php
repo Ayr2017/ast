@@ -101,6 +101,7 @@
         </div>
 
 
+        <button type="button" class="btn btn-primary" {{$readyToSave ? '' : 'disabled'}} wire:click="fillFields">Заполнить данными</button>
         <button type="submit" class="btn btn-primary" {{$readyToSave ? '' : 'disabled'}}>Сохранить</button>
     </form>
 </div>

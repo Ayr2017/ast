@@ -68,7 +68,6 @@ class Index extends Component
             fn() => print($pdfContent),
             "filename.pdf"
         );
-
     }
 
 

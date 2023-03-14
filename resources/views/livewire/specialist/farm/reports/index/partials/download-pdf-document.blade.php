@@ -102,7 +102,7 @@
         <td style="white-space: nowrap">Консультант-технолог: {{auth()->user()->surname}} {{auth()->user()->name}}</td>
     </tr>
     <tr class="">
-        <td style="white-space: nowrap">тел: +78432788654</td>
+        <td style="white-space: nowrap">тел: 8 800 600-90-55</td>
         <td style="width:100%"></td>
         <td>тел: {{auth()->user()->phone}}</td>
     </tr>

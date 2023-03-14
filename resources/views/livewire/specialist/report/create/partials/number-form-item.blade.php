@@ -9,6 +9,7 @@
                min="{{$formField->min}}"
                max="{{$formField->max}}"
                step="{{$formField->step}}"
+               value="{{$lastReportData["field_".$formField?->id] ?? ''}}"
                placeholder="{{$formField->placeholder}}">
     </div>
         <div id="field_{{$formField->id}}Help" class="form-text">{{$formField->hint}}</div>
