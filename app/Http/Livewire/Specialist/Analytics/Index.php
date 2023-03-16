@@ -11,11 +11,13 @@ use App\Models\FormField;
 use App\Models\Organization;
 use App\Models\Report;
 use App\Services\Specialist\FormFieldService;
+use App\Services\Specialist\PhpOfficceService;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Livewire\Component;
 use App\Services\Specialist\LineChartModelService;
 
@@ -55,7 +57,7 @@ class Index extends Component
             'isHtml5ParserEnabled' => false,
             'isRemoteEnabled' => true,
             'pdf' => true
-        ])
+        ])->deleteFileAfterSend(true)
             ->loadView('livewire.specialist.farm.reports.index.partials.download-pdf-document',
                 [
                     'legend' => $this->legend,
@@ -156,7 +158,7 @@ class Index extends Component
             return $query->where('date', '>=', $this->dateFrom);
         })->when($this->dateTo, function ($query) {
             return $query->where('date', '<=', $this->dateTo);
-        })
+        })->orderBy('date')
             ->get();
 
 //        $this->formFields = FormField::where('form_id', $this->formId)->orderBy('id')->get();
@@ -242,5 +244,11 @@ class Index extends Component
     public function getLCM()
     {
         return $this->lineChartModel ?? null;
+    }
+
+    public function downloadWord()
+    {
+      $wordPath = PhpOfficceService::getWordDocument($this->reports, $this->form, $this->formFields, $this->farm);
+      return response()->download($wordPath)->deleteFileAfterSend(true);
     }
 }

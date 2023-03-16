@@ -216,8 +216,12 @@
                                                 </button>
 
                                                 <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        wire:click="downloadWord">Скачать Word
+                                                </button>
+
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
                                                         onclick="start({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>
-                                                    Скачать отчёт
+                                                    Скачать PDF
                                                 </button>
                                             </div>
                                         </div>
