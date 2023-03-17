@@ -57,7 +57,7 @@ class Index extends Component
             'isHtml5ParserEnabled' => false,
             'isRemoteEnabled' => true,
             'pdf' => true
-        ])->deleteFileAfterSend(true)
+        ])
             ->loadView('livewire.specialist.farm.reports.index.partials.download-pdf-document',
                 [
                     'legend' => $this->legend,
