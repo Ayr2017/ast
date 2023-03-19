@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
+use Imagick;
+use ImagickPixel;
 use Livewire\Component;
 use App\Services\Specialist\LineChartModelService;
 
@@ -45,7 +47,9 @@ class Index extends Component
     public $templateName = '';
     public $farm;
 
-    protected $listeners = ['postAdded' => 'createAndDownloadPDF'];
+    protected $listeners = [
+        'postAdded' => 'createAndDownloadPDF',
+        'downloadWordWithChart' => 'downloadWord'];
 
     public function createAndDownloadPDF($url, $farm, $legend)
     {
@@ -246,9 +250,9 @@ class Index extends Component
         return $this->lineChartModel ?? null;
     }
 
-    public function downloadWord()
+    public function downloadWord($file, $legend=null)
     {
-      $wordPath = PhpOfficceService::getWordDocument($this->reports, $this->form, $this->formFields, $this->farm);
+      $wordPath = PhpOfficceService::getWordDocument($this->reports, $this->form, $this->formFields, $this->farm, $file, $legend);
       return response()->download($wordPath)->deleteFileAfterSend(true);
     }
 }

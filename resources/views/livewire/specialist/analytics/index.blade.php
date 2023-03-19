@@ -132,8 +132,8 @@
                                         <div>
                                             <p class="mb-1 ">
                                                 <input type="checkbox" wire:model="selectedFormFields"
-                                                   id="{{$formField->id}}"
-                                                   value="{{$formField->id}}" />
+                                                       id="{{$formField->id}}"
+                                                       value="{{$formField->id}}"/>
                                                 <br>
                                                 <label for="{{$formField->id}}"> {{$formField->name}}</label>
                                             </p>
@@ -158,11 +158,11 @@
                                     <td>
                                         <input type="checkbox" wire:model="selectedReports"
                                                id="{{$report->id}}"
-                                               value="{{$report->id}}" />
+                                               value="{{$report->id}}"/>
                                     </td>
-{{--                                    @php--}}
-{{--                                        $data = $report->data;--}}
-{{--                                    @endphp--}}
+                                    {{--                                    @php--}}
+                                    {{--                                        $data = $report->data;--}}
+                                    {{--                                    @endphp--}}
                                     @foreach($this->formFields as $formField)
                                         @if($formField->class === 'computed')
                                             <td>
@@ -215,8 +215,12 @@
                                                         wire:click="downloadExcel">Скачать Excell
                                                 </button>
 
+                                                {{--                                                <button type="button" class="btn btn-sm btn-outline-primary"--}}
+                                                {{--                                                        wire:click="downloadWord">Скачать Word--}}
+                                                {{--                                                </button>--}}
+
                                                 <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        wire:click="downloadWord">Скачать Word
+                                                        onclick="chart()">Скачать Word
                                                 </button>
 
                                                 <button type="button" class="btn btn-sm btn-outline-primary"
@@ -278,9 +282,61 @@
             modal.hide()
         })
 
+        function chart() {
+            const svg = document.querySelector('svg');
+            let legend = document.querySelector('.apexcharts-legend')
+            legendJson = createSVGLegend(legend);
+
+            let {width, height} = svg.getBBox();
+
+
+            let clonedSvgElement = svg.cloneNode(true);
+
+            // clonedSvgElement.appendChild(legend);
+            // document.body.appendChild(clonedSvgElement)
+
+            let outerHTML = clonedSvgElement.outerHTML;
+            let blob = new Blob([outerHTML],{type:'image/svg+xml;charset=utf-8'});
+
+            let URL = window.URL || window.webkitURL || window;
+            let blobURL = URL.createObjectURL(blob);
+            let image = new Image(width, height);
+
+            image.onload = () => {
+
+                let canvas = document.createElement('canvas');
+
+                canvas.width = width+50;
+                canvas.height = height+50;
+
+                let context = canvas.getContext('2d');
+                context.drawImage(image, 0, 0);
+
+                let png = canvas.toDataURL(); // default png
+                let jpeg = canvas.toDataURL('image/jpg');
+                let webp = canvas.toDataURL('image/webp');
+
+                Livewire.emit('downloadWordWithChart', png, legendJson)
+
+
+                var download = function(href, name){
+                    var link = document.createElement('a');
+                    link.download = name;
+                    link.style.opacity = "0";
+                    document.body.append(link);
+                    link.href = href;
+                    link.click();
+                    link.remove();
+                }
+                // download(webp, "image.webp");
+
+            };
+
+            image.src = blobURL;
+        }
+
         function start(farm) {
             function downloadSVGAsPNG(e) {
-                const canvas = document.createElement("canvas");
                 const svg = document.querySelector('svg');
                 titles = svg.querySelectorAll('title')
                 for (let title of titles) {
@@ -338,6 +394,25 @@
                 ctx.drawImage(e.target, 0, 0);
                 targetImg.src = canvas.toDataURL();
             }
+        }
+
+        function createSVGLegend(legend){
+            if(!legend){
+                return JSON.stringify([]);
+            }
+
+            nodeChildren = legend.children
+            svgItems = [];
+
+             for (let item of nodeChildren) {
+                 itemText = item.innerText;
+                itemColor = item.firstChild.style.backgroundColor;
+                svgItems.push({
+                    'text' : itemText,
+                    'bgColor' : itemColor
+                });
+            }
+            return JSON.stringify(svgItems)
         }
 
     </script>
