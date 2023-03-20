@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 use Imagick;
 use ImagickPixel;
 use Livewire\Component;
@@ -49,6 +50,7 @@ class Index extends Component
 
     protected $listeners = [
         'postAdded' => 'createAndDownloadPDF',
+        'downloadPDF' => 'downloadPDF',
         'downloadWordWithChart' => 'downloadWord'];
 
     public function createAndDownloadPDF($url, $farm, $legend)
@@ -240,10 +242,10 @@ class Index extends Component
         return $downloadExcel->execute($this->reports, $this->formFields, $form);
     }
 
-    public function downloadPdf()
-    {
-        $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
-    }
+//    public function downloadPdf()
+//    {
+//        $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
+//    }
 
     public function getLCM()
     {
@@ -254,5 +256,30 @@ class Index extends Component
     {
       $wordPath = PhpOfficceService::getWordDocument($this->reports, $this->form, $this->formFields, $this->farm, $file, $legend);
       return response()->download($wordPath)->deleteFileAfterSend(true);
+    }
+
+    public function downloadPDF($file, $legend)
+    {
+        $this->file = $file;
+        $this->legend = json_decode($legend) ?? collect([]);
+        $legend = str_replace('Helvetica','"DejaVu Sans"',$legend);
+//        $this->legend = str_replace('absolute','relative',$legend);
+        $pdfContent = PDF::setOptions([
+            'isHtml5ParserEnabled' => false,
+            'isRemoteEnabled' => true,
+            'pdf' => true
+        ])
+            ->loadView('livewire.specialist.analytics.partials.download-pdf-view',
+                [
+                    'legend' => $this->legend,
+                    'file' => $this->file,
+                    'farm' => $this->farm,
+                    'reports' => $this->reports,
+                    'formFields' => $this->formFields->where('type', '=', 'number'),
+                ])->setPaper('a4', 'landscape')->output();
+        return response()->streamDownload(
+            fn() => print($pdfContent),
+            "filename.pdf"
+        );
     }
 }

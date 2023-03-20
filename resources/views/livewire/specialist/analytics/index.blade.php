@@ -102,13 +102,12 @@
                             <div style="overflow-x: auto; white-space: nowrap;">
                                 <div class="btn-group my-1" role="group" aria-label="templates">
                                     <button type="button" class="btn btn-sm btn-outline-dark" wire:click="useAllFields">
-                                        Все
-                                        поля
+                                        Все поля
                                     </button>
                                     @foreach($formFieldTemplates as $template)
                                         <button type="button"
                                                 class="btn btn-sm btn-outline-dark"
-                                                wire:click="useFormFieldTemplate({{$template->id}})">{{$template->name}}</button>
+                                                wire:click="useFormFieldTemplate('{{$template->id}}')">{{$template->name}}</button>
                                     @endforeach
                                 </div>
                             </div>
@@ -220,11 +219,15 @@
                                                 {{--                                                </button>--}}
 
                                                 <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        onclick="chart()">Скачать Word
+                                                        onclick="downloadWord()">Скачать Word
                                                 </button>
 
+{{--                                                <button type="button" class="btn btn-sm btn-outline-primary"--}}
+{{--                                                        onclick="start({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>--}}
+{{--                                                    Скачать PDF--}}
+{{--                                                </button>--}}
                                                 <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        onclick="start({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>
+                                                        onclick="downloadPDF({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>
                                                     Скачать PDF
                                                 </button>
                                             </div>
@@ -282,19 +285,12 @@
             modal.hide()
         })
 
-        function chart() {
+        function downloadWord() {
             const svg = document.querySelector('svg');
             let legend = document.querySelector('.apexcharts-legend')
             legendJson = createSVGLegend(legend);
-
             let {width, height} = svg.getBBox();
-
-
             let clonedSvgElement = svg.cloneNode(true);
-
-            // clonedSvgElement.appendChild(legend);
-            // document.body.appendChild(clonedSvgElement)
-
             let outerHTML = clonedSvgElement.outerHTML;
             let blob = new Blob([outerHTML],{type:'image/svg+xml;charset=utf-8'});
 
@@ -303,9 +299,7 @@
             let image = new Image(width, height);
 
             image.onload = () => {
-
                 let canvas = document.createElement('canvas');
-
                 canvas.width = width+50;
                 canvas.height = height+50;
 
@@ -319,15 +313,58 @@
                 Livewire.emit('downloadWordWithChart', png, legendJson)
 
 
-                var download = function(href, name){
-                    var link = document.createElement('a');
-                    link.download = name;
-                    link.style.opacity = "0";
-                    document.body.append(link);
-                    link.href = href;
-                    link.click();
-                    link.remove();
-                }
+                // var download = function(href, name){
+                //     var link = document.createElement('a');
+                //     link.download = name;
+                //     link.style.opacity = "0";
+                //     document.body.append(link);
+                //     link.href = href;
+                //     link.click();
+                //     link.remove();
+                // }
+                // download(webp, "image.webp");
+
+            };
+
+            image.src = blobURL;
+        }
+        function downloadPDF() {
+            const svg = document.querySelector('svg');
+            let legend = document.querySelector('.apexcharts-legend')
+            legendJson = createSVGLegend(legend);
+            let {width, height} = svg.getBBox();
+            let clonedSvgElement = svg.cloneNode(true);
+            let outerHTML = clonedSvgElement.outerHTML;
+            let blob = new Blob([outerHTML],{type:'image/svg+xml;charset=utf-8'});
+
+            let URL = window.URL || window.webkitURL || window;
+            let blobURL = URL.createObjectURL(blob);
+            let image = new Image(width, height);
+
+            image.onload = () => {
+                let canvas = document.createElement('canvas');
+                canvas.width = width+50;
+                canvas.height = height+50;
+
+                let context = canvas.getContext('2d');
+                context.drawImage(image, 0, 0);
+
+                let png = canvas.toDataURL(); // default png
+                let jpeg = canvas.toDataURL('image/jpg');
+                let webp = canvas.toDataURL('image/webp');
+
+                Livewire.emit('downloadPDF', png, legendJson)
+
+
+                // var download = function(href, name){
+                //     var link = document.createElement('a');
+                //     link.download = name;
+                //     link.style.opacity = "0";
+                //     document.body.append(link);
+                //     link.href = href;
+                //     link.click();
+                //     link.remove();
+                // }
                 // download(webp, "image.webp");
 
             };
@@ -366,35 +403,35 @@
                 }
             }
 
-            downloadSVGAsPNG();
+            // downloadSVGAsPNG();
         }
 
-        function createImage() {
-            let svgObject = document.querySelector('#svgWrapper').querySelector('svg');
-            svg = svgObject.outerHTML;
-            console.log(svg);
-
-            const {body} = document;
-
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            canvas.width = svgObject.getAttribute('width');
-            canvas.height = svgObject.getAttribute('height');
-
-            const newImg = document.createElement("img");
-            newImg.addEventListener("load", onNewImageLoad);
-            newImg.src =
-                "data:image/svg+xml," +
-                encodeURIComponent(svg);
-
-            const targetImg = document.createElement("img");
-            body.appendChild(targetImg);
-
-            function onNewImageLoad(e) {
-                ctx.drawImage(e.target, 0, 0);
-                targetImg.src = canvas.toDataURL();
-            }
-        }
+        // function createImage() {
+        //     let svgObject = document.querySelector('#svgWrapper').querySelector('svg');
+        //     svg = svgObject.outerHTML;
+        //     console.log(svg);
+        //
+        //     const {body} = document;
+        //
+        //     const canvas = document.createElement("canvas");
+        //     const ctx = canvas.getContext("2d");
+        //     canvas.width = svgObject.getAttribute('width');
+        //     canvas.height = svgObject.getAttribute('height');
+        //
+        //     const newImg = document.createElement("img");
+        //     newImg.addEventListener("load", onNewImageLoad);
+        //     newImg.src =
+        //         "data:image/svg+xml," +
+        //         encodeURIComponent(svg);
+        //
+        //     const targetImg = document.createElement("img");
+        //     body.appendChild(targetImg);
+        //
+        //     function onNewImageLoad(e) {
+        //         ctx.drawImage(e.target, 0, 0);
+        //         targetImg.src = canvas.toDataURL();
+        //     }
+        // }
 
         function createSVGLegend(legend){
             if(!legend){
