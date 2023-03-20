@@ -263,7 +263,6 @@ class Index extends Component
         $this->file = $file;
         $this->legend = json_decode($legend) ?? collect([]);
         $legend = str_replace('Helvetica','"DejaVu Sans"',$legend);
-//        $this->legend = str_replace('absolute','relative',$legend);
         $pdfContent = PDF::setOptions([
             'isHtml5ParserEnabled' => false,
             'isRemoteEnabled' => true,
