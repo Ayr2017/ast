@@ -122,7 +122,8 @@
 </p>
 <hr>
 <div style="position: relative;page-break-after: always;">
-    @include('livewire.specialist.farm.reports.index.partials.pdf-excel-vertical')
+    @include('livewire.specialist.analytics.partials.pdf-excel-horizontal')
+{{--    @include('livewire.specialist.analytics.partials.download-pdf-view')--}}
 </div>
 <div style="position: relative;">
 

@@ -278,7 +278,7 @@ class Index extends Component
                 ])->setPaper('a4', 'landscape')->output();
         return response()->streamDownload(
             fn() => print($pdfContent),
-            "filename.pdf"
+            date("Y-m-d-H-i-s")."_document.pdf"
         );
     }
 }
