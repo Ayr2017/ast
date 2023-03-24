@@ -32,6 +32,7 @@
                                    required value="{{old('name') ?? $field_category->name}}">
                             <div id="nameHelp" class="form-text">Название сделайте уникальным</div>
                         </div>
+                        <a href="{{route('admin.field-categories.index')}}" type="submit" class="btn btn-secondary">Назад</a>
                         <button type="submit" class="btn btn-primary">Обновить</button>
                     </div>
                 </form>
