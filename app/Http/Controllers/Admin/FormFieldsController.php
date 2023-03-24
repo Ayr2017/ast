@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\FormFields\UpdateFormFieldRequest;
 use App\Models\FieldCategory;
 use App\Models\Form;
 use App\Models\FormField;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class FormFieldsController extends Controller
@@ -74,7 +75,7 @@ class FormFieldsController extends Controller
     public function edit($id)
     {
         $fieldCategories = FieldCategory::all();
-        $fieldUnits = FormField::UNITS;
+        $fieldUnits = Unit::all();
         $formField = FormField::withTrashed()->find($id);
 
         return view('admin.form-fields.edit',[
