@@ -18,7 +18,9 @@
                     </a>
                 </td>
                 <td>
-                        {{$unit->description}}
+                        <a href="{{route('admin.units.edit',['unit'=>$unit])}}" >
+                            {{$unit->description}}
+                        </a>
                 </td>
 {{--                <td>--}}
 {{--                    <div class="d-flex justify-content-start">--}}

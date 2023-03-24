@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Unit;
+use Illuminate\Validation\Rule;
 
 class UnitsController extends Controller
 {
@@ -61,9 +62,11 @@ class UnitsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Unit $unit)
     {
-        //
+        return view('admin.units.edit',[
+            'unit' => $unit,
+            ]);
     }
 
     /**
@@ -73,9 +76,16 @@ class UnitsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Unit $unit)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+        ]);
+
+        $unit->update($validated);
+
+        return redirect()->back()->with('msg', 'Успешно обновлено');
     }
 
     /**
