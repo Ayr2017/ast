@@ -53,6 +53,12 @@ class Index extends Component
         'downloadPDF' => 'downloadPDF',
         'downloadWordWithChart' => 'downloadWord'];
 
+    /**
+     * @param $url
+     * @param $farm
+     * @param $legend
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
     public function createAndDownloadPDF($url, $farm, $legend)
     {
         $this->url = $url;
