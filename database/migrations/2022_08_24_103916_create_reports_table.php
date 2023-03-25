@@ -14,12 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->id();
-            $table->uuid();
-            $table->foreignId('form_id')->references('id')->on('forms');
-            $table->foreignId('farm_id')->references('id')->on('farms');
-            $table->foreignId('organization_id')->references('id')->on('organizations');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->uuid('id')->primary();
+            $table->unsignedBigInteger('form_id');
+            $table->uuid('farm_id');
+            $table->string('organization_id');
+            $table->unsignedBigInteger('user_id');
             $table->json('data');
             $table->date('date');
             $table->softDeletes();

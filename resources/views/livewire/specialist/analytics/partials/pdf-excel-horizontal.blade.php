@@ -1,21 +1,21 @@
 <table class="vertical-table">
     <thead>
     <tr>
-        <td>ID</td>
-        @foreach($reports->sortBy('id') as $report)
-            <td>{{$loop->iteration}}</td>
+        <td>Дата</td>
+        @foreach($formFields as $formField)
+            <td>{{$formField->name}}</td>
         @endforeach
-
     </tr>
-    @foreach($formFields as $formField)
+    </thead>
+    <tbody>
+    @foreach($reports as $report)
         <tr>
             <th class="text-dark align-top">
                 <div class="d-flex flex-column align-items-start">
-                    <span class="text-primary">{{$formField->category->name}}</span>
-                    <p>{{$formField->name}}</p>
+                    <span class="text-primary">{{$report->date}}</span>
                 </div>
             </th>
-            @foreach($reports->sortBy('id') as $report)
+            @foreach($formFields as $formField)
                 <td>
                     @if($formField->class === 'computed')
                         @if(isset($report->data))
@@ -36,14 +36,6 @@
             @endforeach
         </tr>
     @endforeach
-    <tr>
-        <td>Дата</td>
-        @foreach($reports->sortBy('id') as $report)
-            <td>
-                {{$report->date}}</td>
-        @endforeach
-
-    </tr>
-    </thead>
+    </tbody>
 
 </table>

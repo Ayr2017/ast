@@ -6,7 +6,8 @@
                id="field_{{$formField->id}}"
                name="data[field_{{$formField->id}}]"
                {{$formField->required ? 'required' : ''}}
-               placeholder="{{$formField->placeholder}}">
+               placeholder="{{$formField->placeholder}}"
+               value="{{$lastReportData["field_".$formField?->id] ?? ''}}">
     </div>
     @if($formField->hint)
         <div id="field_{{$formField->id}}Help" class="form-text">{{$formField->hint}}</div>

@@ -3,7 +3,7 @@
         <label for="field_{{$formField->id}}" class="form-label">{{$formField->name}} ({{$formField->unit}})</label>
         <select class="form-select" aria-label="data[field_{{$formField->id}}]" name="data[field_{{$formField->id}}]">
             @foreach($formField->select_fields as $item)
-                <option value="{{$item}}">{{$item}}</option>
+                <option value="{{$item}}" @isset($lastReportData["field_".$formField?->id]) {{$lastReportData["field_".$formField?->id] === $item ? 'selected' : ''}} @endif>{{$item}}</option>
             @endforeach
         </select>
     </div>

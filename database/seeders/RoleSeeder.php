@@ -11,10 +11,7 @@ class RoleSeeder extends Seeder
     const roles = [
         'super-admin',
         'admin',
-        'moderator',
         'specialist',
-        'customer',
-        'director',
     ];
     /**
      * Run the database seeds.

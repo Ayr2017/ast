@@ -102,13 +102,12 @@
                             <div style="overflow-x: auto; white-space: nowrap;">
                                 <div class="btn-group my-1" role="group" aria-label="templates">
                                     <button type="button" class="btn btn-sm btn-outline-dark" wire:click="useAllFields">
-                                        Все
-                                        поля
+                                        Все поля
                                     </button>
                                     @foreach($formFieldTemplates as $template)
                                         <button type="button"
                                                 class="btn btn-sm btn-outline-dark"
-                                                wire:click="useFormFieldTemplate({{$template->id}})">{{$template->name}}</button>
+                                                wire:click="useFormFieldTemplate('{{$template->id}}')">{{$template->name}}</button>
                                     @endforeach
                                 </div>
                             </div>
@@ -132,8 +131,8 @@
                                         <div>
                                             <p class="mb-1 ">
                                                 <input type="checkbox" wire:model="selectedFormFields"
-                                                   id="{{$formField->id}}"
-                                                   value="{{$formField->id}}" />
+                                                       id="{{$formField->id}}"
+                                                       value="{{$formField->id}}"/>
                                                 <br>
                                                 <label for="{{$formField->id}}"> {{$formField->name}}</label>
                                             </p>
@@ -152,17 +151,17 @@
                                     <td>
                                         <a href="{{route('specialist.reports.show', ['report' => $report])}}"
                                            target="_blank">
-                                            {{$report->id}}
+                                            {{$loop->iteration}}
                                         </a>
                                     </td>
                                     <td>
                                         <input type="checkbox" wire:model="selectedReports"
                                                id="{{$report->id}}"
-                                               value="{{$report->id}}" />
+                                               value="{{$report->id}}"/>
                                     </td>
-{{--                                    @php--}}
-{{--                                        $data = $report->data;--}}
-{{--                                    @endphp--}}
+                                    {{--                                    @php--}}
+                                    {{--                                        $data = $report->data;--}}
+                                    {{--                                    @endphp--}}
                                     @foreach($this->formFields as $formField)
                                         @if($formField->class === 'computed')
                                             <td>
@@ -215,9 +214,21 @@
                                                         wire:click="downloadExcel">Скачать Excell
                                                 </button>
 
+                                                {{--                                                <button type="button" class="btn btn-sm btn-outline-primary"--}}
+                                                {{--                                                        wire:click="downloadWord">Скачать Word--}}
+                                                {{--                                                </button>--}}
+
                                                 <button type="button" class="btn btn-sm btn-outline-primary"
-                                                        onclick="start({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>
-                                                    Скачать отчёт
+                                                        onclick="downloadWord()">Скачать Word
+                                                </button>
+
+{{--                                                <button type="button" class="btn btn-sm btn-outline-primary"--}}
+{{--                                                        onclick="start({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>--}}
+{{--                                                    Скачать PDF--}}
+{{--                                                </button>--}}
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        onclick="downloadPDF({{json_encode($farm)}})" {{(count($selectedReports) > 0 && isset($farm)) ? '' : 'disabled'}}>
+                                                    Скачать PDF
                                                 </button>
                                             </div>
                                         </div>
@@ -274,12 +285,96 @@
             modal.hide()
         })
 
+        function downloadWord() {
+            const svg = document.querySelector('svg');
+            let legend = document.querySelector('.apexcharts-legend')
+            legendJson = createSVGLegend(legend);
+            let {width, height} = svg.getBBox();
+            let clonedSvgElement = svg.cloneNode(true);
+            let outerHTML = clonedSvgElement.outerHTML;
+            let blob = new Blob([outerHTML],{type:'image/svg+xml;charset=utf-8'});
+
+            let URL = window.URL || window.webkitURL || window;
+            let blobURL = URL.createObjectURL(blob);
+            let image = new Image(width, height);
+
+            image.onload = () => {
+                let canvas = document.createElement('canvas');
+                canvas.width = width+50;
+                canvas.height = height+50;
+
+                let context = canvas.getContext('2d');
+                context.drawImage(image, 0, 0);
+
+                let png = canvas.toDataURL(); // default png
+                let jpeg = canvas.toDataURL('image/jpg');
+                let webp = canvas.toDataURL('image/webp');
+
+                Livewire.emit('downloadWordWithChart', png, legendJson)
+
+
+                // var download = function(href, name){
+                //     var link = document.createElement('a');
+                //     link.download = name;
+                //     link.style.opacity = "0";
+                //     document.body.append(link);
+                //     link.href = href;
+                //     link.click();
+                //     link.remove();
+                // }
+                // download(webp, "image.webp");
+
+            };
+
+            image.src = blobURL;
+        }
+        function downloadPDF() {
+            const svg = document.querySelector('svg');
+            let legend = document.querySelector('.apexcharts-legend')
+            legendJson = createSVGLegend(legend);
+            let {width, height} = svg.getBBox();
+            let clonedSvgElement = svg.cloneNode(true);
+            let outerHTML = clonedSvgElement.outerHTML;
+            let blob = new Blob([outerHTML],{type:'image/svg+xml;charset=utf-8'});
+
+            let URL = window.URL || window.webkitURL || window;
+            let blobURL = URL.createObjectURL(blob);
+            let image = new Image(width, height);
+
+            image.onload = () => {
+                let canvas = document.createElement('canvas');
+                canvas.width = width+50;
+                canvas.height = height+50;
+
+                let context = canvas.getContext('2d');
+                context.drawImage(image, 0, 0);
+
+                let png = canvas.toDataURL(); // default png
+                let jpeg = canvas.toDataURL('image/jpg');
+                let webp = canvas.toDataURL('image/webp');
+
+                Livewire.emit('downloadPDF', png, legendJson)
+
+
+                // var download = function(href, name){
+                //     var link = document.createElement('a');
+                //     link.download = name;
+                //     link.style.opacity = "0";
+                //     document.body.append(link);
+                //     link.href = href;
+                //     link.click();
+                //     link.remove();
+                // }
+                // download(webp, "image.webp");
+
+            };
+
+            image.src = blobURL;
+        }
+
         function start(farm) {
             function downloadSVGAsPNG(e) {
-                const canvas = document.createElement("canvas");
                 const svg = document.querySelector('svg');
-                const legend = document.querySelector('.apexcharts-legend').outerHTML ?? ''
-                console.log(legend)
                 titles = svg.querySelectorAll('title')
                 for (let title of titles) {
                     title.remove()
@@ -303,39 +398,58 @@
                     } else {
                         const a = document.createElement('a');
                         const my_evt = new MouseEvent('click');
-                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, legend)
+                        Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend')?.outerHTML ?? '')
                     }
                 }
             }
 
-            downloadSVGAsPNG();
+            // downloadSVGAsPNG();
         }
 
-        function createImage() {
-            let svgObject = document.querySelector('#svgWrapper').querySelector('svg');
-            svg = svgObject.outerHTML;
-            console.log(svg);
+        // function createImage() {
+        //     let svgObject = document.querySelector('#svgWrapper').querySelector('svg');
+        //     svg = svgObject.outerHTML;
+        //     console.log(svg);
+        //
+        //     const {body} = document;
+        //
+        //     const canvas = document.createElement("canvas");
+        //     const ctx = canvas.getContext("2d");
+        //     canvas.width = svgObject.getAttribute('width');
+        //     canvas.height = svgObject.getAttribute('height');
+        //
+        //     const newImg = document.createElement("img");
+        //     newImg.addEventListener("load", onNewImageLoad);
+        //     newImg.src =
+        //         "data:image/svg+xml," +
+        //         encodeURIComponent(svg);
+        //
+        //     const targetImg = document.createElement("img");
+        //     body.appendChild(targetImg);
+        //
+        //     function onNewImageLoad(e) {
+        //         ctx.drawImage(e.target, 0, 0);
+        //         targetImg.src = canvas.toDataURL();
+        //     }
+        // }
 
-            const {body} = document;
-
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            canvas.width = svgObject.getAttribute('width');
-            canvas.height = svgObject.getAttribute('height');
-
-            const newImg = document.createElement("img");
-            newImg.addEventListener("load", onNewImageLoad);
-            newImg.src =
-                "data:image/svg+xml," +
-                encodeURIComponent(svg);
-
-            const targetImg = document.createElement("img");
-            body.appendChild(targetImg);
-
-            function onNewImageLoad(e) {
-                ctx.drawImage(e.target, 0, 0);
-                targetImg.src = canvas.toDataURL();
+        function createSVGLegend(legend){
+            if(!legend){
+                return JSON.stringify([]);
             }
+
+            nodeChildren = legend.children
+            svgItems = [];
+
+             for (let item of nodeChildren) {
+                 itemText = item.innerText;
+                itemColor = item.firstChild.style.backgroundColor;
+                svgItems.push({
+                    'text' : itemText,
+                    'bgColor' : itemColor
+                });
+            }
+            return JSON.stringify(svgItems)
         }
 
     </script>

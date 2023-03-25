@@ -122,12 +122,15 @@
 </p>
 <hr>
 <div style="position: relative;page-break-after: always;">
-    @include('livewire.specialist.farm.reports.index.partials.pdf-excel-vertical')
+    @include('livewire.specialist.analytics.partials.pdf-excel-horizontal')
+{{--    @include('livewire.specialist.analytics.partials.download-pdf-view')--}}
 </div>
 <div style="position: relative;">
 
-    <img src="{{$url}}" style="width:100%; object-fit: contain"/>
-    {!! $legend !!}
+    <img src="{{$file}}" style="width:100%; object-fit: contain"/>
+    @foreach($legend as $item)
+        <span style="vertical-align: center"><span style="display:inline-block;height:15px; width:15px; background-color: {{$item->bgColor}}; border-radius:50%"></span>{{$item->text}}</span>
+        @endforeach
 </div>
 
 

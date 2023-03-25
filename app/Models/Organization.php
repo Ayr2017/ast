@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Filters\QueryFilter;
 use App\Models\Interfaces\Contactable;
 use App\Models\Traits\HasContacts;
+use App\Models\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
 
 class Organization extends Model implements Contactable
 {
-    use HasFactory, SoftDeletes, HasContacts;
+    use HasFactory, SoftDeletes, HasContacts, UsesUuid;
 
     protected $guarded = ['id'];
 
@@ -80,6 +81,5 @@ class Organization extends Model implements Contactable
             };
         });
     }
-
 
 }

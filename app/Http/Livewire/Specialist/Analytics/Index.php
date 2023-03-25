@@ -11,11 +11,16 @@ use App\Models\FormField;
 use App\Models\Organization;
 use App\Models\Report;
 use App\Services\Specialist\FormFieldService;
+use App\Services\Specialist\PhpOfficceService;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
+use Imagick;
+use ImagickPixel;
 use Livewire\Component;
 use App\Services\Specialist\LineChartModelService;
 
@@ -43,7 +48,10 @@ class Index extends Component
     public $templateName = '';
     public $farm;
 
-    protected $listeners = ['postAdded' => 'createAndDownloadPDF'];
+    protected $listeners = [
+        'postAdded' => 'createAndDownloadPDF',
+        'downloadPDF' => 'downloadPDF',
+        'downloadWordWithChart' => 'downloadWord'];
 
     public function createAndDownloadPDF($url, $farm, $legend)
     {
@@ -63,12 +71,11 @@ class Index extends Component
                     'farm' => $this->farmPDF,
                     'reports' => $this->reports,
                     'formFields' => $this->formFields->where('type', '=', 'number'),
-                ])->output();
+                ])->setPaper('a4', 'landscape')->output();
         return response()->streamDownload(
             fn() => print($pdfContent),
             "filename.pdf"
         );
-
     }
 
 
@@ -121,14 +128,14 @@ class Index extends Component
             $this->farms = Farm::where('organization_id', $this->organisationId)->get();
             $this->farm = $farm;
         } else {
-            $this->farmId = 0;
+            $this->farmId = '';
         }
     }
 
     private function dropOrganisation()
     {
-        $this->organisationId = 0;
-        $this->farmId = 0;
+        $this->organisationId = '';
+        $this->farmId = '';
         $this->selectedFarm = '';
     }
 
@@ -149,16 +156,16 @@ class Index extends Component
 
     public function findReports($flag=true)
     {
+
         $this->reports = Report::when($this->formId, function ($query) {
             return $query->where('form_id', $this->formId);
         })->when($this->farmId, function ($query) {
-            $farmUUID = Farm::find($this->farmId)->uuid;
-            return $query->where('farm_uuid', $farmUUID);
+            return $query->where('farm_id', $this->farmId);
         })->when($this->dateFrom, function ($query) {
             return $query->where('date', '>=', $this->dateFrom);
         })->when($this->dateTo, function ($query) {
             return $query->where('date', '<=', $this->dateTo);
-        })
+        })->orderBy('date')
             ->get();
 
         if($flag) {
@@ -238,13 +245,43 @@ class Index extends Component
         return $downloadExcel->execute($this->reports, $this->formFields, $form);
     }
 
-    public function downloadPdf()
-    {
-        $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
-    }
+//    public function downloadPdf()
+//    {
+//        $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
+//    }
 
     public function getLCM()
     {
         return $this->lineChartModel ?? null;
+    }
+
+    public function downloadWord($file, $legend=null)
+    {
+      $wordPath = PhpOfficceService::getWordDocument($this->reports, $this->form, $this->formFields, $this->farm, $file, $legend);
+      return response()->download($wordPath)->deleteFileAfterSend(true);
+    }
+
+    public function downloadPDF($file, $legend)
+    {
+        $this->file = $file;
+        $this->legend = json_decode($legend) ?? collect([]);
+        $legend = str_replace('Helvetica','"DejaVu Sans"',$legend);
+        $pdfContent = PDF::setOptions([
+            'isHtml5ParserEnabled' => false,
+            'isRemoteEnabled' => true,
+            'pdf' => true
+        ])
+            ->loadView('livewire.specialist.analytics.partials.download-pdf-view',
+                [
+                    'legend' => $this->legend,
+                    'file' => $this->file,
+                    'farm' => $this->farm,
+                    'reports' => $this->reports,
+                    'formFields' => $this->formFields->where('type', '=', 'number'),
+                ])->setPaper('a4', 'landscape')->output();
+        return response()->streamDownload(
+            fn() => print($pdfContent),
+            date("Y-m-d-H-i-s")."_document.pdf"
+        );
     }
 }

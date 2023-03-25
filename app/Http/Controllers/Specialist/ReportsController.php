@@ -13,6 +13,7 @@ use App\Models\Form;
 use App\Models\FormField;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -56,19 +57,22 @@ class ReportsController extends Controller
         $validatedRequest = $request->validated();
         $validatedRequest['user_id'] = auth()->id();
 
+        DB::transaction(function() use ($request, $validatedRequest){
 
-        $report = Report::create($validatedRequest);
+            $report = Report::create($validatedRequest);
 
 
-        if ($report) {
-            if ($request->hasFile('files')) {
-                $fileAdders = $report->addMultipleMediaFromRequest(['files'])
-                    ->each(function ($fileAdder) {
-                        $fileAdder->toMediaCollection('reports');
-                    });
+            if ($report) {
+                if ($request->hasFile('files')) {
+                    $report->addMultipleMediaFromRequest(['files'])
+                        ->each(function ($fileAdder) {
+                            $fileAdder->toMediaCollection('reports');
+                        });
+                }
+                return redirect()->route('specialist.reports.index')->with('success', 'Отчёт удачно сохранён!');
             }
-            return redirect()->route('specialist.reports.index')->with('success', 'Отчёт удачно сохранён!');
-        }
+
+        });
 
         return redirect()->route('specialist.reports.index')->withErrors('message', 'Ошибка при сохраниении');
     }

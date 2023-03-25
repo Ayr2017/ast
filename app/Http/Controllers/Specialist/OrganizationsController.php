@@ -49,13 +49,6 @@ class OrganizationsController extends Controller
     {
         $validatedRequest = $request->validated();
 
-//        $dadataService = new DadataService();
-
-//        $organizationFromDadata = $dadataService->getOrganizationByInn($validatedRequest['inn']);
-//
-//        if(!$organizationFromDadata){
-//            return redirect()->back()->withErrors(['message'=>'Организации с таким ИНН не существует.'])->withInput();
-//        }
 //Из метода ниже удалён второй параметр $organizationFromDadata
         $organization = $storeOrganisation->execute($validatedRequest);
 

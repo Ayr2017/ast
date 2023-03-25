@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Filters\QueryFilter;
+use App\Models\Traits\UsesUuid;
 use App\Observers\ReportObserver;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,7 +16,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Report extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes, InteractsWithMedia, UsesUuid;
 
     protected $guarded = ['id'];
 
@@ -25,7 +26,7 @@ class Report extends Model implements HasMedia
 
     public function farm()
     {
-        return $this->belongsTo(Farm::class, 'farm_uuid', 'uuid')->withTrashed();
+        return $this->belongsTo(Farm::class, 'farm_id', 'id')->withTrashed();
     }
 
     public function form()
@@ -51,7 +52,6 @@ class Report extends Model implements HasMedia
     public static function boot(): void
     {
         parent::boot();
-        static::creating(fn(Model $model) => $model->uuid = Str::uuid());
 
         self::restored(function (Report $report) {
             $report->farm()->restore();

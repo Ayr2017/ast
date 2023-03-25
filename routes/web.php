@@ -56,6 +56,9 @@ Route::prefix('admin')->name('admin.')->middleware('verify-admin')->group(functi
     Route::resource('organisations', AdminOrganisationsController::class);
     Route::resource('farms', AdminFarmsController::class);
     Route::resource('units', AdminUnitsController::class);
+    Route::get('/test', function(){
+        return '1';
+    });
 });
 
 Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist')->group(function(){

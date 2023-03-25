@@ -3,71 +3,74 @@ namespace App\Http\Livewire\Specialist\Organizations\Create;
 
 use App\Models\District;
 use App\Models\Region;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class SelectRegionAndDistrict extends Component
 {
-    public $organization = null;
-    public $regions = [];
     public $region;
-    public $districts = [];
     public $district;
+
+    public Region|Collection $regions;
+    public District|Collection $districts;
     public $regionSearch = '';
     public $districtSearch = '';
     public $regionId = null;
     public $districtId = null;
-    public $farm = null;
 
     public function __construct()
     {
-        $this->regions = Region::where('name', 'like', '%' . $this->regionSearch . '%')->get();
+        $this->regions = Region::all();
+        $this->districts = new Collection();
 
     }
 
     public function mount($farm = null)
     {
-        $this->farm = $farm;
-        $this->regionSearch = $farm?->region->name;
-        $this->regionId = $farm?->region_id;
-        $this->districtSearch = $farm?->district->name;
 
     }
 
-    public function hydrate()
+    public function updatingRegionSearch($value)
     {
-        $this->regions = Region::where('name', 'like', '%' . $this->regionSearch . '%')->get();
-    }
-
-
-    public function updatedRegionSearch()
-    {
-        $this->regions = Region::where('name', 'like', '%' . $this->regionSearch . '%')->get();
-        $this->regionId = Region::where('name', $this->regionSearch)?->first()?->id;
-        $this->districtSearch = '';
-        $this->districtId = null;
-        $this->getDistricts();
-        if($this->regionId){
-            $this->regions = [];
+        $this->region = $this->regions->firstWhere('name', $value);
+        if ($this->region) {
+            $this->districts = District::where('region_id', $this->region?->id)->get();
+            $this->regionId = $this->region->id;
+        } else{
+            $this->dropRegion();
         }
     }
 
-    public function updatedDistrictSearch()
+    public function updatedDistrictSearch($value)
     {
-        $this->getDistricts();
-        $this->districtId = District::where('name', $this->districtSearch)?->first()?->id;
-        if($this->districtId){
-            $this->districts = [];
+        if ($this->region) {
+            $this->district = $this->districts->firstWhere('name', $value);
+            if($this->district) {
+                $this->districtId = $this->district?->id;
+            } else {
+                $this->dropDistrict();
+            }
         }
     }
 
-    public function getDistricts()
-    {
-        $this->districts = District::where('region_id', $this->regionId)
-            ->where('name', 'like', '%' . $this->districtSearch . '%')
-            ->get();
-    }
     public function render()
     {
         return view('livewire.specialist.organizations.create.select-region-and-district');
+    }
+
+    private function dropRegion()
+    {
+        $this->region = new Region();
+        $this->regionId = null;
+        $this->district = new District();
+        $this->districtId = null;
+        $this->districtSearch = '';
+        $this->districts = new Collection();
+    }
+
+    private function dropDistrict()
+    {
+        $this->district = new District();
+        $this->districtId = null;
     }
 }

@@ -7,6 +7,7 @@ use App\Models\FieldCategory;
 use App\Models\Form;
 use App\Models\FormField;
 use App\Models\Organization;
+use App\Models\Report;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -40,6 +41,7 @@ class CreateReport extends Component
      * @var string[]
      */
     public array $colors;
+    public  $lastReportData = [];
 
     public function __construct($id = null)
     {
@@ -148,4 +150,14 @@ class CreateReport extends Component
     {
         return view('livewire.specialist.report.create-report');
     }
+
+
+    public function fillFields()
+    {
+        $this->lastReportData = Report::where('farm_id', '=', $this->farmId)
+            ->where('form_id', '=', $this->selectedForm)
+            ->orderBy('updated_at', 'desc')
+            ->first()->data;
+    }
+
 }
