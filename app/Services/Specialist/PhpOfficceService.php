@@ -87,7 +87,7 @@ class PhpOfficceService
             $table->addCell(2000, $styleCell)->addText(htmlspecialchars($report->date), $fontStyle);
 
             foreach ($formFields as $formField) {
-                if( in_array($formField->type, ['number', 'select', 'string', 'radio']) ) {
+                if( in_array($formField->type, ['number', 'select', 'text',  'radio', 'string']) ) {
                     $table->addCell(2000)->addText(htmlspecialchars(isset($report->data["field_$formField->id"])) ? $report->data["field_$formField->id"] : ($formField->type === 'number' ? '0' : ''));
                 } else {
                     $table->addCell(2000)->addText(htmlspecialchars(isset($report->data["field_$formField->id"])) ? implode(", ", $report->data["field_$formField->id"]) : ($formField->type === 'number' ? '0' : ''));
