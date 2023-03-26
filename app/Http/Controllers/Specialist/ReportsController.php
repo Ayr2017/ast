@@ -27,7 +27,7 @@ class ReportsController extends Controller
     {
         $reports = Report::with(['farm','form','organization','creator'])->filter($reportsFilter)->whereHas('form', function($query){
             return $query->withoutTrashed();
-        })->paginate(15);
+        })->orderBy('created_at', 'desc')->paginate(15);
 
         return view('specialist.reports.index', ['reports' => $reports]);
     }
