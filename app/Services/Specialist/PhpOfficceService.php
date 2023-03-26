@@ -10,7 +10,7 @@ class PhpOfficceService
 {
     public static function getWordDocument($reports, $form, $formFields, $farm, $file_contents, $legendJson)
     {
-        $imagePath = public_path() . ('/storage/ast_logo.png');
+        $imagePath = public_path() . ('/img/ast-pdf.png');
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection(['orientation' => 'landscape']);
 
