@@ -262,6 +262,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            @if (session()->has('message'))
+                                <div class="alert alert-success">
+                                    {{ session('message') }}
+                                </div>
+                            @endif
                             <div class="mb-3">
                                 <label for="templateName" class="form-label">Название</label>
                                 <input type="text" class="form-control" id="templateName" wire:model="templateName">

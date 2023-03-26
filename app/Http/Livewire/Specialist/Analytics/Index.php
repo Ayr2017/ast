@@ -157,7 +157,6 @@ class Index extends Component
         } else {
             $this->buttonDisabled = true;
         }
-
     }
 
     public function findReports($flag=true)
@@ -217,7 +216,10 @@ class Index extends Component
 
             $this->templateName = '';
             $this->formFieldTemplates = FieldTemplate::where('form_id', $this->formId)->get();
+            session()->flash('message', 'Шаблон удачно сохранён.');
+            sleep(2);
             $this->dispatchBrowserEvent('close');
+
         }
     }
 
