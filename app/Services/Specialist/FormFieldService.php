@@ -24,6 +24,7 @@ class FormFieldService
         } catch(ParseError $exception){
             $result = 'Требуется исправление формулы или данных';
         }
+
         if(is_numeric($result)){
             $result = round($result, 2);
         }

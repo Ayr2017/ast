@@ -31,6 +31,16 @@ class FormField extends Model
         '-',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // auto-sets values on creation
+        static::creating(function ($query) {
+            $query->unit = $query->unit ?? '';
+        });
+    }
+
     public function form()
     {
         return $this->belongsTo(Form::class)->withTrashed();

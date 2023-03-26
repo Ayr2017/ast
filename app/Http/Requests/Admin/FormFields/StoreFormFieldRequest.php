@@ -29,7 +29,7 @@ class StoreFormFieldRequest extends FormRequest
             'name' => ['required','string', 'unique:form_fields'],
             'number' => ['nullable','numeric'],
             'type' => ['required','in:text,number,select,checkbox,radio'],
-            'unit' => ['string','nullable'],
+            'unit' => ['string', 'nullable'],
             'form_id' => ['required'],
             'field_category_id' => ['required','numeric'],
             'step' => ['required_if:type,number','numeric'],
