@@ -131,12 +131,12 @@ return [
         'string' => 'The :attribute must be :size characters.',
     ],
     'starts_with' => 'The :attribute must start with one of the following: :values.',
-    'string' => 'The :attribute must be a string.',
+    'string' => 'Тип :attribute должен быть строковым.',
     'timezone' => 'The :attribute must be a valid timezone.',
     'unique' => 'Запись с таким :attribute уже существует.',
-    'uploaded' => 'The :attribute failed to upload.',
-    'url' => 'The :attribute must be a valid URL.',
-    'uuid' => 'The :attribute must be a valid UUID.',
+    'uploaded' => ':attribute не удалось загрузить.',
+    'url' => ':attribute - должен быть корректный URL.',
+    'uuid' => ':attribute - должен быть UUID.',
 
     /*
     |--------------------------------------------------------------------------
