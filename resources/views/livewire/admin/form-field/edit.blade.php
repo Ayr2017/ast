@@ -17,7 +17,7 @@
 
         <div class="mb-3">
             <input type="hidden" name="required" value="0">
-            <input class="form-check-input" type="checkbox" value="1" {{$form_field->required ? 'checked' : ''}}name="required" id="required">
+            <input class="form-check-input" type="checkbox" value="1" {{$form_field->required ? 'checked' : ''}} name="required" id="required">
             <label for="required" class="form-label">Обязательное поле</label>
         </div>
 
