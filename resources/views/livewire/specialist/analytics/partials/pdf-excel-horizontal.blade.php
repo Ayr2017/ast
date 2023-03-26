@@ -22,6 +22,7 @@
                             {{\App\Services\Specialist\FormFieldService::compute($formField,$report) ?? '-'}}
                         @endif
                     @else
+
                         @isset($report?->data["field_$formField?->id"])
                             @if($formField->type != 'checkbox' && !is_array($report->data["field_$formField->id"]))
                                 {{$report->data["field_$formField->id"] ?? '-'}}
