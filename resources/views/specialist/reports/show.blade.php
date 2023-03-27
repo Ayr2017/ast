@@ -23,6 +23,15 @@
                 @endif
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">

@@ -155,4 +155,14 @@ class ReportsController extends Controller
 
     }
 
+    public function deleteFile($id)
+    {
+        $media = Media::find($id);
+        if($media){
+            $media->delete();
+            return redirect()->back()->with(['message' => 'Файл успешно удалён']);
+        }
+        return redirect()->back()->withErrors(['msg' => 'Файл не найден']);
+    }
+
 }

@@ -69,6 +69,7 @@ Route::prefix('specialist')->name('specialist.')->middleware('verify-specialist'
     Route::resource('farms.reports', FarmsReportsController::class);
     Route::resource('field-templates', FieldTemplatesController::class);
     Route::resource('analytics', AnalyticsController::class);
+    Route::delete('reports/delete-file/{file}', [ReportsController::class, 'deleteFile'])->name('reports.delete-file');
 });
 
 Route::prefix('general')->name('general.')->middleware('role:admin|specialist|super-admin')->group(function(){

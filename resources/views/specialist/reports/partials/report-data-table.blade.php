@@ -27,19 +27,51 @@
             </tr>
         @endforeach
         <tr>
-            <td>Файлы</td>
+            <th>Файлы</th>
             <td></td>
             <td>
                 @foreach($report->getMedia('reports') as $item)
-                    <p>
-                    <a href="{{$item->getFullUrl()}}">
-                        <i class="fa fa-eye" aria-hidden="true"></i> {{$item->name}}
+                    <p class="bordered border-bottom border-primary">
+                    <a href="{{$item->getFullUrl()}}" class="btn btn-link">
+                        <i class="fa fa-eye" aria-hidden="true"></i> {{$item->file_name}}
                     </a>
                     <br>
-                    <a download href="{{$item->getFullUrl()}}">
+                    <a download href="{{$item->getFullUrl()}}" class="btn btn-link">
                         <i class="fa fa-download" aria-hidden="true"></i>
-                        {{$item->name}}
+                        {{$item->file_name}}
                     </a>
+                        <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            <i class="fa fa-trash" aria-hidden="true"></i> Удалить
+                        </button>
+
+                        <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Удаление файла</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Файл будет безвозвратно удалён!
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить
+                                    </button>
+                                    <form action="{{route('specialist.reports.delete-file', ['file'=>$item->id])}}" method="POST">
+                                        @csrf()
+                                        @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </p>
                 @endforeach
             </td>
