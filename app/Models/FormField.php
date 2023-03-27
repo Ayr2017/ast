@@ -17,20 +17,6 @@ class FormField extends Model
         'select_fields' => 'array',
     ];
 
-    const UNITS = [
-        'кг',
-        'т',
-        'ц',
-        'шт',
-        'л',
-        'гол',
-        'м',
-        '%',
-        'руб.',
-        'мин.',
-        '-',
-    ];
-
     protected static function boot()
     {
         parent::boot();

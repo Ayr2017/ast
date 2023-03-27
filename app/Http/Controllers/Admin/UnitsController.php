@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Units\StoreUnit;
+use App\Http\Requests\Admin\Units\UpdateUnit;
 use Illuminate\Http\Request;
 use App\Models\Unit;
 use Illuminate\Validation\Rule;
@@ -35,13 +37,10 @@ class UnitsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreUnit $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-        ]);
-        Unit::create($validated);
+        $validatedRequest = $request->validated();
+        Unit::create($validatedRequest);
         return redirect()->route('admin.units.index');
     }
 
@@ -74,14 +73,11 @@ class UnitsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Unit $unit)
+    public function update(UpdateUnit $request, Unit $unit)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
-        ]);
+        $validatedRequest = $request->validated();
 
-        $unit->update($validated);
+        $unit->update($validatedRequest);
 
         return redirect()->back()->with('msg', 'Успешно обновлено');
     }

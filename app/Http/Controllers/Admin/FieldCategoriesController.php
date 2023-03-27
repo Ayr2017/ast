@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\FieldCategories\StoreFieldCategory;
+use App\Http\Requests\Admin\FieldCategories\UpdateFieldCategory;
 use App\Models\FieldCategory;
 use Illuminate\Http\Request;
 
@@ -35,13 +37,11 @@ class FieldCategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFieldCategory $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'unique:field_categories']
-        ]);
+        $validatedRequest = $request->validated();
 
-        FieldCategory::firstOrCreate(['name' => $validated['name']]);
+        FieldCategory::firstOrCreate(['name' => $validatedRequest['name']]);
         return redirect()->route('admin.field-categories.index')->with(['successMsg'=>'Категория успешно создана']);
     }
 
@@ -69,21 +69,19 @@ class FieldCategoriesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateFieldCategory $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateFieldCategory $request, $id)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'unique:field_categories']
-        ]);
+        $validatedRequest = $request->validated();
 
         $fieldCategory = FieldCategory::find($id);
-        $fieldCategory->update(['name' => $validated['name']]);
-        return redirect()->route('admin.field-categories.index')->with(['successMsg'=>'Категория успешно обновлена']);
+        $fieldCategory->update(['name' => $validatedRequest['name']]);
+
+        return redirect()->route('admin.field-categories.index')
+            ->with(['successMsg'=>'Категория успешно обновлена']);
     }
 
     /**
