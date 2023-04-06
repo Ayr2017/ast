@@ -23,7 +23,6 @@ class FormFieldService
             }
         }
         } catch (Exception $exception) {
-            Log::alert($exception);
             return 'ex';
         }
 
