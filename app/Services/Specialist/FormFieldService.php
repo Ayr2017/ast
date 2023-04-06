@@ -2,6 +2,9 @@
 
 namespace App\Services\Specialist;
 
+use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Exception;
+
 class FormFieldService
 {
     public static function compute($formField,$report)
@@ -11,12 +14,17 @@ class FormFieldService
 
         $is_match = preg_match_all("/${regex}/", $formula, $matches);
 
+        try {
         if ($is_match && count($matches[0])) {
             $matchedFields = $matches[0];
             foreach ($matchedFields as $key => $val) {
                 $preparedField = str_replace('#', '', $val);
                 $formula = str_replace( $val, $report->data["field_$preparedField"] ?? 0 ,$formula);
             }
+        }
+        } catch (Exception $exception) {
+            Log::alert($exception);
+            return 'ex';
         }
 
         try {
