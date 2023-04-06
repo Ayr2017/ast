@@ -53,6 +53,10 @@
         @if($class === 'computed')
             <div class="mb-3">
                 <label for="formula" class="form-label">Формула</label>
+                <div class="alert alert-warning" role="alert">
+                    При построении формулы используйте только обычные поля! Не используйте вычисляемые поля. <br>
+                    При написании идентификатора поля начинайте с #. Например, формула для сложения двух полей #1+#2
+                </div>
                 <textarea class="form-control" name="formula" id="formula" cols="30" rows="5">{{old('class')}}</textarea>
             </div>
         @endif

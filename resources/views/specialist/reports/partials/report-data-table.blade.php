@@ -2,7 +2,8 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Поле</th>
+            <th>Id поля</th>
+            <th>Название поля</th>
             <th>Значение</th>
             <th>Единица</th>
         </tr>
@@ -10,6 +11,7 @@
         <tbody class="tbody">
         @foreach($formFields as $field)
             <tr>
+                <td>{{$field->id}}</td>
                 <td>{{$field->name}}</td>
                 <td>
                     @if($field->class !== 'computed')
