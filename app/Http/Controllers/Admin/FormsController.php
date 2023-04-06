@@ -54,7 +54,7 @@ class FormsController extends Controller
     public function show($id)
     {
         $fieldCategories = FieldCategory::all();
-        $form = Form::withTrashed()->with('fields')->find($id);
+        $form = Form::withTrashed()->with('fields')->findOrFail($id);
         $fieldUnits = Unit::all();
         return view('admin.forms.show', ['form' => $form, 'field_categories' => $fieldCategories, 'field_units' => $fieldUnits]);
     }
