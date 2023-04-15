@@ -157,7 +157,7 @@ class CreateReport extends Component
         $this->lastReportData = Report::where('farm_id', '=', $this->farmId)
             ->where('form_id', '=', $this->selectedForm)
             ->orderBy('updated_at', 'desc')
-            ->first()->data;
+            ?->first()?->data ?? collect([]);
     }
 
 }
