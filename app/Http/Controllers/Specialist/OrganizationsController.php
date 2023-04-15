@@ -23,7 +23,7 @@ class OrganizationsController extends Controller
      */
     public function index(OrganizationsFilter $organizationsFilter)
     {
-        $organizations = Organization::filter($organizationsFilter)->paginate(30);
+        $organizations = Organization::filter($organizationsFilter)->orderBy('created_at')->paginate(30);
 
         session()->flashInput(request()->input());
 
