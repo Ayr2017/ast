@@ -7,6 +7,7 @@ use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
@@ -31,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
-        if(env('APP_ENV') !== 'production')
+        if(App::environment('production'))
         {
             URL::forceScheme('https');
         }
