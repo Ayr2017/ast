@@ -9,6 +9,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,12 +28,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(UrlGenerator $url)
+    public function boot()
     {
         Paginator::useBootstrap();
         if(env('APP_ENV') !== 'production')
         {
-            $url->forceSchema('https');
+            URL::forceScheme('https');
         }
 //        DB::listen(function ($query) {
 //            $query->sql; // выполненная sql-строка
