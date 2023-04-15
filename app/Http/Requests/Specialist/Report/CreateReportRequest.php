@@ -29,7 +29,7 @@ class CreateReportRequest extends FormRequest
             'organization_id' => ['required'],
             'data' => ['required','array'],
             'date' => ['required','date'],
-            'files.*' =>['nullable','max:20000'],
+            'files.*' =>['nullable','max:200000'],
         ];
     }
 }
