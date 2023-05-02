@@ -174,7 +174,7 @@ class Index extends Component
             ->get();
 
         if($flag) {
-            $this->formFields = FormField::where('form_id', $this->formId)->orderBy('id')->get();
+            $this->formFields = FormField::where('form_id', $this->formId)->orderBy('number')->get();
         }
     }
 
@@ -200,7 +200,7 @@ class Index extends Component
         $template = FieldTemplate::find($id);
         if ($template) {
             $this->formFields = new Collection();
-            $this->formFields = FormField::whereIn('id', $template->fields)->get();
+            $this->formFields = FormField::whereIn('id', $template->fields)->orderBy('number')->get();
         }
     }
 
@@ -230,7 +230,7 @@ class Index extends Component
     public function useAllFields()
     {
         $this->formFields = new Collection();
-        $this->formFields = FormField::where('form_id', $this->formId)->get();
+        $this->formFields = FormField::where('form_id', $this->formId)->orderBy('number')->get();
     }
 
     public function compareReports()
