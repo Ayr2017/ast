@@ -1,6 +1,6 @@
 <div>
     <div class="mb-3">
-        <label for="field_{{$formField->id}}" class="form-label">{{$formField->name}} ({{$formField->unit}})</label>
+        <label for="field_{{$formField->id}}" class="form-label"> <span class="text-muted">{{$formField->id}}</span>: {{$formField->name}} ({{$formField->unit}}) <span class="text-muted">{{$formField->id}}</span></label>
         <input type="text"
                class="form-control"
                id="field_{{$formField->id}}"

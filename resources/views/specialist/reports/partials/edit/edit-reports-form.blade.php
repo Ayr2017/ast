@@ -61,7 +61,7 @@
                         @else
                             <div>
                                 <div class="mb-3">
-                                    <label for="field_{{$formField->id}}" class="form-label">{{$formField->name}} ({{$formField->unit}})</label>
+                                    <label for="field_{{$formField->id}}" class="form-label"> <span class="text-muted">{{$formField->id}}</span>: {{$formField->name}} ({{$formField->unit}})</label>
                                     <input type="text"
                                            class="form-control "
                                            disabled

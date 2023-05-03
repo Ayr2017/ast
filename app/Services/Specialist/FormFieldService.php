@@ -2,8 +2,10 @@
 
 namespace App\Services\Specialist;
 
+use DivisionByZeroError;
 use Illuminate\Support\Facades\Log;
 use mysql_xdevapi\Exception;
+use ParseError;
 
 class FormFieldService
 {
@@ -15,21 +17,23 @@ class FormFieldService
         $is_match = preg_match_all("/${regex}/", $formula, $matches);
 
         try {
-        if ($is_match && count($matches[0])) {
-            $matchedFields = $matches[0];
-            foreach ($matchedFields as $key => $val) {
-                $preparedField = str_replace('#', '', $val);
-                $formula = str_replace( $val, $report->data["field_$preparedField"] ?? 0 ,$formula);
+            if ($is_match && count($matches[0])) {
+                $matchedFields = $matches[0];
+                foreach ($matchedFields as $key => $val) {
+                    $preparedField = str_replace('#', '', $val);
+                    $formula = str_replace( $val, $report->data["field_$preparedField"] ?? 0 ,$formula);
+                }
             }
-        }
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             Log::alert($exception);
             return 'ex';
         }
 
         try {
             $result = eval(" return ".$formula. ';');
-        } catch(ParseError $exception){
+        } catch(DivisionByZeroError $exception){
+            $result = '/0';
+        }catch(ParseError $exception){
             $result = 'Требуется исправление формулы или данных';
         }
 
