@@ -232,15 +232,6 @@ class PhpOfficceService
             $table->addCell(2000)->addText(htmlspecialchars(isset($report->date) ? $report->date : ''));
         }
 
-//        $chartSection = $phpWord->addSection();
-//        $categories = $reports->pluck('date')->toArray();
-//        $series = collect($reports->pluck('data'))->pluck('field_1')->toArray();
-
-//        dump($categories);
-//        dd($series);
-//        $textRun = $chartSection->addTextRun();
-//        $text = $textRun->addText('Hello World! Time to ');
-//        $chart = $chartSection->addChart('line', $categories, $series);
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         try {

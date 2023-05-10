@@ -3,8 +3,10 @@ window._ = _;
 
 import 'bootstrap';
 import * as bootstrap from 'bootstrap';
+import {Canvg} from 'canvg';
 
 window.bootstrap = bootstrap;
+window.Canvg = Canvg;
 
 
 /**
