@@ -84,7 +84,7 @@ class ReportsController extends Controller
     public function show($id)
     {
         $report = Report::with(['organization.region', 'organization.district', 'farm.region', 'farm.district', 'media'])->withTrashed()->find($id);
-        $formFields = FormField::where('form_id', $report?->form_id)->get();
+        $formFields = FormField::where('form_id', $report?->form_id)->orderBy("number")->get();
         return view('specialist.reports.show', ['report' => $report, 'formFields' => $formFields]);
     }
 

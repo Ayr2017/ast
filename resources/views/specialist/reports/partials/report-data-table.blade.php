@@ -13,7 +13,7 @@
             <tr>
                 <td>{{$field->id}}</td>
                 <td>{{$field->name}}</td>
-                <td>
+                <td >
                     @if($field->class !== 'computed')
                     @if($field->type == 'checkbox')
                         {{implode(',',($report->data)["field_".$field->id] ?? []) }}
@@ -22,7 +22,9 @@
                         {{($report->data)["field_".$field->id] ?? ''}}
                     @endif
                     @else
+                    <span @if(App\Services\Specialist\FormFieldService::compute($field, $report) === "/0") class="fw-bold text-danger" @endif}}>
                         {{ App\Services\Specialist\FormFieldService::compute($field, $report) }}
+                    </span>
                     @endif
                 </td>
                 <td>{{$field->unit}}</td>
