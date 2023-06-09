@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\FieldTemplate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class FieldTemplatesController extends Controller
 {
@@ -13,12 +14,50 @@ class FieldTemplatesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $fieldTemplate = FieldTemplate::paginate(15);
-        return response($fieldTemplate, 200);
+        $syncDate = $request->input('syncDate');
+
+        $fieldTemplate = FieldTemplate::withTrashed()
+            ->where(function ($query) use ($syncDate) {
+                $query->where('created_at', '>', Carbon::createFromTimestamp($syncDate))
+                    ->orWhere('updated_at', '>', Carbon::createFromTimestamp($syncDate))
+                    ->orWhere('deleted_at', '>', Carbon::createFromTimestamp($syncDate));
+            })
+            ->get();
+
+        return response()->json($fieldTemplate, 200);
     }
 
+    public function updateOrCreate(Request $request, $id)
+    {
+        $fields = $request->input('fields');
+        $deletedAt = $request->input('deleted_at');
+
+        $templateData = [
+            'form_id' => $request->input('form_id'),
+            'name' => $request->input('name'),
+            'fields' => $fields,
+            'deleted_at' => $deletedAt
+        ];
+
+        if ($deletedAt !== null) {
+            $templateData['deleted_at'] = $deletedAt;
+        }
+
+        if ($id) {
+            $template = FieldTemplate::withTrashed()->updateOrCreate(['id' => $id], $templateData);
+        } else {
+            $template = FieldTemplate::withTrashed()->where('name', $request->input('name'))->first();
+            if ($template) {
+                $template->update($templateData);
+            } else {
+                $template = FieldTemplate::create($templateData);
+            }
+        }
+
+        return response()->json($template);
+    }
     /**
      * Show the form for creating a new resource.
      *

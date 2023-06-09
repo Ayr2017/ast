@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Form;
+use App\Models\FormCategory;
 use Illuminate\Http\Request;
 
 class FormCategoriesController extends Controller
@@ -15,8 +16,25 @@ class FormCategoriesController extends Controller
      */
     public function index()
     {
-        $forms = Form::paginate(15);
+        $forms = Form::all();
         return response($forms, 200);
+    }
+
+    public function updateOrCreate(Request $request)
+    {
+        $requestData = $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        $formCategory = FormCategory::updateOrCreate(
+            ['name' => $requestData['name']],
+            ['name' => $requestData['name']]
+        );
+
+        return response()->json([
+            'message' => 'Form category updated or created successfully',
+            'data' => $formCategory
+        ]);
     }
 
     /**

@@ -21,7 +21,6 @@ class FormField extends Model
     {
         parent::boot();
 
-        // auto-sets values on creation
         static::creating(function ($query) {
             $query->unit = $query->unit ?? '';
         });
@@ -32,13 +31,14 @@ class FormField extends Model
         return $this->belongsTo(Form::class)->withTrashed();
     }
 
-    public function setSelectFieldsAttribute($value):void
+    public function setSelectFieldsAttribute($value): void
     {
-        if($value){
-            $itemsArray = explode(',',$value);
-            $trimmedArray = array_map('trim', $itemsArray);
+        if (is_array($value)) {
+            $trimmedArray = array_map('trim', $value);
             $jsonItems = json_encode($trimmedArray);
             $this->attributes['select_fields'] = $jsonItems;
+        } else {
+            $this->attributes['select_fields'] = $value;
         }
     }
 

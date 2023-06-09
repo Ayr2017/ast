@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Farm;
+use App\Models\Organization;
+use App\Models\PasswordReset;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
-class FarmsController extends Controller
+
+class PasswordResetsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,20 +19,21 @@ class FarmsController extends Controller
      */
     public function index()
     {
-        $farms = DB::table('farms')->get();
-        return $farms;
-        $farms = Farm::all();
-        return response($farms, 200);
+        $passwordResets = PasswordReset::all();
+        return response($passwordResets, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function updateOrCreate(Request $request, $email)
     {
-        //
+        $passwordReset = PasswordReset::updateOrCreate(
+            ['email' => $email],
+            [
+                'token' => Str::uuid(),
+                'created_at' => Carbon::now()
+            ]
+        );
+
+        return response(['passwordReset' => $passwordReset], 200);
     }
 
     /**
@@ -49,17 +54,6 @@ class FarmsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
