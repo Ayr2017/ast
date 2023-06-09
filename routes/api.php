@@ -81,5 +81,10 @@ Route::middleware('auth:sanctum')->delete('media_delete/{id}', 'App\Http\Control
 // Восстановление пароля
 Route::post('passwordresets_update/{email}', 'App\Http\Controllers\Api\v1\PasswordResetsController@updateOrCreate');
 
+//Тестовый маршрут
+Route::get('/test', function(){
+    return 'ok';
+});
+
 
 
