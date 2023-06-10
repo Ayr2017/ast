@@ -118,11 +118,12 @@
 </table>
 <p style="width:100%">
     {{$farm?->region?->name}} - {{$farm?->organization?->name}} -{{$farm?->name}} <span
-        style="position: absolute; right:0">{{date("Y-m-d")}}</span>
+{{--        style="position: absolute; right:0">{{date("Y-m-d")}}</span>--}}
 </p>
 <hr>
 <div style="position: relative;page-break-after: always;">
-    @include('livewire.specialist.analytics.partials.pdf-excel-horizontal')
+    @include('livewire.specialist.analytics.partials.pdf-chunked-table')
+{{--    @include('livewire.specialist.analytics.partials.pdf-excel-horizontal')--}}
 {{--    @include('livewire.specialist.analytics.partials.download-pdf-view')--}}
 </div>
 <div style="position: relative;">
