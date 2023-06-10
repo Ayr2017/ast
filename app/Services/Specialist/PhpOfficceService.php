@@ -72,27 +72,27 @@ class PhpOfficceService
          * Таблица, другая
          */
 
-        $table = $section->addTable('Fancy Table');
-        $table->addRow(900);
-//        $table->addCell(2000, $styleCell)->addText(htmlspecialchars('Организация'), $fontStyle);
-//        $table->addCell(2000, $styleCell)->addText(htmlspecialchars('Ферма'), $fontStyle);
-        $table->addCell(2000, $styleCell)->addText(htmlspecialchars('Дата'), $fontStyle);
-        foreach ($formFields as $formField) {
-            $table->addCell(2000)->addText(htmlspecialchars($formField->name));
-        }
-        foreach ($reports as $key => $report) {
-            $table->addRow();
-//            $table->addCell(2000, $styleCell)->addText(htmlspecialchars($report->organization?->name), $fontStyle);
-//            $table->addCell(2000, $styleCell)->addText(htmlspecialchars($report->farm?->name), $fontStyle);
-            $table->addCell(2000, $styleCell)->addText(htmlspecialchars($report->date), $fontStyle);
-
+        $formFieldsChuncked = $formFields->chunk(6);
+        foreach($formFieldsChuncked as $formFields) {
+            $table = $section->addTable('Fancy Table');
+            $table->addRow(900);
+            $table->addCell(2000, $styleCell)->addText(htmlspecialchars('Дата'), $fontStyle);
             foreach ($formFields as $formField) {
-                if( in_array($formField->type, ['number', 'select', 'text',  'radio', 'string']) ) {
-                    $table->addCell(2000)->addText(htmlspecialchars(isset($report->data["field_$formField->id"])) ? $report->data["field_$formField->id"] : ($formField->type === 'number' ? '0' : ''));
-                } else {
-                    $table->addCell(2000)->addText(htmlspecialchars(isset($report->data["field_$formField->id"])) ? implode(", ", $report->data["field_$formField->id"]) : ($formField->type === 'number' ? '0' : ''));
+                $table->addCell(2000)->addText(htmlspecialchars($formField->name));
+            }
+            foreach ($reports as $key => $report) {
+                $table->addRow();
+                $table->addCell(2000, $styleCell)->addText(htmlspecialchars($report->date), $fontStyle);
+
+                foreach ($formFields as $formField) {
+                    if( in_array($formField->type, ['number', 'select', 'text',  'radio', 'string']) ) {
+                        $table->addCell(2000)->addText(htmlspecialchars(isset($report->data["field_$formField->id"])) ? $report->data["field_$formField->id"] : ($formField->type === 'number' ? '0' : ''));
+                    } else {
+                        $table->addCell(2000)->addText(htmlspecialchars(isset($report->data["field_$formField->id"])) ? implode(", ", $report->data["field_$formField->id"]) : ($formField->type === 'number' ? '0' : ''));
+                    }
                 }
             }
+            $section->addTextBreak(2);
         }
 
         /*
