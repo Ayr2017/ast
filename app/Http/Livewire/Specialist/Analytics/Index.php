@@ -284,7 +284,8 @@ class Index extends Component
                     'file' => $this->file,
                     'farm' => $this->farm,
                     'reports' => $this->reports,
-                    'formFields' => $this->formFields,
+//                    'formFields' => $this->formFields,
+                    'formFieldsChunk' => $this->formFields->chunk(7),
                 ])->setPaper('a4', 'landscape')->output();
         return response()->streamDownload(
             fn() => print($pdfContent),
