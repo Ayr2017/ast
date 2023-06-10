@@ -32,12 +32,7 @@ class FarmController extends Controller
             })
             ->get();
 
-        $response = response()->json(['farms' => $farms]);
-        $response->setEncodingOptions(JSON_UNESCAPED_SLASHES);
-
-        $jsonResponse = stripcslashes($response->getContent());
-
-        return response($jsonResponse, 200)->header('Content-Type', 'application/json');
+        return response()->json($farms, 200);
     }
 
 
