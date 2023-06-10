@@ -262,10 +262,34 @@ class Index extends Component
         return $this->lineChartModel ?? null;
     }
 
-    public function downloadWord($file, $legend=null)
+    public function downloadWord($blob, $legend=null)
     {
-      $wordPath = PhpOfficceService::getWordDocument($this->reports, $this->form, $this->formFields, $this->farm, $file, $legend);
-      return response()->download($wordPath)->deleteFileAfterSend(true);
+        // Создаем объект Imagick
+        $image = new Imagick();
+        $pattern = '/clip-path="url\\(#[A-Za-z0-9]+\\)"/i';
+        $blob = preg_replace($pattern, '', $blob);
+
+        // Загружаем SVG файл
+        $image->readImageBlob($blob);
+
+        // Устанавливаем формат PNG
+        $image->setImageFormat('png');
+
+        // Сохраняем PNG файл
+        $image->writeImage('chartImage.png');
+        //Тестовый код для проверки содержимого SVG
+//        file_put_contents("file.svg", $blob);
+        $fileContent = file_get_contents('chartImage.png');
+        $fileContent = base64_encode($fileContent);
+        // Освобождаем ресурсы
+
+
+
+        $wordPath = PhpOfficceService::getWordDocument($this->reports, $this->form, $this->formFields, $this->farm, $fileContent, $legend);
+        $image->clear();
+        $image->destroy();
+        unlink('chartImage.png');
+        return response()->download($wordPath)->deleteFileAfterSend(true);
     }
 
     public function downloadPDF($file, $legend)

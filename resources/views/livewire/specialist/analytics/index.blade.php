@@ -301,33 +301,11 @@
             image.crossOrigin = "Anonymous";
 
             image.onload = async () => {
-                let img = await getChartInPng(svg)
-
-                Livewire.emit('downloadWordWithChart', img.src, legendJson)
-
+                Livewire.emit('downloadWordWithChart', outerHTML, legendJson)
             };
 
             image.src = blobURL;
         }
-
-        async function getChartInPng(svg){
-            let canvas = document.createElement('canvas');
-            canvas.width = svg.width.baseVal.value+50;
-            canvas.height = svg.height.baseVal.value+50;
-
-            let context = canvas.getContext('2d');
-            v = await Canvg.from(context, svg.outerHTML);
-            v.start()
-            const pngUrl = canvas.toDataURL('image/png');
-            const img = new Image();
-            img.src = pngUrl;
-            window.onbeforeunload = () => {
-                v.stop();
-            };
-
-            return img
-        }
-
 
         function downloadPDF() {
             const svg = document.querySelector('svg');
@@ -350,40 +328,6 @@
 
             image.src = blobURL;
         }
-
-        // function start(farm) {
-        //     function downloadSVGAsPNG(e) {
-        //         const svg = document.querySelector('svg');
-        //         titles = svg.querySelectorAll('title')
-        //         for (let title of titles) {
-        //             title.remove()
-        //         }
-        //
-        //         const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
-        //         const w = parseInt(svg.getAttribute('width'));
-        //         const h = parseInt(svg.getAttribute('height'));
-        //         const img_to_download = document.createElement('img');
-        //         img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
-        //         img_to_download.onload = function () {
-        //             console.log('img loaded');
-        //             canvas.setAttribute('width', w);
-        //             canvas.setAttribute('height', h);
-        //             const context = canvas.getContext("2d");
-        //             context.drawImage(img_to_download, 0, 0, w, h);
-        //             const dataURL = canvas.toDataURL('image/png');
-        //             if (window.navigator.msSaveBlob) {
-        //                 window.navigator.msSaveBlob(canvas.msToBlob(), "download.png");
-        //                 e.preventDefault();
-        //             } else {
-        //                 const a = document.createElement('a');
-        //                 const my_evt = new MouseEvent('click');
-        //                 Livewire.emit('postAdded', 'data:image/svg+xml;base64,' + base64doc, farm, svg.querySelector('.apexcharts-legend')?.outerHTML ?? '')
-        //             }
-        //         }
-        //     }
-        //
-        //     // downloadSVGAsPNG();
-        // }
 
         function createSVGLegend(legend){
             if(!legend){
