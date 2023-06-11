@@ -314,19 +314,7 @@
             let {width, height} = svg.getBBox();
             let clonedSvgElement = svg.cloneNode(true);
             let outerHTML = clonedSvgElement.outerHTML;
-            let blob = new Blob([outerHTML],{type:'image/svg+xml;charset=utf-8'});
-
-            let URL = window.URL || window.webkitURL || window;
-            let blobURL = URL.createObjectURL(blob);
-            let image = new Image(width, height);
-
-            image.onload = async () => {
-                let img = await getChartInPng(svg);
-                Livewire.emit('downloadPDF', img.src, legendJson)
-
-            };
-
-            image.src = blobURL;
+            Livewire.emit('downloadPDF', outerHTML, legendJson)
         }
 
         function createSVGLegend(legend){

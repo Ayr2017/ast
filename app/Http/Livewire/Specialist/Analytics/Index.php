@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Imagick;
 use ImagickPixel;
@@ -52,6 +53,8 @@ class Index extends Component
         'postAdded' => 'createAndDownloadPDF',
         'downloadPDF' => 'downloadPDF',
         'downloadWordWithChart' => 'downloadWord'];
+    private string $fileContent;
+    private string $src;
 
     /**
      * @param $url
@@ -252,11 +255,6 @@ class Index extends Component
         return $downloadExcel->execute($this->reports, $this->formFields, $form);
     }
 
-//    public function downloadPdf()
-//    {
-//        $this->lineChartModel = LineChartModelService::getLineChartModel($this->reports, $this->form, $this->formFields);
-//    }
-
     public function getLCM()
     {
         return $this->lineChartModel ?? null;
@@ -281,22 +279,36 @@ class Index extends Component
 //        file_put_contents("file.svg", $blob);
         $fileContent = file_get_contents('chartImage.png');
         $fileContent = base64_encode($fileContent);
-        // Освобождаем ресурсы
+
 
 
 
         $wordPath = PhpOfficceService::getWordDocument($this->reports, $this->form, $this->formFields, $this->farm, $fileContent, $legend);
+        // Освобождаем ресурсы
         $image->clear();
         $image->destroy();
         unlink('chartImage.png');
         return response()->download($wordPath)->deleteFileAfterSend(true);
     }
 
-    public function downloadPDF($file, $legend)
+    public function downloadPDF($blob, $legend)
     {
-        $this->file = $file;
-        $this->legend = json_decode($legend) ?? collect([]);
-        $legend = str_replace('Helvetica','"DejaVu Sans"',$legend);
+        $image = new Imagick();
+        $pattern = '/clip-path="url\\(#[A-Za-z0-9]+\\)"/i';
+        $blob = preg_replace($pattern, '', $blob);
+
+        // Загружаем SVG файл
+        $image->readImageBlob($blob);
+
+        // Устанавливаем формат PNG
+        $image->setImageFormat('png');
+
+        $imgBuff = $image->getImageBlob();
+        $img = base64_encode($imgBuff);
+        $this->src = "data:image/jpeg;base64,$img";
+
+        $legend = json_decode($legend) ?? collect([]);
+
         $pdfContent = PDF::setOptions([
             'isHtml5ParserEnabled' => false,
             'isRemoteEnabled' => true,
@@ -304,13 +316,14 @@ class Index extends Component
         ])
             ->loadView('livewire.specialist.analytics.partials.download-pdf-view',
                 [
-                    'legend' => $this->legend,
-                    'file' => $this->file,
+                    'legend' => $legend,
+                    'src' => $this->src,
                     'farm' => $this->farm,
                     'reports' => $this->reports,
-//                    'formFields' => $this->formFields,
                     'formFieldsChunk' => $this->formFields->chunk(7),
                 ])->setPaper('a4', 'landscape')->output();
+
+
         return response()->streamDownload(
             fn() => print($pdfContent),
             date("Y-m-d-H-i-s")."_document.pdf"

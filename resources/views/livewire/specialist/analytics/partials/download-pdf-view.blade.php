@@ -128,7 +128,7 @@
 </div>
 <div style="position: relative;">
 
-    <img src="{{$file}}" style="width:100%; object-fit: contain"/>
+    <img src="{{$src}}" style="width:100%; object-fit: contain"/>
     @foreach($legend as $item)
         <span style="vertical-align: center"><span style="display:inline-block;height:15px; width:15px; background-color: {{$item->bgColor}}; border-radius:50%"></span>{{$item->text}}</span>
         @endforeach
@@ -137,5 +137,3 @@
 
 </body>
 </html>
-
-{{--<img src="data:image/svg+xml;base64,'.base64_encode({{$svg}}).'"  width="100" height="100" />--}}
