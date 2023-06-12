@@ -24,6 +24,16 @@ class Organization extends Model implements Contactable
         'data' => 'array'
     ];
 
+    // Модели не менять. В случае, если нужно поменять для API, создать другую модель в директории Models/Api/Organisation, например
+    public function setDeletedAtAttribute($value)
+    {
+        if($value){
+            $this->attributes['deleted_at'] = date("Y-m-d H:i:s");
+        }else{
+            $this->attributes['deleted_at'] = null;
+        }
+    }
+
     public function getDataAttribute($value)
     {
         return json_decode($value, true);
