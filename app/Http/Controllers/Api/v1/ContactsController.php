@@ -47,7 +47,7 @@ class ContactsController extends Controller
         $contact->mobile = $request->input('mobile', $contact->mobile);
         $contact->work_number = $request->input('work_number', $contact->work_number);
         $contact->deleted_at = $request->input('deleted_at', $contact->deleted_at);
-        $contact->contactable_type = 'App/Models/Organization';
+        $contact->contactable_type = 'App\Models\Organization';
         $contactableId = $request->input('contactable_id');
         if ($contactableId !== null) {
             $contact->contactable_id = $contactableId;
