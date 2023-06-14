@@ -29,41 +29,42 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'file' => 'required|file',
-        ]);
+        // Проверяем, получен ли файл
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
 
-        $file = $validatedData['file'];
+            // Генерируем уникальные значения для полей
+            $modelId = Str::uuid();
+            $uuid = Str::uuid();
 
-        if ($file->isValid()) {
-            $path = $file->store('media', 'public');
+            // Загружаем файл в хранилище
+            $filePath = $file->store('media', 'public');
 
-            if ($path) {
-                $media = Media::create([
-                    'model_type' => 'App\\Models\\Report',
-                    'model_id' => Str::uuid(),
-                    'uuid' => Str::uuid(),
-                    'collection_name' => 'reports',
-                    'name' => $file->getClientOriginalName(),
-                    'file_name' => $file->hashName(),
-                    'mime_type' => $file->getMimeType(),
-                    'disk' => 'public',
-                    'conversions_disk' => 'public',
-                    'size' => $file->getSize(),
-                    'manipulations' => [],
-                    'custom_properties' => [],
-                    'generated_conversions' => [],
-                    'responsive_images' => [],
-                    'order_column' => 0,
-                ]);
+            // Создаем новый объект Media
+            $media = Media::create([
+                'model_type' => 'App\\Models\\Report',
+                'model_id' => $modelId,
+                'uuid' => $uuid,
+                'collection_name' => 'reports',
+                'name' => $file->getClientOriginalName(),
+                'file_name' => $file->hashName(),
+                'mime_type' => $file->getMimeType(),
+                'disk' => 'public',
+                'conversions_disk' => 'public',
+                'size' => $file->getSize(),
+                'manipulations' => [],
+                'custom_properties' => [],
+                'generated_conversions' => [],
+                'responsive_images' => [],
+                'order_column' => 0,
+            ]);
 
-                return response()->json(['path' => $path, 'media' => $media], 200);
-            } else {
-                return response()->json(['error' => 'Не удалось сохранить файл'], 500);
-            }
-        } else {
-            return response()->json(['error' => 'Не удалось загрузить файл'], 400);
+            // Возвращаем созданный объект Media
+            return response()->json($media);
         }
+
+        // Если файл не был передан
+        return response()->json(['error' => 'No file uploaded'], 400);
     }
 
     /**
