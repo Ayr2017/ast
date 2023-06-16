@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Report;
+use App\Models\Api\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Farm;
+use App\Models\Api\Farm;
 use Illuminate\Http\Request;
 
 class FarmsController extends Controller

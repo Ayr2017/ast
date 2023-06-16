@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Farm;
+use App\Models\Api\Farm;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 

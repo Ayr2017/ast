@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\FormField;
+use App\Models\Api\FormField;
 use Illuminate\Http\Request;
 
 class FormFieldsController extends Controller

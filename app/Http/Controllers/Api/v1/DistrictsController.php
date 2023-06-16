@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\District;
+use App\Models\Api\District;
 use Illuminate\Http\Request;
 
 class DistrictsController extends Controller

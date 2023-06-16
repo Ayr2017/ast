@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\FieldTemplate;
+use App\Models\Api\FieldTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 

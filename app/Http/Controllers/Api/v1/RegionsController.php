@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Regions\IndexRequest;
-use App\Models\Region;
+use App\Models\Api\Region;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Carbon\Carbon;

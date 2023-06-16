@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Form;
-use App\Models\FormCategory;
+use App\Models\Api\Form;
+use App\Models\Api\FormCategory;
 use Illuminate\Http\Request;
 
 class FormCategoriesController extends Controller
