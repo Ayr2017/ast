@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 
 class Farm extends Model
 {
-    protected $table = 'farms';
     use HasFactory, HasContacts, SoftDeletes, UsesUuid;
     protected $guarded =['id'];
 

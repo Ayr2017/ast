@@ -27,11 +27,6 @@ class Form extends Model
         return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'users', 'form_id', 'user_id');
-    }
-
     public function category()
     {
         return $this->belongsTo(FormCategory::class, 'category_id', 'id');

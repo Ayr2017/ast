@@ -20,11 +20,9 @@ class Organization extends Model implements Contactable
     protected $guarded = ['id'];
 
     protected $casts = [
-        'id' => 'string',
-        'data' => 'array'
+        'id' => 'string'
     ];
 
-    // Модели не менять. В случае, если нужно поменять для API, создать другую модель в директории Models/Api/Organisation, например
     public function setDeletedAtAttribute($value)
     {
         if($value){
@@ -32,16 +30,6 @@ class Organization extends Model implements Contactable
         }else{
             $this->attributes['deleted_at'] = null;
         }
-    }
-
-    public function getDataAttribute($value)
-    {
-        return json_decode($value, true);
-    }
-
-    public function setDataAttribute($value)
-    {
-        $this->attributes['data'] = json_encode($value);
     }
 
     public function region()
@@ -64,6 +52,7 @@ class Organization extends Model implements Contactable
         return $this->hasMany(Farm::class);
     }
 
+
     public function reports()
     {
         return $this->hasMany(Report::class);
@@ -74,6 +63,8 @@ class Organization extends Model implements Contactable
         $filter->apply($builder);
     }
 
+
+    // Удаление-восстановление фермы при удалении-восстановлении организации
     public static function boot()
     {
         parent::boot();
@@ -81,13 +72,14 @@ class Organization extends Model implements Contactable
         self::deleted(function (Organization $organization) {
             foreach ($organization->farms as $farm) {
                 $farm->delete();
-            }
+            };
         });
 
         self::restored(function (Organization $organization) {
             foreach ($organization->farms()->withTrashed()->get() as $farm) {
                 $farm->restore();
-            }
+            };
         });
     }
+
 }
