@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Media;
+use App\Models\Api\Media;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +38,7 @@ class MediaController extends Controller
             $uuid = Str::uuid();
 
             // Загружаем файл в хранилище
-            $filePath = $file->store('media', 'public');
+            $filePath = $file->store('public/' . $modelId, 'local');
 
             // Создаем новый объект Media
             $media = Media::create([
@@ -49,8 +49,8 @@ class MediaController extends Controller
                 'name' => $file->getClientOriginalName(),
                 'file_name' => $file->hashName(),
                 'mime_type' => $file->getMimeType(),
-                'disk' => 'public',
-                'conversions_disk' => 'public',
+                'disk' => 'local',
+                'conversions_disk' => 'local',
                 'size' => $file->getSize(),
                 'manipulations' => [],
                 'custom_properties' => [],
@@ -124,7 +124,7 @@ class MediaController extends Controller
         $media = Media::find($id);
 
         if ($media) {
-            $filePath = Storage::disk('public')->path('media/' . $media->file_name);
+            $filePath = Storage::disk('local')->path('public/' . $media->model_id . '/' . $media->file_name);
 
             if (file_exists($filePath)) {
                 $fileName = $media->name;
@@ -153,8 +153,8 @@ class MediaController extends Controller
         $media = Media::find($id);
 
         if ($media) {
-            if (Storage::disk('public')->exists('media/' . $media->file_name)) {
-                if (Storage::disk('public')->delete('media/' . $media->file_name)) {
+            if (Storage::disk('local')->exists('public/' . $media->model_id . '/' . $media->file_name)) {
+                if (Storage::disk('local')->delete('public/' . $media->model_id . '/' . $media->file_name)) {
                     $media->delete(); // Удаление записи из базы данных
 
                     return response(['message' => 'Медиафайл успешно удален'], 200);
