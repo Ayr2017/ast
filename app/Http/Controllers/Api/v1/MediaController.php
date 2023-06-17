@@ -29,18 +29,13 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        // Проверяем, получен ли файл
         if ($request->hasFile('file')) {
             $file = $request->file('file');
 
-            // Генерируем уникальные значения для полей
             $modelId = Str::uuid();
             $uuid = Str::uuid();
 
-            // Загружаем файл в хранилище
             $filePath = $file->store('public/' . $modelId, 'local');
-
-            // Создаем новый объект Media
             $media = Media::create([
                 'model_type' => 'App\\Models\\Report',
                 'model_id' => $modelId,
@@ -58,12 +53,9 @@ class MediaController extends Controller
                 'responsive_images' => [],
                 'order_column' => 0,
             ]);
-
-            // Возвращаем созданный объект Media
             return response()->json($media);
         }
 
-        // Если файл не был передан
         return response()->json(['error' => 'No file uploaded'], 400);
     }
 
@@ -155,7 +147,7 @@ class MediaController extends Controller
         if ($media) {
             if (Storage::disk('local')->exists('public/' . $media->model_id . '/' . $media->file_name)) {
                 if (Storage::disk('local')->delete('public/' . $media->model_id . '/' . $media->file_name)) {
-                    $media->delete(); // Удаление записи из базы данных
+                    $media->delete(); 
 
                     return response(['message' => 'Медиафайл успешно удален'], 200);
                 } else {
