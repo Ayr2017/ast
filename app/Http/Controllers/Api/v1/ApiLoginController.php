@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Api\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
@@ -27,7 +27,7 @@ class ApiLoginController extends Controller
             ], 401);
         }
 
-        $roles = $user->roles()->pluck('name')->toArray(); // Получаем список названий ролей пользователя
+        $roles = $user->roles()->pluck('name')->toArray();
 
         $token = $user->createToken('Access Token')->plainTextToken;
 
@@ -46,7 +46,7 @@ class ApiLoginController extends Controller
                 'remember_token' => $user->remember_token,
                 'created_at' => $user->created_at,
                 'updated_at' => $user->updated_at,
-                'roles' => $roles, // Добавляем список ролей пользователя
+                'roles' => $roles,
             ]
         ], 200);
     }
@@ -81,7 +81,12 @@ class ApiLoginController extends Controller
             'job_title' => $request->job_title,
         ]);
 
+        $roles = $request->input('roles', []);
+        $user->roles()->attach($roles);
+
         $token = $user->createToken('Access Token')->plainTextToken;
+
+        $user->load('roles');
 
         return response()->json([
             'token' => $token,
@@ -98,6 +103,7 @@ class ApiLoginController extends Controller
                 'remember_token' => $user->remember_token,
                 'created_at' => $user->created_at,
                 'updated_at' => $user->updated_at,
+                'roles' => $user->roles->pluck('name'),
             ]
         ], 201);
     }
