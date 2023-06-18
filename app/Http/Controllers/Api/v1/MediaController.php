@@ -35,7 +35,6 @@ class MediaController extends Controller
             $modelId = Str::uuid();
             $uuid = Str::uuid();
 
-            $filePath = $file->store('public/' . $modelId, 'local');
             $media = Media::create([
                 'model_type' => 'App\\Models\\Report',
                 'model_id' => $modelId,
@@ -53,6 +52,9 @@ class MediaController extends Controller
                 'responsive_images' => [],
                 'order_column' => 0,
             ]);
+            $filePath = $file->store('public/' . $media->id, 'local');
+
+
             return response()->json($media);
         }
 
@@ -116,7 +118,7 @@ class MediaController extends Controller
         $media = Media::find($id);
 
         if ($media) {
-            $filePath = Storage::disk('local')->path('public/' . $media->model_id . '/' . $media->file_name);
+            $filePath = Storage::disk('local')->path('public/' . $id . '/' . $media->file_name);
 
             if (file_exists($filePath)) {
                 $fileName = $media->name;
@@ -145,9 +147,9 @@ class MediaController extends Controller
         $media = Media::find($id);
 
         if ($media) {
-            if (Storage::disk('local')->exists('public/' . $media->model_id . '/' . $media->file_name)) {
-                if (Storage::disk('local')->delete('public/' . $media->model_id . '/' . $media->file_name)) {
-                    $media->delete(); 
+            if (Storage::disk('local')->exists('public/' . $media->id . '/' . $media->file_name)) {
+                if (Storage::disk('local')->delete('public/' . $media->id . '/' . $media->file_name)) {
+                    $media->delete();
 
                     return response(['message' => 'Медиафайл успешно удален'], 200);
                 } else {
