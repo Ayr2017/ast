@@ -52,7 +52,7 @@ class MediaController extends Controller
                 'responsive_images' => [],
                 'order_column' => 0,
             ]);
-            $filePath = $file->store('public/' . $media->id, 'local');
+            $filePath = $file->store('public/' . $media->id, 'public');
 
 
             return response()->json($media);
