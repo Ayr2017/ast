@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\Api\FormField;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
 
 class FormFieldsController extends Controller
 {
@@ -13,10 +15,19 @@ class FormFieldsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $formFields = FormField::all();
-        return response($formFields, 200);
+        $syncDate = $request->input('syncDate');
+
+        $formFields = FormField::withTrashed()
+            ->where(function ($query) use ($syncDate) {
+                $query->where('created_at', '>', Carbon::createFromTimestamp($syncDate))
+                    ->orWhere('updated_at', '>', Carbon::createFromTimestamp($syncDate))
+                    ->orWhere('deleted_at', '>', Carbon::createFromTimestamp($syncDate));
+            })
+            ->get();
+
+        return response()->json($formFields, 200);
     }
 
     public function updateOrCreate(Request $request, $id)
