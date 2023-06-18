@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\v1\RegionsController;
 use App\Http\Controllers\Api\v1\ReportsController;
 use App\Http\Controllers\Api\v1\RolesController;
 use App\Http\Controllers\Api\v1\UsersController;
+use App\Http\Controllers\Api\v1\PasswordResetsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -80,11 +81,6 @@ Route::middleware('auth:sanctum')->delete('media_delete/{id}', 'App\Http\Control
 
 // Восстановление пароля
 Route::post('passwordresets_update/{email}', 'App\Http\Controllers\Api\v1\PasswordResetsController@updateOrCreate');
-
-//Тестовый маршрут
-Route::get('/test', function(){
-    return 'ok';
-});
-
+Route::post('/password/reset', [PasswordResetsController::class, 'sendResetLinkEmail'])->name('password.email');
 
 
