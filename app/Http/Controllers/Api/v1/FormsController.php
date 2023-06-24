@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Form;
+use App\Models\Api\Form;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FormsController extends Controller
 {
@@ -13,10 +15,58 @@ class FormsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $forms = Form::paginate(15);
-        return response($forms, 200);
+        $syncDate = $request->input('syncDate');
+
+        $forms = Form::withTrashed()
+            ->where(function ($query) use ($syncDate) {
+                $query->where('created_at', '>', Carbon::createFromTimestamp($syncDate))
+                    ->orWhere('updated_at', '>', Carbon::createFromTimestamp($syncDate))
+                    ->orWhere('deleted_at', '>', Carbon::createFromTimestamp($syncDate));
+            })
+            ->get();
+
+        return response()->json($forms, 200);
+    }
+
+    public function updateOrCreate(Request $request, $id)
+    {
+        $form = Form::find($id);
+
+        if (!$form) {
+            $form = new Form();
+            $form->id = $id;
+        }
+
+        $form->name = $request->input('name', $form->name);
+        $form->description = $request->input('description', $form->description);
+        $form->creator_id = $request->input('creator_id', $form->creator_id);
+        $form->category_id = $request->input('category_id', $form->category_id);
+
+        DB::beginTransaction();
+
+        try {
+            $form->save();
+
+            if (!$form->wasRecentlyCreated) {
+                $form->users()->sync([$form->creator_id]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Form updated or created successfully',
+                'data' => $form
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'message' => 'Failed to update or create form',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

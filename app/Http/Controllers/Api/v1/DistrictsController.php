@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\District;
+use App\Models\Api\District;
 use Illuminate\Http\Request;
 
 class DistrictsController extends Controller
@@ -15,10 +15,25 @@ class DistrictsController extends Controller
      */
     public function index()
     {
-        $districts = District::paginate(20);
+        $districts = District::all();
         return response($districts,200);
     }
 
+    public function updateOrCreate(Request $request, $id)
+    {
+        $district = District::find($id);
+
+        if (!$district) {
+            $district = new District();
+            $district->id = $id;
+        }
+
+        $district->region_id = $request->input('region_id', $district->region_id);
+        $district->name = $request->input('name', $district->name);
+        $district->save();
+
+        return response(['district' => $district], 200);
+    }
     /**
      * Show the form for creating a new resource.
      *

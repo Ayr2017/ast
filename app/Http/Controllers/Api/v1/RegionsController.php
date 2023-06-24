@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Regions\IndexRequest;
-use App\Models\Region;
+use App\Models\Api\Region;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
 
 class RegionsController extends Controller
 {
@@ -15,10 +16,20 @@ class RegionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(IndexRequest $request)
+    public function index(Request $request)
     {
-        $search = $request->search ?? '';
-        return response(Region::where('name', 'like', '%'. $search . '%')->get(), Response::HTTP_OK);
+        $syncDate = $request->input('syncDate');
+
+        $regions = Region::where(function ($query) use ($syncDate) {
+            if ($syncDate) {
+                $query->where(function ($query) use ($syncDate) {
+                    $query->where('created_at', '>', Carbon::createFromTimestamp($syncDate))
+                        ->orWhere('updated_at', '>', Carbon::createFromTimestamp($syncDate));
+                });
+            }
+        })->get();
+
+        return response()->json(['regions' => $regions]);
     }
 
     /**
@@ -44,15 +55,21 @@ class RegionsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update or create the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateOrCreate(Request $request, $id)
     {
-        //
+        $regionData = [
+            'name' => $request->input('name'),
+        ];
+
+        $region = Region::updateOrCreate(['id' => $id], $regionData);
+
+        return response(['region' => $region]);
     }
 
     /**
