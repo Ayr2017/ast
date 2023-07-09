@@ -273,10 +273,11 @@ class Index extends Component
         // Устанавливаем формат PNG
         $image->setImageFormat('png');
 
+
         // Сохраняем PNG файл
         $image->writeImage('chartImage.png');
         //Тестовый код для проверки содержимого SVG
-//        file_put_contents("file.svg", $blob);
+        //        file_put_contents("file.svg", $blob);
         $fileContent = file_get_contents('chartImage.png');
         $fileContent = base64_encode($fileContent);
 
