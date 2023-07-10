@@ -34,7 +34,7 @@
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Дата</label>
             <input type="date" class="form-control" id="exampleFormControlInput1" placeholder=""
-                   value="{{now()->format('Y-m-d')}}" name="date">
+                   value="{{now()->format('Y-m-d')}}" name="date" max="{{date_format(date_add(date_create(date("Y-m-d")),date_interval_create_from_date_string("1 days")), "Y-m-d");}}">
         </div>
 
         <div class="mb-3">
