@@ -26,7 +26,7 @@ class ReportsExport implements FromView
 
         return view('excel.excel-horizontal', [
             'reports' => $this->reports,
-            'formFields' => $this->formFields->sortBy('field_category_id'),
+            'formFields' => $this->formFields->sortBy('number'),
         ]);
     }
 }

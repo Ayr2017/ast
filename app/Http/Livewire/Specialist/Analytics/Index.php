@@ -252,7 +252,7 @@ class Index extends Component
     public function downloadExcel(DownloadExcel $downloadExcel)
     {
         $form = Form::find($this->formId);
-        return $downloadExcel->execute($this->reports, $this->formFields->sortBy('number'), $form);
+        return $downloadExcel->execute($this->reports, $this->formFields, $form);
     }
 
     public function getLCM()
